@@ -1,0 +1,6 @@
+{
+  "name": "OSX Console",
+  "description": "Secure OS/10 operator console with CNS-1 to CNS-7 protocol engine, cryptographic envelopes, and multi-profile trust boundaries.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
