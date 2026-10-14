@@ -1,10 +1,10 @@
 # amk-authority.md (Attestation Authority)
 
 **Boundary:** Attestation Authority (amk-authority) of OS/10 AMK. Formerly named `amk-registry`.
-**Spec version:** 1.2.0-draft. Conforms to `amk-contracts` 1.2.0-draft.
+**Spec version:** 1.2.0-draft.
 **Trust:** Trusted for the attestations it signs. Untrusted for enforcement, which belongs to the session router and `amk-controller`.
-**Companions:** `amk-controller.md`, `amk-console.md`, `amk-contracts`, `session-router.md`, `router-factory.md`, `os10-lifecycle.md`, `amk-defaults-manifest.md`.
-**Normative language:** MUST, MUST NOT, SHOULD and MAY as in RFC 2119. No default value is stated here; every default is a `DV-` ID defined only in `amk-defaults-manifest.md`.
+**Companions:** `amk-controller.md`, `amk-console.md`, and the session-router specification (`specs/modules/session-router`, which includes the `router-factory` endpoint). `amk-contracts`, `os10-lifecycle` and `amk-defaults-manifest` are discontinued; their content is distributed into the individual spec files.
+**Normative language:** MUST, MUST NOT, SHOULD and MAY as in RFC 2119. Default values are stated in this specification under `DV-ATA-nn` IDs (see the Defaults section).
 
 **Review markers.** `[S-xx]` = settled by the operator. `[P-xx]` = provisional; needs confirmation. `[OPEN O-xx]` = undecided; the text is a placeholder. Markers are for review and are removed before release.
 
@@ -14,7 +14,7 @@
 
 ## Terms used in this document
 
-Authoritative definitions live in `amk-contracts`. Short forms here for readability.
+Definitions in this section are authoritative for this specification.
 
 - **Attestation Authority (AA):** the sole issuer of role attestations. This component.
 - **Role attestation:** a signed statement binding a session public key to a role for a session handle and epoch.
@@ -93,7 +93,7 @@ Authoritative definitions live in `amk-contracts`. Short forms here for readabil
 
 ---
 
-## Defaults needed in `amk-defaults-manifest`
+## Defaults
 
 - Grace window `G` (default: end of epoch + 30 seconds) [DV-ATA-01]
 - Maximum revocation list age `R_MAX` (default: 300 seconds) [DV-ATA-02]
@@ -113,4 +113,4 @@ Authoritative definitions live in `amk-contracts`. Short forms here for readabil
 
 ## Dependent files
 
-Drafted for 1.2 together with this file: `amk-contracts`, `session-router`, `router-factory`, `os10-lifecycle`, `amk-defaults`. Not yet updated: `amk-controller`, `amk-console`, `amk-test-matrix`, `ssot-index`.
+Drafted for 1.2 together with this file: `session-router` (including its `router-factory` endpoint). Not yet updated: `amk-test-matrix`, `ssot-index`. Discontinued: `amk-contracts`, `os10-lifecycle`, `amk-defaults-manifest`.

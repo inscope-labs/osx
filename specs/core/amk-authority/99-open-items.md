@@ -30,7 +30,7 @@
 
 ---
 
-## Defaults needed in `amk-defaults-manifest`
+## Defaults
 
 - Grace window `G` (default: end of epoch + 30 seconds) [DV-ATA-01]
 - Maximum revocation list age `R_MAX` (default: 300 seconds) [DV-ATA-02]
@@ -44,4 +44,4 @@
 
 ## Dependent files
 
-Drafted for 1.2 together with this file: `amk-contracts`, `session-router`, `router-factory`, `os10-lifecycle`, `amk-defaults`. Not yet updated: `amk-controller`, `amk-console`, `amk-test-matrix`, `ssot-index`.
+Drafted for 1.2 together with this file: `session-router` (including its `router-factory` endpoint). Not yet updated: `amk-test-matrix`, `ssot-index`. Discontinued: `amk-contracts`, `os10-lifecycle`, `amk-defaults-manifest`.
