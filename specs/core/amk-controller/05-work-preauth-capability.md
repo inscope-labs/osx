@@ -16,7 +16,7 @@ This module defines the controller’s obligations for work-order enforcement, p
 
 - **CTR-6:4** The controller verifies envelope signature (console key), scope, expiry, runtime and version where relevant, per-session quota, and kernel-level cap before honoring it.
 - **CTR-6:5** It honors an envelope only for the scopes it lists.
-- **CTR-6:6** The controller never creates or widens an envelope.
+- **CTR-6:6** Duplicate of CTR-1:18. The requirement is defined only there.
 - **CTR-6:7** For offline continuation, envelopes are deposited with the controller. A revocation registry is checked on every use; expiry is the backstop.
 - **CTR-6:8** A runtime update to a new version voids coverage for that runtime.
 

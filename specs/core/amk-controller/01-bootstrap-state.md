@@ -21,7 +21,7 @@ This module defines bootstrap from the Release Manifest, the nested state model,
 - **CTR-2:8** Failure conditions include INTEGRITY-FAILED, CONTRACT-FAILED, FAULTED, and SAFE-HALT, with health NORMAL or DEGRADED. BLOCKED and AUTHORIZATION-FAILED are scoped conditions.
 - **CTR-2:9** Each session carries an anomaly level (see file 6).
 - **CTR-2:10** The controller changes lifecycle only by restricting. Permissive transitions require console authority.
-- **CTR-2:11** The controller MUST fail closed on any failure condition.
+- **CTR-2:11** Duplicate of CTR-1:16. The requirement is defined only there.
 
 ## Durability and Concurrency
 
