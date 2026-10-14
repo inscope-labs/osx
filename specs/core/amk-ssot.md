@@ -22,7 +22,7 @@ Every row below is a single statement with exactly one rule reference. A stateme
 |---|---|
 | ATA-00:01 | The Attestation Authority is the sole issuer of role attestations. |
 | ATA-00:02 | The Authority is trusted for the statements it signs and untrusted for enforcement. |
-| ATA-06:07 | A party does not accept a peer that declares a lower profile than its own unless explicitly allowed and audited. |
+| ATA-06:08 | A party does not accept a peer that declares a lower profile than its own unless explicitly allowed and audited. |
 | CNS-1:1 | The console is the sole seat of operator authority. |
 | CNS-1:2 | The controller has no independent notion of an operator. |
 | CNS-1:5 | The console is untrusted for enforcement. |

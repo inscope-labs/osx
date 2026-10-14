@@ -64,6 +64,6 @@
 
 - Three profiles define the security requirements for the Authority. Basic is suitable for any language; Standard requires non-exportable keys and full revocation; High requires HSM/TEE protection, with measured boot and remote attestation recommended. The profile is selected at deployment and discoverable by clients.
 
-## ATA-06:07 Peer Profile Rule
+## ATA-06:08 Peer Profile Rule
 
 - A party MUST NOT accept a peer that declares a lower profile than its own unless the operator or administrator has explicitly allowed it, and that allowance MUST be audited.
