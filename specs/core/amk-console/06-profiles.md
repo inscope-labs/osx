@@ -9,7 +9,7 @@ This module defines the three operational profiles—Basic, Standard, and High�
 ## Common Rules
 
 - **CNS-7:1** Every conformant implementation MUST declare exactly one profile: `basic`, `standard`, or `high`.
-- **CNS-7:2** The declared profile SHOULD be discoverable through a status or capability envelope.
+- **CNS-7:2** The declared profile MUST be discoverable through a status or capability envelope.
 - **CNS-7:3** An implementation claiming `standard` MUST satisfy every Basic requirement in addition to the Standard obligations.
 - **CNS-7:4** An implementation claiming `high` MUST satisfy every Basic and Standard requirement in addition to the High obligations.
 - **CNS-7:5** The invariants defined in file 1 apply at every profile.
@@ -64,3 +64,7 @@ This module defines the three operational profiles—Basic, Standard, and High�
 | Fresh confirmation for high-impact actions | MAY relax | MUST | MUST |
 | Tamper-protected audit trail | Minimal | Full | Hardware-protected |
 | Remote attestation support | — | — | SHOULD |
+
+## Peer Profile Rule
+
+- **CNS-7:23** The console MUST NOT accept a peer that declares a lower profile than its own unless the operator has explicitly allowed it, and that allowance MUST be audited.
