@@ -1,6 +1,6 @@
-# amk-registry.md (Attestation Authority)
+# amk-authority.md (Attestation Authority)
 
-**Boundary:** Attestation Authority (amk-registry) of OS/10 AMK.
+**Boundary:** Attestation Authority (amk-authority) of OS/10 AMK. Formerly named `amk-registry`.
 **Spec version:** 1.2.0-draft. Conforms to `amk-contracts` 1.2.0-draft.
 **Trust:** Trusted for the attestations it signs. Untrusted for enforcement, which belongs to the session router and `amk-controller`.
 **Companions:** `amk-controller.md`, `amk-console.md`, `amk-contracts`, `session-router.md`, `router-factory.md`, `os10-lifecycle.md`, `amk-defaults-manifest.md`.
