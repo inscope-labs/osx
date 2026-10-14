@@ -2,6 +2,8 @@
 
 **Boundary:** Attestation Authority (amk-authority) of OS/10 AMK. Formerly named `amk-registry`.
 **Spec version:** 1.2.0-draft.
+**Suite compatibility:** `OS10-AMK 2.x` (suite version defined in `amk-ssot.md`).
+**Reference ID policy:** Once published, an ID is never reassigned. A withdrawn requirement keeps its ID and is marked `RETIRED`. Ordinal file numbers and per-bullet IDs (`ATA-<file>:<rule>`) are the target scheme; conversion of this specification is pending (see `specs/core/OPEN-ITEMS.md`, CORE-O-05).
 **Trust:** Trusted for the attestations it signs. Untrusted for enforcement, which belongs to the session router and `amk-controller`.
 **Companions:** `amk-controller.md`, `amk-console.md`, and the session-router specification (`specs/modules/session-router`, which includes the `router-factory` endpoint). `amk-contracts`, `os10-lifecycle` and `amk-defaults-manifest` are discontinued; their content is distributed into the individual spec files.
 **Normative language:** MUST, MUST NOT, SHOULD and MAY as in RFC 2119. Default values are stated in this specification under `DV-ATA-nn` IDs (see the Defaults section).

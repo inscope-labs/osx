@@ -4,6 +4,7 @@
 |---|---|
 | Spec ID | `amk-console` |
 | Version | 2.1.0-draft |
+| Suite compatibility | `OS10-AMK 2.x` (suite version defined in `amk-ssot.md`) |
 | Status | Draft — self-contained, language-agnostic, envelope-only contract with three operational profiles. |
 | Boundary | User Control Plane. Defines only the console’s interaction surface. |
 | Trust | Trusted for authenticated operator intent. Untrusted for enforcement. |
@@ -23,7 +24,7 @@ The specification is language-agnostic. Implementations may be written in any la
 
 Three operational profiles—Basic, Standard, and High—govern privacy, security, and implementation complexity. Higher profiles subsume all requirements of lower profiles.
 
-This document is the single source of truth. Normative requirements live in the module files listed below.
+Normative requirements live in the module files listed below.
 
 ---
 
@@ -37,7 +38,7 @@ Every normative statement carries a stable identifier of the form:
 - `<file>` is the module file number (see table below).
 - `<rule>` is the rule number inside that file. Each file begins numbering at 1.
 
-Rule numbers may be reassigned or may point to an updated rule in a later revision. Once published, an ID is never reused for a different requirement.
+Once published, an ID is never reassigned. A withdrawn requirement keeps its ID and is marked `RETIRED`. File numbers are stable identifiers and need not follow file-name order.
 
 ---
 
