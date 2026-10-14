@@ -4,6 +4,7 @@
 |---|---|
 | Spec ID | `amk-console` |
 | Version | 2.1.0-draft |
+| Suite compatibility | `OS10-AMK 2.x` (suite version defined in `amk-ssot.md`) |
 | Status | Draft — self-contained, language-agnostic, envelope-only contract with three operational profiles. |
 | Boundary | User Control Plane. Defines only the console’s interaction surface. |
 | Trust | Trusted for authenticated operator intent. Untrusted for enforcement. |
@@ -13,17 +14,17 @@
 
 ## Holistic System Overview
 
-The amk-console is the sole seat of human operator authority. It is a self-contained component that communicates with all external entities exclusively through signed envelopes. It has no knowledge of the internal behaviour of the controller, Host AI, runtimes, gateways, or any other counterpart; it only knows the envelope schemas, the cryptographic verification rules it must apply, and the sequencing obligations defined in this specification.
+The amk-console is the sole seat of human operator authority. It is a self-contained component that communicates with external entities through signed envelopes; the sole exception is delivery of the session handoff to a Host AI (CNS-3:21). It has no knowledge of the internal behaviour of the controller, Host AI, runtimes, gateways, or any other counterpart; it only knows the envelope schemas, the cryptographic verification rules it must apply, and the sequencing obligations defined in this specification.
 
 The console is trusted to capture and transmit authenticated operator intent. It is untrusted for enforcement: every action is submitted as a signed envelope that the receiving party alone enforces. Mutual verification is mandatory.
 
-All external interactions are envelope-based. Local presentation, user-interface design, notification rendering, first-run experience, and operator-load timing are outside the scope of this specification and belong in an implementation guide.
+All external interactions are envelope-based, except handoff delivery (CNS-3:21). Local presentation, user-interface design, notification rendering, first-run experience, and operator-load timing are outside the scope of this specification and belong in an implementation guide.
 
 The specification is language-agnostic. Implementations may be written in any language that can satisfy the cryptographic and sequencing requirements of the claimed operational profile.
 
 Three operational profiles—Basic, Standard, and High—govern privacy, security, and implementation complexity. Higher profiles subsume all requirements of lower profiles.
 
-This document is the single source of truth. Normative requirements live in the module files listed below.
+Normative requirements live in the module files listed below.
 
 ---
 
@@ -37,7 +38,7 @@ Every normative statement carries a stable identifier of the form:
 - `<file>` is the module file number (see table below).
 - `<rule>` is the rule number inside that file. Each file begins numbering at 1.
 
-Rule numbers may be reassigned or may point to an updated rule in a later revision. Once published, an ID is never reused for a different requirement.
+Once published, an ID is never reassigned. A withdrawn requirement keeps its ID and is marked `RETIRED`. File numbers are stable identifiers and need not follow file-name order.
 
 ---
 

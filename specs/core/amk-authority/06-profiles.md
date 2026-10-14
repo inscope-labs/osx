@@ -34,7 +34,7 @@
 ## ATA-06:04 High Profile
 
 - Signing keys MUST be HSM- or TEE-protected. [S-12]
-- Measured boot and remote attestation of the Authority itself MUST be supported.
+- Measured boot and remote attestation of the Authority itself SHOULD be supported.
 - Hardware-protected audit of issuance MUST be enabled.
 - Revocation list is required.
 - Real-time revocation endpoint is required.
@@ -57,9 +57,13 @@
 | Real-time revocation | No | Permitted | Required |
 | Identity binding | No | Optional | Should |
 | Process isolation | No | Required | Required |
-| Measured boot | No | No | Required |
+| Measured boot / remote attestation | No | No | Should |
 | Hardware audit | No | No | Required |
 
 ## ATA-06:07 Summary
 
-- Three profiles define the security requirements for the Authority. Basic is suitable for any language; Standard requires non-exportable keys and full revocation; High requires HSM/TEE protection and measured boot. The profile is selected at deployment and discoverable by clients.
+- Three profiles define the security requirements for the Authority. Basic is suitable for any language; Standard requires non-exportable keys and full revocation; High requires HSM/TEE protection, with measured boot and remote attestation recommended. The profile is selected at deployment and discoverable by clients.
+
+## ATA-06:07 Peer Profile Rule
+
+- A party MUST NOT accept a peer that declares a lower profile than its own unless the operator or administrator has explicitly allowed it, and that allowance MUST be audited.

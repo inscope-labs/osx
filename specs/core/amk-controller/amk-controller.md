@@ -4,6 +4,7 @@
 |---|---|
 | Spec ID | `amk-controller` |
 | Version | 2.0.0-draft |
+| Suite compatibility | `OS10-AMK 2.x` (suite version defined in `amk-ssot.md`) |
 | Status | Draft — self-contained, language- and platform-agnostic, with three operational profiles. |
 | Boundary | Kernel Enforcement Point. Sole trusted enforcement, token-issuance, and state authority. |
 | Trust | Sole trusted enforcement point. |
@@ -23,7 +24,7 @@ Three operational profiles—Basic, Standard, and High—govern privacy, securit
 
 Local presentation, user-interface design, and operator-facing summaries are outside the scope of this specification and belong in an implementation guide.
 
-This document is the single source of truth. Normative requirements live in the module files listed below.
+Normative requirements live in the module files listed below.
 
 ---
 
@@ -37,7 +38,7 @@ Every normative statement carries a stable identifier of the form:
 - `<file>` is the module file number (see table below).
 - `<rule>` is the rule number inside that file. Each file begins numbering at 1.
 
-Rule numbers may be reassigned or may point to an updated rule in a later revision. Once published, an ID is never reused for a different requirement.
+Once published, an ID is never reassigned. A withdrawn requirement keeps its ID and is marked `RETIRED`. File numbers are stable identifiers and need not follow file-name order.
 
 ---
 
@@ -54,6 +55,7 @@ Rule numbers may be reassigned or may point to an updated rule in a later revisi
 | 7 | [06-tokens-audit-revocation.md](06-tokens-audit-revocation.md) | Capability tokens, audit, revocation, recovery |
 | 8 | [07-profiles.md](07-profiles.md) | Basic / Standard / High profile requirements |
 | 9 | [99-open-items.md](99-open-items.md) | Open questions (non-normative) |
+| 10 | [08-keys.md](08-keys.md) | Controller key hierarchy |
 
 ---
 

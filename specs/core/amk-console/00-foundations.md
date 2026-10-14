@@ -46,6 +46,6 @@ This module defines the core terminology, the console’s role as the sole human
 - **CNS-1:12** A failed validation gate is never overridden.
 - **CNS-1:13** Long-term private keys never leave the console’s protected key store.
 - **CNS-1:14** The console never accepts an envelope whose signature or freshness checks fail.
-- **CNS-1:15** All external communication occurs through envelopes defined in this specification.
+- **CNS-1:15** All external communication occurs through envelopes defined in this specification, subject to the exception in CNS-3:21.
 
 **CNS-1:16** An implementation that violates any invariant listed above is non-conformant.

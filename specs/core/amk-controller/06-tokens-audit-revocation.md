@@ -10,7 +10,7 @@ This module defines capability-token issuance, the append-only audit chain, revo
 
 - **CTR-7:1** The controller issues short-lived, controller-signed capability tokens bound to session, runtime, scope, nonce, and lineage.
 - **CTR-7:2** Tokens for destructive or irreversible operations MUST be single-use.
-- **CTR-7:3** The Host AI never receives a capability token; it learns only the outcome.
+- **CTR-7:3** Duplicate of CTR-1:19. The requirement is defined only there.
 
 ## Audit
 
@@ -22,7 +22,7 @@ This module defines capability-token issuance, the append-only audit chain, revo
 
 - **CTR-7:7** Revocation commits at the controller, is audited, and halts runtimes at the next operation boundary; authority also ends at token expiry.
 - **CTR-7:8** The controller keeps a revocation registry for pre-authorization envelopes.
-- **CTR-7:9** Concurrent requests per session are serialized with a single writer.
+- **CTR-7:9** Duplicate of CTR-2:13. The requirement is defined only there.
 
 ## Multi-Runtime Isolation
 

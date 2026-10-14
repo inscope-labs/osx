@@ -9,7 +9,7 @@ This module defines the three operational profiles. An implementation MUST decla
 ## Common Rules
 
 - **CTR-8:1** Every conformant implementation MUST declare exactly one profile: `basic`, `standard`, or `high`.
-- **CTR-8:2** The declared profile SHOULD be discoverable through a status or capability envelope.
+- **CTR-8:2** The declared profile MUST be discoverable through a status or capability envelope.
 - **CTR-8:3** An implementation claiming `standard` MUST satisfy every Basic requirement in addition to the Standard obligations.
 - **CTR-8:4** An implementation claiming `high` MUST satisfy every Basic and Standard requirement in addition to the High obligations.
 - **CTR-8:5** The invariants defined in file 1 apply at every profile.
@@ -53,3 +53,7 @@ This module defines the three operational profiles. An implementation MUST decla
 | Durable state + signed audit | Minimal | Full | Hardware-protected |
 | Remote attestation support | — | — | SHOULD |
 | Language / platform exclusion | None (basic crypto) | Must support isolation + mature crypto | Must support HSM/TEE + measured environment |
+
+## Peer Profile Rule
+
+- **CTR-8:22** The controller MUST NOT accept a peer that declares a lower profile than its own unless the administrator has explicitly allowed it, and that allowance MUST be audited.

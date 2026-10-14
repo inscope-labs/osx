@@ -31,21 +31,33 @@ This module defines the sole external communication mechanism of the console: si
 | `SurfaceAcceptance` / `SurfaceRejection` | Console → Controller | Result of validation gates |
 | `Handoff` | Controller → Console | Session start credential |
 | `HandoffDelivery` / `HandoffReceipt` | Console ↔ external | Delivery and acknowledgement of handoff |
-| `RuntimeRegistration` | Console → external | Register a runtime |
-| `RuntimeInclusionRequest` | external → Console | Request mid-session inclusion |
-| `RuntimeInclusionDecision` | Console → external | Approve or deny inclusion |
+| `RuntimeInclusionDecision` | Console → Controller | Approve or deny inclusion of an already-registered runtime in a running session (see CNS-O-10) |
 | `WorkOrder` / `WorkOrderUpdate` | Console → Controller | Create, extend, renew, cancel |
 | `PreAuthorization` | Console → Controller | Create, change, or revoke a pre-authorization |
 | `Revocation` | Console → Controller | Immediate revocation of session, runtime, or pre-auth |
 | `StatusQuery` / `StatusResponse` | Console ↔ Controller | Request and receive state or audit information |
 | `Notification` | Controller → Console | Pending decision or event |
-| `ClarificationAnswer` | Console → external | Operator answer to a clarification question |
 | `ValidatorEvidence` | Console → Controller | Optional session-validator observation |
+| `Genesis` | Console → Controller | Console-signed anchor that locks console, Host AI, controller and gateways into one session; the genesis value MUST be 0 at handoff (see CNS-O-09) |
+| `TurnReceipt` | Console → Controller | Console-signed receipt for a turn (see CNS-O-09) |
 
-- **CNS-3:12** All of the above are ordinary envelopes subject to the common rules. No special out-of-band channels are required or permitted for control-plane actions.
+- **CNS-3:12** All of the above are ordinary envelopes subject to the common rules. No transport other than the channels defined in CNS-3:19 and the delivery exception in CNS-3:21 is permitted for control-plane actions.
 
 ## Sequencing and Sessions
 
-- **CNS-3:13** Sequence numbers are scoped to the sender identity.
+- **CNS-3:13** Duplicate of CNS-3:3. The requirement is defined only there.
 - **CNS-3:14** Session-related envelopes carry a session handle once one has been allocated.
 - **CNS-3:15** The console MUST maintain sufficient state to enforce monotonicity and replay protection for the lifetime required by the claimed profile.
+
+## Contract Version and TTL
+
+- **CNS-3:16** Every envelope MUST contain a `contract_version` equal to the suite major.minor to which the sender conforms (`amk-ssot.md`, SSOT-1:3).
+- **CNS-3:17** Every envelope MUST contain a `ttl` after which the envelope MUST be rejected.
+- **CNS-3:18** The console MUST reject any envelope whose `contract_version` it does not support or whose `ttl` has expired. It MUST NOT silently downgrade.
+
+## Channels
+
+- **CNS-3:19** The console and the controller communicate over two distinct channels. The **administrative channel** is direct, its trust is rooted in the Release Key, and it is required to initiate a session. The **session channel** carries all session-based communication through the session router; envelopes are router payloads.
+- **CNS-3:20** `SessionStart` is sent on the administrative channel. Once a session handle has been allocated, every session-related envelope MUST use the session channel. The assignment of the remaining envelope types to channels is not yet defined (see CNS-O-08).
+- **CNS-3:21** Delivery of the handoff to a Host AI by manual, loopback or gateway means is the only permitted transport that is not an envelope exchange.
+- **CNS-3:22** The encapsulation of envelopes as router payloads is defined by the session-router specification (see CNS-O-08).
