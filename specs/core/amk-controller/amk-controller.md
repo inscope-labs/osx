@@ -55,6 +55,7 @@ Once published, an ID is never reassigned. A withdrawn requirement keeps its ID 
 | 7 | [06-tokens-audit-revocation.md](06-tokens-audit-revocation.md) | Capability tokens, audit, revocation, recovery |
 | 8 | [07-profiles.md](07-profiles.md) | Basic / Standard / High profile requirements |
 | 9 | [99-open-items.md](99-open-items.md) | Open questions (non-normative) |
+| 10 | [08-keys.md](08-keys.md) | Controller key hierarchy |
 
 ---
 
