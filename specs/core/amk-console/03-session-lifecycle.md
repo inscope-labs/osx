@@ -24,8 +24,9 @@ This module defines the envelope exchanges that constitute session start, handof
 
 ## Mid-Session Runtime Inclusion / Removal
 
-- **CNS-4:11** An external party MAY emit a `RuntimeInclusionRequest` envelope.
-- **CNS-4:12** The console responds with a `RuntimeInclusionDecision` envelope (accept or reject).
+- **CNS-4:11** RETIRED. Replaced by CNS-4:16.
+- **CNS-4:12** The outcome of the inclusion workflow is communicated to the controller by a `RuntimeInclusionDecision` envelope (accept or reject). Whether this is a distinct envelope type is open (see CNS-O-10).
 - **CNS-4:13** Under a covering pre-authorization the decision MAY be emitted automatically according to profile rules.
 - **CNS-4:14** Inclusion does not require a new handoff; the existing session handle continues.
 - **CNS-4:15** The console MAY emit a `Revocation` envelope targeting a runtime within a session.
+- **CNS-4:16** Mid-session inclusion of an already-registered runtime is requested by the operator or by the Host AI. Handling the request is an exclusive console workflow; no `RuntimeInclusionRequest` envelope exists.

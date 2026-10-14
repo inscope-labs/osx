@@ -8,7 +8,7 @@ This module defines the envelope contracts for runtime registration, work-order 
 
 ## Runtime Registration
 
-- **CNS-5:1** The console emits a `RuntimeRegistration` envelope containing the runtime descriptor (or a reference to it).
+- **CNS-5:1** RETIRED. Replaced by CNS-5:13.
 - **CNS-5:2** The console does not interpret the internal semantics of a runtime beyond the fields required by the envelope schema.
 
 ## Work Orders
@@ -29,3 +29,4 @@ This module defines the envelope contracts for runtime registration, work-order 
 
 - **CNS-5:11** Auto Assist is expressed as a policy flag carried in session-related envelopes or as a standing pre-authorization scope.
 - **CNS-5:12** When the console is unreachable, continuation of a session is governed solely by the limits of an applicable pre-authorization and the information supplied by the controller.
+- **CNS-5:13** Runtime registration is an exclusive console workflow. It is console-local and involves no envelope.

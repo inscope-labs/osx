@@ -27,3 +27,5 @@ This module defines the abstract key hierarchy and the authentication/confirmati
 
 - **CNS-2:10** Under Standard and High profiles, private keys MUST be protected by an OS keystore or equivalent.
 - **CNS-2:11** Under the High profile, private keys MUST be protected by an HSM, secure element, or TEE and MUST NOT exist in ordinary process memory in clear form.
+
+- **CNS-2:12** The console build MUST pin the Release Key fingerprint(s), the list of controller URLs, and the list of Authority URLs. These pins are the root of trust for the administrative channel (CNS-3:19). How the controller signing key and the Authority public key reach the console is not yet defined (see CNS-O-13).
