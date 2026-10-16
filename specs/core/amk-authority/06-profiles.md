@@ -60,7 +60,7 @@
 | Measured boot / remote attestation | No | No | Should |
 | Hardware audit | No | No | Required |
 
-## ATA-06:07 Summary
+## ATA-06:08 Summary
 
 - Three profiles define the security requirements for the Authority. Basic is suitable for any language; Standard requires non-exportable keys and full revocation; High requires HSM/TEE protection, with measured boot and remote attestation recommended. The profile is selected at deployment and discoverable by clients.
 

@@ -2,11 +2,11 @@
 """Merge the individual spec files of one AMK spec directory into one file.
 
 Usage:
-    python3 scripts/merge_spec.py --dir specs/core/amk-console
-    python3 scripts/merge_spec.py --dir specs/core/amk-console --check
+    python3 specs/scripts/merge_spec.py --dir specs/core/amk-console
+    python3 specs/scripts/merge_spec.py --dir specs/core/amk-console --check
 
 The merged file is written to the root of the spec directory as
-<dir-name>.merged.md. The main index file (<dir-name>.md) comes first, followed
+<dir-name>-spec-full.md. The main index file (<dir-name>.md) comes first, followed
 by every other .md file in the directory in path order (numbered module files
 sort naturally; 99-open-items.md sorts last). Output is deterministic: it
 contains no timestamps and no commit hashes, so an unchanged source produces an
@@ -101,7 +101,7 @@ def build(spec_dir: Path, output_name: str):
 
     modules = []
     for p in sorted(spec_dir.rglob("*.md"), key=lambda q: q.relative_to(spec_dir).as_posix()):
-        if p == main or p == out_path or p.name.endswith(".merged.md"):
+        if p == main or p == out_path or p.name.endswith("-spec-full.md"):
             continue
         if MARKER in read(p):
             continue
@@ -119,7 +119,7 @@ def build(spec_dir: Path, output_name: str):
     header = (
         "<!--\n"
         f"{MARKER}\n"
-        "Merged from the individual spec files in this directory by scripts/merge_spec.py.\n"
+        "Merged from the individual spec files in this directory by specs/scripts/merge_spec.py.\n"
         "Edit the source files, then re-run the merge-spec workflow.\n"
         "Source files (sha256, first 12 hex):\n" + "\n".join(lines) + "\n"
         f"Merged content hash: {overall}\n"
@@ -176,7 +176,7 @@ def build(spec_dir: Path, output_name: str):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dir", required=True, help="spec directory, for example specs/core/amk-console")
-    ap.add_argument("--output", help="output file name (default: <dir-name>.merged.md)")
+    ap.add_argument("--output", help="output file name (default: <dir-name>-spec-full.md)")
     ap.add_argument("--check", action="store_true", help="do not write; exit 1 if the merged file is stale")
     args = ap.parse_args()
 
@@ -184,7 +184,7 @@ def main():
     if not spec_dir.is_dir():
         print(f"error: not a directory: {spec_dir}", file=sys.stderr)
         return 2
-    output_name = args.output or f"{spec_dir.name}.merged.md"
+    output_name = args.output or f"{spec_dir.name}-spec-full.md"
 
     merged, out_path, errors, warnings, nfiles, nrules = build(spec_dir, output_name)
     for w in warnings:

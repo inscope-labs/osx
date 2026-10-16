@@ -10,11 +10,6 @@ on:
           - pr
           - commit
         default: pr
-  push:
-    branches: [main]
-    paths:
-      - 'specs/core/amk-authority/**'
-      - '!specs/core/amk-authority/*.merged.md'
 
 permissions:
   contents: write
