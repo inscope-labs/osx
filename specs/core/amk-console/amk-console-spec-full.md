@@ -482,3 +482,4 @@ Non-normative list of remaining open questions and notes on the migration from e
 - `RuntimeRegistration`, `RuntimeInclusionRequest` and `ClarificationAnswer` envelopes were removed. Runtime registration and inclusion handling are console workflows; `ClarificationAnswer` is discontinued. CNS-4:11 and CNS-5:1 are marked `RETIRED`.
 - `Genesis` and `TurnReceipt` envelopes were added to the catalogue. Common envelope fields now include `contract_version` and `ttl`.
 - Cross-spec open items are indexed in `specs/core/OPEN-ITEMS.md`.
+TAMPERED
