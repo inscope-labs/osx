@@ -1,0 +1,23 @@
+{
+  "id": "AUT-011",
+  "stage": "S0",
+  "title": "Deploy the empty Worker manually",
+  "description": "Deploy the empty Worker manually.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-010"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "A manual deploy run succeeds and the health route responds",
+    "Run URL recorded as evidence"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

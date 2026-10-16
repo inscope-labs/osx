@@ -1,0 +1,32 @@
+{
+  "id": "AUT-023",
+  "stage": "S2",
+  "title": "Issuance and binding rules",
+  "description": "Issuance and binding rules.",
+  "spec_refs": [
+    "ATA-02:06",
+    "ATA-02:07"
+  ],
+  "depends_on": [
+    "AUT-014",
+    "AUT-020",
+    "AUT-021",
+    "AUT-022"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/issuance/issue.ts"
+  ],
+  "acceptance": [
+    "Issued attestation binds key, role, session handle and epoch",
+    "Signing covers the canonical serialization"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- issue"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

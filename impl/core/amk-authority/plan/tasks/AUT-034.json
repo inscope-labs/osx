@@ -1,0 +1,28 @@
+{
+  "id": "AUT-034",
+  "stage": "S3",
+  "title": "Fail-closed negative suite for the verifier",
+  "description": "Fail-closed negative suite for the verifier.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-028",
+    "AUT-032",
+    "AUT-033"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/test/verifier.negative.test.ts"
+  ],
+  "acceptance": [
+    "Malformed, expired, revoked, mismatched, untrusted and unknown-status cases all reject",
+    "No case is accepted silently"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- verifier.negative"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

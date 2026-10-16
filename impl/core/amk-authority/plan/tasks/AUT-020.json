@@ -1,0 +1,32 @@
+{
+  "id": "AUT-020",
+  "stage": "S2",
+  "title": "Proof-of-possession challenge and response",
+  "description": "Proof-of-possession challenge and response.",
+  "spec_refs": [
+    "ATA-02:03",
+    "DV-ATA-05",
+    "O-ATA-07"
+  ],
+  "depends_on": [
+    "AUT-019",
+    "AUT-014"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/issuance/pop.ts"
+  ],
+  "acceptance": [
+    "Challenge uses DV-ATA-05 length",
+    "Wrong key and replayed responses are rejected",
+    "Challenge format decision from O-ATA-07 recorded"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- pop"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

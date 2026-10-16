@@ -1,0 +1,26 @@
+{
+  "id": "AUT-051",
+  "stage": "S6",
+  "title": "Binding and audit tests",
+  "description": "Binding and audit tests.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-049",
+    "AUT-050"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/test/binding-audit.test.ts"
+  ],
+  "acceptance": [
+    "Binding scope and audit content tests pass"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- binding-audit"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

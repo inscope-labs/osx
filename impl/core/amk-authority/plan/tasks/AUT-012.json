@@ -1,0 +1,29 @@
+{
+  "id": "AUT-012",
+  "stage": "S1",
+  "title": "Attestation type and field validation",
+  "description": "Attestation type and field validation.",
+  "spec_refs": [
+    "ATA-01:01"
+  ],
+  "depends_on": [
+    "AUT-008",
+    "AUT-001"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/attestation/types.ts"
+  ],
+  "acceptance": [
+    "All fields in ATA-01:01 are typed and validated",
+    "Missing, extra and wrongly typed fields are rejected"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- attestation-types"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

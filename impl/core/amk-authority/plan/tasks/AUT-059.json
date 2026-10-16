@@ -1,0 +1,22 @@
+{
+  "id": "AUT-059",
+  "stage": "S8",
+  "title": "Release",
+  "description": "Release.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-058"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Release tagged with deviations and unsupported features documented"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

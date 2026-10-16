@@ -1,0 +1,26 @@
+{
+  "id": "AUT-035",
+  "stage": "S4",
+  "title": "Controller and router stand-in harness",
+  "description": "Controller and router stand-in harness.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-026",
+    "AUT-034"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/test/harness/README.md"
+  ],
+  "acceptance": [
+    "Harness simulates controller and router using only the public verifier and endpoints",
+    "Lives under test/harness"
+  ],
+  "verify": {
+    "method": "files"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

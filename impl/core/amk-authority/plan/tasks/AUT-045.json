@@ -1,0 +1,29 @@
+{
+  "id": "AUT-045",
+  "stage": "S5",
+  "title": "Metadata endpoint",
+  "description": "Metadata endpoint.",
+  "spec_refs": [
+    "O-ATA-08",
+    "ATA-06:05"
+  ],
+  "depends_on": [
+    "AUT-040"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/profiles/metadata.ts"
+  ],
+  "acceptance": [
+    "Algorithms, profile and public key published at a well-known path",
+    "Matches the decision on O-ATA-08"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- metadata"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

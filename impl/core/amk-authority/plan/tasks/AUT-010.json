@@ -1,0 +1,27 @@
+{
+  "id": "AUT-010",
+  "stage": "S0",
+  "title": "Add manual-dispatch workflows for test and deploy",
+  "description": "Add manual-dispatch workflows for test and deploy.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-009"
+  ],
+  "deliverables": [
+    ".github/workflows/amk-authority-ci.yml",
+    ".github/workflows/amk-authority-deploy.yml"
+  ],
+  "acceptance": [
+    "Workflows exist for typecheck/test and deploy, trigger only on workflow_dispatch",
+    "They are separate files that do not touch the Android build workflow",
+    "No secrets are stored in the repository; required secret names are documented"
+  ],
+  "verify": {
+    "method": "files"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

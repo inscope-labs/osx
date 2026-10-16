@@ -1,0 +1,28 @@
+{
+  "id": "AUT-013",
+  "stage": "S1",
+  "title": "Canonical serialization",
+  "description": "Canonical serialization.",
+  "spec_refs": [
+    "ATA-01:02"
+  ],
+  "depends_on": [
+    "AUT-012"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/attestation/canonical.ts"
+  ],
+  "acceptance": [
+    "Output is deterministic and excludes only the signature field",
+    "Matches the chosen standard on published vectors"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- canonical"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

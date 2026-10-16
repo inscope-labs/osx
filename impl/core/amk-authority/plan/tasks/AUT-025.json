@@ -1,0 +1,30 @@
+{
+  "id": "AUT-025",
+  "stage": "S2",
+  "title": "Signing key storage and loading",
+  "description": "Signing key storage and loading.",
+  "spec_refs": [
+    "ATA-00:04"
+  ],
+  "depends_on": [
+    "AUT-014",
+    "AUT-005"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/keys/provider.ts"
+  ],
+  "acceptance": [
+    "Key is read from a Worker secret and referenced by key id",
+    "Key never appears in logs, errors or responses",
+    "Key provider sits behind an interface so the host can change later"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- key-provider"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

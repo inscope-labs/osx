@@ -1,0 +1,25 @@
+{
+  "id": "AUT-018",
+  "stage": "S1",
+  "title": "Run vectors in CI",
+  "description": "Run vectors in CI.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-017",
+    "AUT-010"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Vector runner executes every vector and fails on any mismatch",
+    "Runs via the manual CI workflow"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- vectors"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

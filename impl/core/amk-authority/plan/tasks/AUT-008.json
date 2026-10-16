@@ -1,0 +1,27 @@
+{
+  "id": "AUT-008",
+  "stage": "S0",
+  "title": "Scaffold the TypeScript project",
+  "description": "Scaffold the TypeScript project.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-007"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/package.json",
+    "impl/core/amk-authority/tsconfig.json"
+  ],
+  "acceptance": [
+    "pnpm project with tsconfig, src/, test/, vectors/ exists under impl/core/amk-authority",
+    "No runtime dependencies beyond the Worker platform",
+    "Nothing outside impl/core/amk-authority and its own workflows is touched"
+  ],
+  "verify": {
+    "method": "files"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

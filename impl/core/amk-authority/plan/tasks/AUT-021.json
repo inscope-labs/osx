@@ -1,0 +1,30 @@
+{
+  "id": "AUT-021",
+  "stage": "S2",
+  "title": "Role validation against the declared role list",
+  "description": "Role validation against the declared role list.",
+  "spec_refs": [
+    "ATA-02:04",
+    "O-ATA-02"
+  ],
+  "depends_on": [
+    "AUT-019",
+    "AUT-002"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/issuance/roles.ts"
+  ],
+  "acceptance": [
+    "Roles outside the list are rejected",
+    "Absent list behaves as decided in AUT-002 and fails closed"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- roles"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

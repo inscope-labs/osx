@@ -1,0 +1,29 @@
+{
+  "id": "AUT-042",
+  "stage": "S5",
+  "title": "Implement the non-exportable key provider",
+  "description": "Implement the non-exportable key provider.",
+  "spec_refs": [
+    "ATA-06:03"
+  ],
+  "depends_on": [
+    "AUT-025",
+    "AUT-041"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/keys/standard.ts"
+  ],
+  "acceptance": [
+    "Provider implements the key interface and never exposes private bytes",
+    "Signing works end to end through it"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- key-standard"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

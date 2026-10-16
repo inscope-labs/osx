@@ -1,0 +1,29 @@
+{
+  "id": "AUT-017",
+  "stage": "S1",
+  "title": "Publish test vector set v1",
+  "description": "Publish test vector set v1.",
+  "spec_refs": [
+    "ATA-01:06"
+  ],
+  "depends_on": [
+    "AUT-013",
+    "AUT-014",
+    "AUT-015"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/vectors/v1/README.md"
+  ],
+  "acceptance": [
+    "Language-neutral JSON vectors cover valid, malformed, expired, tampered, wrong-key and unknown-algorithm cases",
+    "A README describes the schema so the Kotlin console can consume them"
+  ],
+  "verify": {
+    "method": "files"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

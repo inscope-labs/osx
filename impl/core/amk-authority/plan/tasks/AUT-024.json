@@ -1,0 +1,29 @@
+{
+  "id": "AUT-024",
+  "stage": "S2",
+  "title": "Enrollment flow for controller and router",
+  "description": "Enrollment flow for controller and router.",
+  "spec_refs": [
+    "O-ATA-05"
+  ],
+  "depends_on": [
+    "AUT-003",
+    "AUT-009"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/issuance/enroll.ts"
+  ],
+  "acceptance": [
+    "Enrollment follows AUT-003",
+    "Unenrolled callers are rejected"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- enroll"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}
