@@ -1,0 +1,30 @@
+{
+  "id": "AUT-056",
+  "stage": "S7",
+  "title": "High conformance suite",
+  "description": "High conformance suite.",
+  "spec_refs": [
+    "ATA-06:04"
+  ],
+  "depends_on": [
+    "AUT-053",
+    "AUT-054",
+    "AUT-055",
+    "AUT-050"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/test/conformance/high.test.ts"
+  ],
+  "acceptance": [
+    "Every High-applicable ATA rule maps to a passing test"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- conformance/high"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

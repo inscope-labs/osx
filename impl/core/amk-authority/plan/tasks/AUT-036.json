@@ -1,0 +1,26 @@
+{
+  "id": "AUT-036",
+  "stage": "S4",
+  "title": "End-to-end integration test",
+  "description": "End-to-end integration test.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-035"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/test/integration.e2e.test.ts"
+  ],
+  "acceptance": [
+    "Enroll, issue, verify, revoke, reject runs green",
+    "Uses the harness only"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- integration.e2e"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

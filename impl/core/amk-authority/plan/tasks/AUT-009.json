@@ -1,0 +1,28 @@
+{
+  "id": "AUT-009",
+  "stage": "S0",
+  "title": "Create the Worker and Authority Durable Object skeleton",
+  "description": "Create the Worker and Authority Durable Object skeleton.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-008"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/wrangler.jsonc",
+    "impl/core/amk-authority/src/index.ts",
+    "impl/core/amk-authority/src/authority-do.ts"
+  ],
+  "acceptance": [
+    "wrangler config, Worker entry and one Authority Durable Object with a health route exist",
+    "Typechecks cleanly"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm typecheck"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

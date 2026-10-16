@@ -1,0 +1,27 @@
+{
+  "id": "AUT-047",
+  "stage": "S6",
+  "title": "Resolve identity binding scope",
+  "description": "Resolve identity binding scope.",
+  "spec_refs": [
+    "ATA-05:04",
+    "O-ATA-03"
+  ],
+  "depends_on": [
+    "AUT-040"
+  ],
+  "deliverables": [
+    "specs/core/amk-authority/05-identity-binding.md"
+  ],
+  "acceptance": [
+    "Per-role or per-session scope decided and merged in the specification"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

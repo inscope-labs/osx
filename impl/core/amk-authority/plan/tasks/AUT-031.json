@@ -1,0 +1,29 @@
+{
+  "id": "AUT-031",
+  "stage": "S3",
+  "title": "Revocation list pull endpoint",
+  "description": "Revocation list pull endpoint.",
+  "spec_refs": [
+    "ATA-04:01",
+    "DV-ATA-06"
+  ],
+  "depends_on": [
+    "AUT-030"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/revocation/endpoint.ts"
+  ],
+  "acceptance": [
+    "List is served with the publication interval DV-ATA-06",
+    "Caching headers match the interval"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- revocation-endpoint"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

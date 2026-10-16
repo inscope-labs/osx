@@ -1,0 +1,25 @@
+{
+  "id": "AUT-052",
+  "stage": "S7",
+  "title": "Decide the High key host and how the High claim is verified",
+  "description": "Decide the High key host and how the High claim is verified.",
+  "spec_refs": [
+    "ATA-06:04"
+  ],
+  "depends_on": [
+    "AUT-046"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Hardware or TEE host chosen",
+    "A way for relying parties to verify the High claim is specified"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "E-ATA-09 (blocking): High is currently a self-declaration."
+}

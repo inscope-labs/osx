@@ -1,0 +1,27 @@
+{
+  "id": "AUT-048",
+  "stage": "S6",
+  "title": "Resolve audit format and retention",
+  "description": "Resolve audit format and retention.",
+  "spec_refs": [
+    "ATA-05:05",
+    "O-ATA-09"
+  ],
+  "depends_on": [
+    "AUT-040"
+  ],
+  "deliverables": [
+    "specs/core/amk-authority/05-identity-binding.md"
+  ],
+  "acceptance": [
+    "Format and retention per profile specified"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "E-ATA-10 (blocking for High): hardware audit is required but its format is undefined."
+}

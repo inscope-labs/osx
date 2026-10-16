@@ -1,0 +1,24 @@
+{
+  "id": "AUT-007",
+  "stage": "S0",
+  "title": "Create AGENTS.md local to impl/core/amk-authority",
+  "description": "Create AGENTS.md local to impl/core/amk-authority.",
+  "spec_refs": [],
+  "depends_on": [],
+  "deliverables": [
+    "impl/core/amk-authority/AGENTS.md"
+  ],
+  "acceptance": [
+    "File exists and states that it is the only instruction file for this directory and overrides the repository-root AGENTS.md",
+    "Contains no Kotlin or Android rules",
+    "Covers language, tests location, branch-per-task, manual-only workflows, spec conflicts reported not patched"
+  ],
+  "verify": {
+    "method": "files"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

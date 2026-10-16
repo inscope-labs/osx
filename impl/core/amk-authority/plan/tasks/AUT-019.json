@@ -1,0 +1,31 @@
+{
+  "id": "AUT-019",
+  "stage": "S2",
+  "title": "Issuance request schema and validation",
+  "description": "Issuance request schema and validation.",
+  "spec_refs": [
+    "ATA-02:01",
+    "ATA-02:02",
+    "DV-ATA-04"
+  ],
+  "depends_on": [
+    "AUT-012",
+    "AUT-002"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/issuance/request.ts"
+  ],
+  "acceptance": [
+    "Request fields are validated and rejected when malformed",
+    "Request freshness uses DV-ATA-04"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- issuance-request"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

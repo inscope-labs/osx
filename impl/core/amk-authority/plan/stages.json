@@ -1,0 +1,67 @@
+{
+  "stages": [
+    {
+      "id": "S0",
+      "title": "Decisions and scaffold",
+      "goal": "Settle the specification decisions that block Basic, and create the project skeleton.",
+      "exit": "All S0 tasks done: blocking Basic decisions recorded in the specification, AGENTS.md local to this directory in place, and an empty Worker deployed manually.",
+      "gate": true
+    },
+    {
+      "id": "S1",
+      "title": "Attestation core",
+      "goal": "Implement the attestation format, canonical serialization, signing, validity and the shared test vectors.",
+      "exit": "Vector set v1 passes in CI, including malformed, expired, tampered and unknown-algorithm cases.",
+      "gate": false
+    },
+    {
+      "id": "S2",
+      "title": "Issuance (Basic)",
+      "goal": "Implement issuance with proof of possession, role validation, replay protection and enrollment.",
+      "exit": "A test client obtains a valid attestation; bad proof of possession, replayed nonces and out-of-list roles are rejected.",
+      "gate": false
+    },
+    {
+      "id": "S3",
+      "title": "Verification and revocation (Basic)",
+      "goal": "Provide the verifier library and the revocation list, failing closed everywhere.",
+      "exit": "The verifier rejects every unverifiable case and revocation takes effect within the published interval.",
+      "gate": false
+    },
+    {
+      "id": "S4",
+      "title": "Integration and Basic conformance",
+      "goal": "Prove the Basic profile end to end against controller and router stand-ins and cut a Basic candidate.",
+      "exit": "Basic conformance suite green, deviations documented, candidate tagged.",
+      "gate": true
+    },
+    {
+      "id": "S5",
+      "title": "Standard profile",
+      "goal": "Add non-exportable keys, real-time revocation, rotation and metadata publication.",
+      "exit": "Standard conformance suite green on the chosen key host.",
+      "gate": false
+    },
+    {
+      "id": "S6",
+      "title": "Identity binding and audit",
+      "goal": "Implement identity binding and the signed audit trail.",
+      "exit": "Binding and audit conformance tests green for the profiles that require them.",
+      "gate": false
+    },
+    {
+      "id": "S7",
+      "title": "High profile",
+      "goal": "Add hardware-backed keys and a verifiable High claim.",
+      "exit": "High conformance suite green, profile claim independently verifiable.",
+      "gate": false
+    },
+    {
+      "id": "S8",
+      "title": "Release hardening",
+      "goal": "Run full conformance per profile, regenerate specifications and release.",
+      "exit": "Release tagged with deviations and unsupported features documented.",
+      "gate": false
+    }
+  ]
+}

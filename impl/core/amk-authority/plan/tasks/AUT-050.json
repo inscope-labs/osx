@@ -1,0 +1,30 @@
+{
+  "id": "AUT-050",
+  "stage": "S6",
+  "title": "Signed audit trail",
+  "description": "Signed audit trail.",
+  "spec_refs": [
+    "ATA-05:05"
+  ],
+  "depends_on": [
+    "AUT-048",
+    "AUT-023",
+    "AUT-030"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/audit/trail.ts"
+  ],
+  "acceptance": [
+    "Issuance, revocation and binding events are recorded and signed",
+    "Records contain no secrets"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- audit"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

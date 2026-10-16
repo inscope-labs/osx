@@ -1,0 +1,29 @@
+{
+  "id": "AUT-053",
+  "stage": "S7",
+  "title": "Implement the hardware-backed key provider",
+  "description": "Implement the hardware-backed key provider.",
+  "spec_refs": [
+    "ATA-06:04"
+  ],
+  "depends_on": [
+    "AUT-052",
+    "AUT-042"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/keys/high.ts"
+  ],
+  "acceptance": [
+    "Provider uses the chosen hardware host",
+    "Keys cannot be exported"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- key-high"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

@@ -1,0 +1,28 @@
+{
+  "id": "AUT-028",
+  "stage": "S3",
+  "title": "Nonce freshness and session context verification",
+  "description": "Nonce freshness and session context verification.",
+  "spec_refs": [
+    "ATA-03:04",
+    "ATA-03:06"
+  ],
+  "depends_on": [
+    "AUT-027"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/verification/session.ts"
+  ],
+  "acceptance": [
+    "Stale or replayed nonces and wrong session context are rejected"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- verifier-session"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

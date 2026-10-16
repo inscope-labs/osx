@@ -1,0 +1,32 @@
+{
+  "id": "AUT-032",
+  "stage": "S3",
+  "title": "Client obligations in the verifier",
+  "description": "Client obligations in the verifier.",
+  "spec_refs": [
+    "ATA-04:03",
+    "ATA-03:05",
+    "DV-ATA-02"
+  ],
+  "depends_on": [
+    "AUT-027",
+    "AUT-029",
+    "AUT-004"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/verification/revocation.ts"
+  ],
+  "acceptance": [
+    "Lists older than R_MAX are rejected",
+    "Unknown revocation status follows AUT-004 and fails closed"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- verifier-revocation"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "E-ATA-06: effective latency can reach R_MAX, longer than the publication interval."
+}

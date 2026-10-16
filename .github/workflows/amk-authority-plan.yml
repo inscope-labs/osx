@@ -1,0 +1,87 @@
+name: amk-authority-plan
+
+# Manual only. Checks, summarizes, verifies or re-renders the amk-authority implementation plan
+# (impl/core/amk-authority/plan). Does not touch the Android build or any other workflow.
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "check = validate plan and confirm PLAN.md is current; status = counts per stage; verify = run one task's verification; render = regenerate PLAN.md and commit it"
+        type: choice
+        required: true
+        default: check
+        options: [check, status, verify, render]
+      task_id:
+        description: "Task ID for action=verify (for example AUT-007)"
+        type: string
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amk-authority-plan-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    env:
+      TOOL: impl/core/amk-authority/plan/plan_tool.py
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node and pnpm (only once the project has a package.json)
+        if: ${{ hashFiles('impl/core/amk-authority/package.json') != '' }}
+        working-directory: impl/core/amk-authority
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile || pnpm install
+
+      - name: Check
+        if: ${{ inputs.action == 'check' }}
+        run: |
+          python3 "$TOOL" check
+          python3 "$TOOL" render --check
+
+      - name: Status
+        if: ${{ inputs.action == 'status' || inputs.action == 'check' }}
+        run: |
+          {
+            echo '### amk-authority plan status'
+            echo '```'
+            python3 "$TOOL" status || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          python3 "$TOOL" status || true
+
+      - name: Verify one task
+        if: ${{ inputs.action == 'verify' }}
+        run: |
+          if [ -z "${{ inputs.task_id }}" ]; then echo "::error::task_id is required for action=verify"; exit 1; fi
+          python3 "$TOOL" verify "${{ inputs.task_id }}"
+
+      - name: Render and commit PLAN.md
+        if: ${{ inputs.action == 'render' }}
+        run: |
+          python3 "$TOOL" check
+          python3 "$TOOL" render
+          if git diff --quiet -- impl/core/amk-authority/PLAN.md; then
+            echo "PLAN.md already up to date"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add impl/core/amk-authority/PLAN.md
+          git commit -q -m "Regenerate amk-authority PLAN.md"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            git fetch -q origin "${GITHUB_REF_NAME}"
+            git rebase -q "origin/${GITHUB_REF_NAME}" || { git rebase --abort || true; break; }
+            sleep $((attempt * 2))
+          done
+          echo "::error::Push failed. If the branch is protected, open a PR with the regenerated file instead."
+          exit 1

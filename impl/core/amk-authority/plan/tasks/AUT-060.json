@@ -1,0 +1,23 @@
+{
+  "id": "AUT-060",
+  "stage": "S8",
+  "title": "Review and close the plan",
+  "description": "Review and close the plan.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-059"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Open and dropped tasks reviewed",
+    "Plan archived or rolled into the next version"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

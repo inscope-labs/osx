@@ -1,0 +1,30 @@
+{
+  "id": "AUT-029",
+  "stage": "S3",
+  "title": "Revocation list structure and signing",
+  "description": "Revocation list structure and signing.",
+  "spec_refs": [
+    "ATA-04:01",
+    "ATA-04:02"
+  ],
+  "depends_on": [
+    "AUT-014",
+    "AUT-004"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/revocation/list.ts"
+  ],
+  "acceptance": [
+    "List is signed, versioned and carries reasons",
+    "Format matches ATA-04:01 and ATA-04:02"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- revocation-list"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

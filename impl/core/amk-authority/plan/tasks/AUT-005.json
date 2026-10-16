@@ -1,0 +1,25 @@
+{
+  "id": "AUT-005",
+  "stage": "S0",
+  "title": "Resolve signing key rotation scope for Basic",
+  "description": "Resolve signing key rotation scope for Basic.",
+  "spec_refs": [
+    "O-ATA-01"
+  ],
+  "depends_on": [],
+  "deliverables": [
+    "specs/core/amk-authority/99-open-items.md"
+  ],
+  "acceptance": [
+    "Basic key handling (single key with key id, or more) is specified",
+    "Full multi-key rotation is explicitly assigned to a later task"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

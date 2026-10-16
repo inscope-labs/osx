@@ -1,0 +1,31 @@
+{
+  "id": "AUT-027",
+  "stage": "S3",
+  "title": "Verifier library",
+  "description": "Verifier library.",
+  "spec_refs": [
+    "ATA-03:01",
+    "ATA-03:02",
+    "ATA-03:03"
+  ],
+  "depends_on": [
+    "AUT-017",
+    "AUT-023"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/verification/index.ts"
+  ],
+  "acceptance": [
+    "Verifier package checks issuer, signature, scope, validity and binding",
+    "Exports a single entry point usable by controller and router"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- verifier"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

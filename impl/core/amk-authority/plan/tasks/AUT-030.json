@@ -1,0 +1,31 @@
+{
+  "id": "AUT-030",
+  "stage": "S3",
+  "title": "Revocation write path in the Durable Object",
+  "description": "Revocation write path in the Durable Object.",
+  "spec_refs": [
+    "ATA-04:01"
+  ],
+  "depends_on": [
+    "AUT-006",
+    "AUT-022",
+    "AUT-029"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/revocation/revoke.ts"
+  ],
+  "acceptance": [
+    "Revocation is serialized in the Authority Durable Object",
+    "Authorization follows AUT-006",
+    "Revoked state survives restart"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- revoke"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

@@ -1,0 +1,29 @@
+{
+  "id": "AUT-014",
+  "stage": "S1",
+  "title": "Signing and verification primitives",
+  "description": "Signing and verification primitives.",
+  "spec_refs": [
+    "ATA-01:05"
+  ],
+  "depends_on": [
+    "AUT-013"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/attestation/signature.ts"
+  ],
+  "acceptance": [
+    "Sign and verify work with the chosen algorithm",
+    "Unknown or unsupported algorithm is rejected",
+    "No private key material is ever logged"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- signature"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

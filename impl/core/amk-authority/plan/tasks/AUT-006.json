@@ -1,0 +1,26 @@
+{
+  "id": "AUT-006",
+  "stage": "S0",
+  "title": "Specify who may request revocation and how they authenticate",
+  "description": "Specify who may request revocation and how they authenticate.",
+  "spec_refs": [
+    "ATA-04:01",
+    "ATA-04:02"
+  ],
+  "depends_on": [],
+  "deliverables": [
+    "specs/core/amk-authority/04-revocation.md"
+  ],
+  "acceptance": [
+    "The revocation authorization model is specified (not defined today)",
+    "Failure behavior for unauthorized revocation requests is specified"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

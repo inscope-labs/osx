@@ -1,0 +1,31 @@
+{
+  "id": "AUT-015",
+  "stage": "S1",
+  "title": "Validity window and grace handling",
+  "description": "Validity window and grace handling.",
+  "spec_refs": [
+    "ATA-01:03",
+    "DV-ATA-01",
+    "DV-ATA-03",
+    "DV-ATA-07"
+  ],
+  "depends_on": [
+    "AUT-012"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/attestation/validity.ts"
+  ],
+  "acceptance": [
+    "Window checks use DV-ATA-01, DV-ATA-03 and DV-ATA-07",
+    "Edges (just inside, just outside, skew) are covered"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- validity"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "E-ATA-07: skew tolerance and grace window overlap; confirm intended maximum."
+}

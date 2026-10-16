@@ -1,0 +1,24 @@
+{
+  "id": "AUT-040",
+  "stage": "S4",
+  "title": "Tag Basic candidate",
+  "description": "Tag Basic candidate.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-038",
+    "AUT-039"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Release notes list deviations and unsupported behavior",
+    "Tag created from a green conformance run"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

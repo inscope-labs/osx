@@ -1,0 +1,28 @@
+{
+  "id": "AUT-026",
+  "stage": "S2",
+  "title": "Issuance endpoint end-to-end test",
+  "description": "Issuance endpoint end-to-end test.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-023",
+    "AUT-024",
+    "AUT-025"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/test/issuance.e2e.test.ts"
+  ],
+  "acceptance": [
+    "A test client completes enroll, challenge, issue",
+    "Negative cases return opaque failures"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- issuance.e2e"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

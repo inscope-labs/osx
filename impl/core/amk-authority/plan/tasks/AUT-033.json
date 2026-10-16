@@ -1,0 +1,27 @@
+{
+  "id": "AUT-033",
+  "stage": "S3",
+  "title": "Router and factory behavior in the verifier",
+  "description": "Router and factory behavior in the verifier.",
+  "spec_refs": [
+    "ATA-03:07"
+  ],
+  "depends_on": [
+    "AUT-027"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/verification/router.ts"
+  ],
+  "acceptance": [
+    "Malformed, expired, mis-scoped and session-inconsistent claims are rejected or isolated"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- verifier-router"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

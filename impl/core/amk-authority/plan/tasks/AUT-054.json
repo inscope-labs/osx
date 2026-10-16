@@ -1,0 +1,27 @@
+{
+  "id": "AUT-054",
+  "stage": "S7",
+  "title": "Remote attestation of the Authority",
+  "description": "Remote attestation of the Authority.",
+  "spec_refs": [
+    "ATA-06:04"
+  ],
+  "depends_on": [
+    "AUT-052"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/profiles/attestation-evidence.ts"
+  ],
+  "acceptance": [
+    "Evidence of the running Authority is published and verifiable"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- attestation-evidence"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

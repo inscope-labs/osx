@@ -1,0 +1,30 @@
+{
+  "id": "AUT-055",
+  "stage": "S7",
+  "title": "Enforce mandatory real-time revocation",
+  "description": "Enforce mandatory real-time revocation.",
+  "spec_refs": [
+    "ATA-04:04",
+    "ATA-06:04"
+  ],
+  "depends_on": [
+    "AUT-043",
+    "AUT-052"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/revocation/high.ts"
+  ],
+  "acceptance": [
+    "High requires and exercises the real-time endpoint",
+    "Clients cannot skip it"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- revocation-high"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

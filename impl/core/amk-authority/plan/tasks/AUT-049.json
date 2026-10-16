@@ -1,0 +1,30 @@
+{
+  "id": "AUT-049",
+  "stage": "S6",
+  "title": "Identity binding process",
+  "description": "Identity binding process.",
+  "spec_refs": [
+    "ATA-05:03",
+    "ATA-05:04"
+  ],
+  "depends_on": [
+    "AUT-047",
+    "AUT-023"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/src/identity/binding.ts"
+  ],
+  "acceptance": [
+    "Binding follows ATA-05:03 and the decided scope",
+    "Disclosure stays minimal"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- binding"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

@@ -1,0 +1,28 @@
+{
+  "id": "AUT-037",
+  "stage": "S4",
+  "title": "Basic conformance suite with rule traceability",
+  "description": "Basic conformance suite with rule traceability.",
+  "spec_refs": [
+    "ATA-06:02"
+  ],
+  "depends_on": [
+    "AUT-036"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/test/conformance/basic.test.ts"
+  ],
+  "acceptance": [
+    "Every Basic-applicable ATA rule maps to at least one test",
+    "Mapping table is generated"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm test -- conformance/basic"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

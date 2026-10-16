@@ -1,0 +1,24 @@
+{
+  "id": "AUT-003",
+  "stage": "S0",
+  "title": "Resolve enrollment of controller and router at first use",
+  "description": "Resolve enrollment of controller and router at first use.",
+  "spec_refs": [
+    "O-ATA-05"
+  ],
+  "depends_on": [],
+  "deliverables": [
+    "specs/core/amk-authority/99-open-items.md"
+  ],
+  "acceptance": [
+    "Enrollment flow, trust anchor pinning and failure behavior are specified"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}
