@@ -12,9 +12,9 @@ case "$MODE" in
   *) echo "::error::Unknown mode: $MODE (expected pr or commit)"; exit 2 ;;
 esac
 NAME="$(basename "$SPEC_DIR")"
-OUT="$SPEC_DIR/$NAME.merged.md"
+OUT="$SPEC_DIR/$NAME-spec-full.md"
 SOURCE_SHA="$(git rev-parse --short HEAD)"
-MESSAGE="Regenerate $NAME.merged.md"
+MESSAGE="Regenerate $NAME-spec-full.md"
 
 git add -- "$OUT"
 if git diff --cached --quiet; then

@@ -61,8 +61,8 @@ jobs:
 
       - name: Merge spec files
         if: steps.dir.outputs.exists == 'true'
-        run: python3 scripts/merge_spec.py --dir "$SPEC_DIR"
+        run: python3 specs/scripts/merge_spec.py --dir "$SPEC_DIR"
 
       - name: Commit or open a pull request
         if: steps.dir.outputs.exists == 'true'
-        run: bash scripts/merge_spec_publish.sh
+        run: bash specs/scripts/merge_spec_publish.sh
