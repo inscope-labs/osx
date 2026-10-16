@@ -642,4 +642,3 @@ No default value is stated in this specification. Each is defined only in the de
 ### Dependencies
 
 This draft depends on, and should be reconciled with, the AMK core review decisions (files 00 to 03). Companion documents needed: `amk-core` specification, a platform implementation profile for the loader, the update profile database specification, and the conformance rule set.
-TAMPERED
