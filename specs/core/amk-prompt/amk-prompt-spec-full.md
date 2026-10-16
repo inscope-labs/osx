@@ -341,4 +341,3 @@ Non-normative list of remaining open questions and notes on the migration from t
 - Console-only operations are explicitly listed as forbidden.
 - HTSM traversal, work-order, runtime-inclusion, and validation conduct are collected in a dedicated module.
 - The document is ready to drive generation of the templated prompt artifact.
-TAMPERED
