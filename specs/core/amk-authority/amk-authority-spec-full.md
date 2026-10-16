@@ -654,4 +654,3 @@ Drafted for 1.2 together with this file: `session-router` (including its `router
 ### Cross-spec items
 
 Cross-spec items that affect this specification are indexed in `specs/core/OPEN-ITEMS.md` (`CORE-O-nn`). Existing `O-ATA-nn` IDs are retained; IDs are never reassigned.
-TAMPERED
