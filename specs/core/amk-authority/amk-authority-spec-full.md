@@ -3,7 +3,7 @@ GENERATED FILE - DO NOT EDIT.
 Merged from the individual spec files in this directory by specs/scripts/merge_spec.py.
 Edit the source files, then re-run the merge-spec workflow.
 Source files (sha256, first 12 hex):
-  amk-authority.md                         da897160f7d7
+  amk-authority.md                         55d77d09fd04
   00-foundations.md                        4df9a0b848d3
   01-attestation-format.md                 59182cd6e02d
   02-issuance.md                           eed2ec83741c
@@ -12,7 +12,7 @@ Source files (sha256, first 12 hex):
   05-identity-binding.md                   914894795be4
   06-profiles.md                           06f52e8d8cd3
   99-open-items.md                         c58db1f2d62f
-Merged content hash: e8d955cac55a
+Merged content hash: 709940d369bb
 -->
 <a id="file-amk-authority"></a>
 
@@ -43,6 +43,21 @@ Merged content hash: e8d955cac55a
 **Review markers.** `[S-xx]` = settled by the operator. `[P-xx]` = provisional; needs confirmation. `[OPEN O-xx]` = undecided; the text is a placeholder. Markers are for review and are removed before release.
 
 **What changed from 1.1.0.** The Attestation Authority is formalized as a standalone component with an exclusive reference scheme (`ATA-<file>:<rule>`). Role attestations replace ad-hoc session tokens for role binding. Three operational profiles (Basic, Standard, High) are defined. The Authority never issues long-term identity certificates to the router; identity binding, when supported, remains internal.
+
+---
+
+## Core Intent
+
+*Informative overview. The normative sections below remain authoritative wherever a requirement is already defined.*
+
+- **Make claims verifiable, not unlimited.** The Authority issues or validates attestations (issuer, subject, claim/role, scope, validity, epoch, key binding, proof of possession) whose meaning is strictly bounded. A valid signature never implies truth or trust beyond that defined meaning.
+- **Attest only; never decide or act.** Attestation, authentication, authorization, and enforcement stay logically distinct, even when co-located. The Authority does not grant permission, execute tasks, run the Host AI, route sessions, or bypass the controller, which alone applies policy and enforces.
+- **No self-minting or elevation.** The Host AI, console, tasks, packages, adapters, and external inputs may carry or request attestations but cannot mint, alter, or escalate them. Authority material never overrides kernel invariants, controller policy, or higher governance.
+- **Fail closed, with explicit validity.** Unverifiable, ambiguous, stale, expired, revoked, malformed, or scope-mismatched attestations are never accepted as current. Outcomes when revocation status is unknown are set by policy (deny, suspend, restrict), never by a permissive fallback, and revocation never rewrites audit history.
+- **Minimal, scoped identity.** Disclose only what verification needs. Keep session, user, agent, and gateway identities distinct, and keep secrets and personal data out of logs.
+- **Platform-independent and conformance-tested.** The contract is independent of any Host AI, OS, or language. Implementations declare algorithms, trust anchors, and failure behavior; optional features cannot weaken mandatory checks; conformance tests cover valid, malformed, expired, revoked, mismatched, and untrusted attestations.
+
+**Essence:** the Authority proves who or what is participating, within bounded and verifiable limits, and leaves every decision about what they may do to the controller.
 
 ---
 
@@ -144,6 +159,37 @@ Definitions in this section are authoritative for this specification.
 - **O-ATA-04** The revocation list distribution mechanism (push, pull, or both).
 - **O-ATA-05** How the Authority is enrolled with the controller or router at first use.
 - **O-ATA-06** Whether the Authority can delegate issuance to sub-authorities.
+
+## Errors, inconsistencies and critical deficiencies (cursory)
+
+*Cursory pass only; a complete scan follows. It drew on this file, `03-verification.md`, `04-revocation.md`, `06-profiles.md` and `99-open-items.md`, with only a partial look at `01-attestation-format.md` and `02-issuance.md`. IDs (`E-ATA-nn`) are provisional. **BLOCKING** means the item must be resolved before this specification can be released at the stated profile; items already tracked as `O-ATA-nn` are not repeated unless their blocking status is itself inconsistent.*
+
+### BASIC
+
+- **E-ATA-01 (BLOCKING):** When no revocation list is available, the client MAY proceed (`ATA-03:05`, `ATA-04:03`). This contradicts Core Intent ("fail closed"; the outcome when revocation status is unknown is set by policy as deny, suspend, or restrict, never a permissive fallback). Decision needed: change Basic to restrict or deny, or define an explicit, bounded Basic exemption and reflect it in Core Intent.
+- **E-ATA-02 (non-blocking):** A stale revocation list is rejected (`R_MAX`), but an absent one is accepted. Under Basic, not publishing a list is therefore more permissive than publishing a late one.
+- **E-ATA-03 (non-blocking):** Nonce tracking may be skipped for "single-use or short-lived" attestations (`ATA-03:04`), but neither term is defined or bounded, so replay protection is undefined at every profile. Affects STANDARD and HIGH as well.
+
+### STANDARD
+
+- **E-ATA-04 (BLOCKING):** Normative level of the revocation list conflicts. `ATA-04:01` says the Authority SHOULD publish one, while `ATA-06:03` and `ATA-06:04` require it and `ATA-04:03` has clients MUST reject without one. `INV-ATA-05` ("checked when available") is weaker still. Also affects HIGH.
+- **E-ATA-05 (BLOCKING):** If the request has no role list, the Authority MAY issue the attestation for any role (`02-issuance.md`, [P-03]), and `INV-ATA-02` applies only "when that list is supplied". This opens a role-elevation path that Core Intent forbids. Depends on `O-ATA-02`. Also affects HIGH.
+- **E-ATA-06 (non-blocking):** Effective revocation latency is unclear. `ATA-04:05` says revocation SHOULD take effect within `RL_INTERVAL` (60 s), but clients may rely on a list up to `R_MAX` (300 s) old. Also affects HIGH.
+- **E-ATA-07 (non-blocking):** Clock-skew tolerance (30 s, `DV-ATA-07`) is added on top of grace window `G` (30 s), so an attestation can be accepted up to about 60 s past epoch end, which conflicts with the intent of `INV-ATA-06`. Also affects HIGH.
+
+### HIGH
+
+- **E-ATA-08 (BLOCKING):** Real-time revocation is "required" in `ATA-06:04` but only "MAY" in `ATA-04:04`, and no client obligation to query the endpoint exists, so the requirement has no verifiable effect.
+- **E-ATA-09 (BLOCKING):** A High claim cannot be verified. Measured boot and remote attestation of the Authority are only SHOULD, and profile discovery depends on `O-ATA-08` (metadata endpoint), yet `ATA-06:05` requires clients to verify that the profile matches their requirements. As written, High is a self-declaration.
+- **E-ATA-10 (BLOCKING):** Hardware-protected audit of issuance is a MUST at High, but its format and retention (`O-ATA-09`) are undefined, and `ATA-99:02` classes `O-ATA-09` as deferrable. The blocking classification is inconsistent with the requirement, and the requirement cannot be conformance-tested.
+
+### ALL PROFILES
+
+- **E-ATA-11 (non-blocking):** This file lists six open items (`O-ATA-01` to `06`) while `99-open-items.md` and `specs/core/OPEN-ITEMS.md` list ten, and the statement that `O-ATA-01` to `05` are blocking (`ATA-99:02`) is absent here. `DV-ATA-07` is also missing from this file's Defaults.
+- **E-ATA-12 (non-blocking):** `ATA-06:07` is used twice (Summary and Peer Profile Rule). Since IDs are never reassigned, this must be fixed before first publication. `RL_INTERVAL` is used in `04-revocation.md` but is neither defined in Terms nor linked to `DV-ATA-06`.
+- **E-ATA-13 (non-blocking):** Several Core Intent points have no normative counterpart in the files checked: implementations declaring trust anchors and failure behavior, conformance test coverage (valid, malformed, expired, revoked, mismatched, untrusted), and revocation never rewriting historical audit records. `amk-test-matrix` is also not yet updated.
+
+---
 
 ## Dependent files
 
