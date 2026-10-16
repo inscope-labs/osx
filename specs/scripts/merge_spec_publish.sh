@@ -28,10 +28,19 @@ git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 case "$MODE" in
   commit)
     git commit -q -m "$MESSAGE"
-    git push origin "HEAD:${BASE_BRANCH}" || {
+    # Other merge-spec runs may push to the same branch at the same time; rebase and retry.
+    pushed=0
+    for attempt in 1 2 3 4 5; do
+      if git push origin "HEAD:${BASE_BRANCH}"; then pushed=1; break; fi
+      echo "Push attempt ${attempt} was rejected; rebasing onto origin/${BASE_BRANCH} and retrying."
+      git fetch -q origin "${BASE_BRANCH}"
+      git rebase -q "origin/${BASE_BRANCH}" || { git rebase --abort || true; break; }
+      sleep $((attempt * 2))
+    done
+    if [ "$pushed" != "1" ]; then
       echo "::error::Push to ${BASE_BRANCH} failed. If the branch is protected, run this workflow with mode=pr."
       exit 1
-    }
+    fi
     echo "Committed $OUT to ${BASE_BRANCH}."
     ;;
   pr)
