@@ -1,44 +1,33 @@
 # 99-open-items.md
 
 **File:** `99-open-items.md`
-**Scope:** Open questions.
+**Scope:** Open questions and their resolutions. This file is the single source for `O-ATA-nn` items and their blocking status.
 **Reference prefix:** `ATA-99`
 
 ---
 
 ## ATA-99:01 Open Items
 
-- **O-ATA-01** Whether the Authority supports multiple simultaneous signing keys for rotation.
-- **O-ATA-02** The exact format of the session's declared role list and how it is communicated to the Authority.
-- **O-ATA-03** Whether identity binding is per-role or per-session.
-- **O-ATA-04** The revocation list distribution mechanism (push, pull, or both).
-- **O-ATA-05** How the Authority is enrolled with the controller at first use.
-- **O-ATA-06** Whether the Authority can delegate issuance to sub-authorities.
-- **O-ATA-07** The exact PoP challenge format and whether it is standardized across profiles.
-- **O-ATA-08** Whether the Authority publishes metadata (algorithms, profile, public key) at a well-known endpoint.
-- **O-ATA-09** The audit format and retention requirements for each profile.
-- **O-ATA-10** Whether the Authority supports batch issuance for multiple roles.
+- **O-ATA-01** Multiple simultaneous signing keys for rotation. RESOLVED: a signed key set with `kid` and key statuses (`ATA-01:07`).
+- **O-ATA-02** Format of the session's declared role list and how it reaches the Authority. RESOLVED: the controller supplies it in the session record (`ATA-02:02`).
+- **O-ATA-03** Whether identity binding is per-role or per-session. RESOLVED: per-session (`ATA-05:04`).
+- **O-ATA-04** Revocation list distribution mechanism. RESOLVED: pull-only by HTTPS GET (`ATA-04:01`).
+- **O-ATA-05** How the Authority is enrolled with the controller at first use. RESOLVED: out-of-band pinning at deployment of the root key (`ATA-01:07`) and the controller identity (`ATA-02:02`); there is no online enrollment handshake.
+- **O-ATA-06** Delegation of issuance to sub-authorities. CLOSED: not supported in this version; the Authority is the sole issuer (`ATA-00:01`).
+- **O-ATA-07** PoP challenge format. RESOLVED: a deterministic signed value, with no challenge round-trip (`ATA-02:03`).
+- **O-ATA-08** Metadata at a well-known endpoint. RESOLVED (`ATA-01:07`).
+- **O-ATA-09** Audit format and retention per profile. RESOLVED (`ATA-06:10`, `DV-ATA-10`).
+- **O-ATA-10** Batch issuance for multiple roles. CLOSED: not supported in this version; one request yields one attestation (`ATA-02:06`).
+- **O-ATA-11** OPEN. The controller-to-Authority interface that carries the session record and revocation requests: channel, authentication of the controller, delivery and error semantics. Cross-spec with `amk-controller`; to be indexed in `specs/core/OPEN-ITEMS.md`.
 
 ## ATA-99:02 Blocking Items
 
-- Items O-ATA-01 through O-ATA-05 are considered blocking for a 1.2.0 release.
-- Items O-ATA-06 through O-ATA-10 may be deferred to a later revision.
+- `O-ATA-11` is blocking for a 1.2.0 release.
+- All other items are resolved or closed.
 
 ## ATA-99:03 Summary
 
-- Open items cover key rotation, role list format, identity binding scope, revocation distribution, enrollment, delegation, PoP standardization, metadata publication, audit, and batch issuance.
-
----
-
-## Defaults
-
-- Grace window `G` (default: end of epoch + 30 seconds) [DV-ATA-01]
-- Maximum revocation list age `R_MAX` (default: 300 seconds) [DV-ATA-02]
-- Attestation maximum validity window (default: epoch duration + G) [DV-ATA-03]
-- Nonce freshness window for issuance (default: 60 seconds) [DV-ATA-04]
-- PoP challenge length (default: 128-bit nonce) [DV-ATA-05]
-- Revocation list publication interval (default: 60 seconds) [DV-ATA-06]
-- Clock skew tolerance (default: 30 seconds) [DV-ATA-07]
+- Ten of eleven open items are resolved or closed. The remaining item is the controller-to-Authority interface for the session record and revocation requests.
 
 ---
 

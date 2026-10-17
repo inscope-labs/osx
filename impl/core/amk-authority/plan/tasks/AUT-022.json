@@ -1,26 +1,26 @@
 {
   "id": "AUT-022",
   "stage": "S2",
-  "title": "Issuance nonce replay protection in the Durable Object",
-  "description": "Issuance nonce replay protection in the Durable Object.",
+  "title": "Request nonce replay protection",
+  "description": "Request nonce replay protection.",
   "spec_refs": [
     "ATA-02:02",
     "DV-ATA-04"
   ],
   "depends_on": [
-    "AUT-009",
+    "AUT-066",
     "AUT-019"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/authority-do.ts"
+    "impl/core/amk-authority/packages/authority/src/issuance/replay.ts"
   ],
   "acceptance": [
-    "A nonce seen within its window is rejected",
-    "State survives Durable Object restart"
+    "A request nonce seen within DV-ATA-04 is rejected atomically via a unique constraint",
+    "State survives Worker and Durable Object restarts"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- replay"
+    "command": "pnpm --filter @amk-authority/authority test -- replay"
   },
   "status": "todo",
   "blocked_by": [],

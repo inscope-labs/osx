@@ -1,0 +1,22 @@
+{
+  "id": "AUT-078",
+  "stage": "S8",
+  "title": "Dashboards",
+  "description": "Dashboards.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-046"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Issuance rate, deny rate by internal reason (never surfaced to callers), revocation list age, real-time query rate and audit chain head are visible"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

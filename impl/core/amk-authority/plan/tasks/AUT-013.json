@@ -1,8 +1,8 @@
 {
   "id": "AUT-013",
   "stage": "S1",
-  "title": "Canonical serialization",
-  "description": "Canonical serialization.",
+  "title": "Canonical serialization (JCS, RFC 8785)",
+  "description": "Canonical serialization (JCS, RFC 8785).",
   "spec_refs": [
     "ATA-01:02"
   ],
@@ -10,15 +10,16 @@
     "AUT-012"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/attestation/canonical.ts"
+    "impl/core/amk-authority/packages/shared-crypto/src/jcs.ts"
   ],
   "acceptance": [
     "Output is deterministic and excludes only the signature field",
-    "Matches the chosen standard on published vectors"
+    "Golden vectors for attestation, issuance request, proof of possession, presentation proof, revocation list and metadata pass",
+    "Node and a Workers isolate produce identical bytes"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- canonical"
+    "command": "pnpm --filter @amk-authority/shared-crypto test -- jcs"
   },
   "status": "todo",
   "blocked_by": [],

@@ -1,0 +1,29 @@
+{
+  "id": "AUT-062",
+  "stage": "S2",
+  "title": "Resolve O-ATA-11: controller-to-Authority interface",
+  "description": "Resolve O-ATA-11: controller-to-Authority interface.",
+  "spec_refs": [
+    "O-ATA-11",
+    "ATA-02:02",
+    "ATA-04:02"
+  ],
+  "depends_on": [
+    "AUT-061"
+  ],
+  "deliverables": [
+    "specs/core/amk-authority/99-open-items.md"
+  ],
+  "acceptance": [
+    "Channel, controller authentication (mTLS RFC 8705 or JWT RFC 7523), delivery and error semantics for the session record and revocation requests are specified in amk-authority and amk-controller",
+    "Item indexed in specs/core/OPEN-ITEMS.md as a CORE item"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "Missing from the imported plan. Blocks session records, epoch bounds, role validation and revocation requests."
+}

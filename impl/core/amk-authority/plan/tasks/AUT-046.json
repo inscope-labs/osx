@@ -1,26 +1,25 @@
 {
   "id": "AUT-046",
-  "stage": "S5",
+  "stage": "S6",
   "title": "Standard conformance suite",
   "description": "Standard conformance suite.",
   "spec_refs": [
     "ATA-06:03"
   ],
   "depends_on": [
-    "AUT-042",
     "AUT-043",
-    "AUT-044",
-    "AUT-045"
+    "AUT-076",
+    "AUT-077"
   ],
   "deliverables": [
-    "impl/core/amk-authority/test/conformance/standard.test.ts"
+    "impl/core/amk-authority/packages/conformance/test/standard.test.ts"
   ],
   "acceptance": [
     "Every Standard-applicable ATA rule maps to a passing test"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- conformance/standard"
+    "command": "pnpm --filter @amk-authority/conformance test -- standard"
   },
   "status": "todo",
   "blocked_by": [],

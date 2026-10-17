@@ -1,26 +1,25 @@
 {
   "id": "AUT-025",
-  "stage": "S2",
-  "title": "Signing key storage and loading",
-  "description": "Signing key storage and loading.",
+  "stage": "S1",
+  "title": "Signer interface and software signer",
+  "description": "Signer interface and software signer.",
   "spec_refs": [
-    "ATA-00:04"
+    "ATA-01:05",
+    "ATA-06:02"
   ],
   "depends_on": [
-    "AUT-014",
-    "AUT-005"
+    "AUT-014"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/keys/provider.ts"
+    "impl/core/amk-authority/packages/shared-crypto/src/signer.ts"
   ],
   "acceptance": [
-    "Key is read from a Worker secret and referenced by key id",
-    "Key never appears in logs, errors or responses",
-    "Key provider sits behind an interface so the host can change later"
+    "Signer interface offers sign and verify by kid",
+    "SoftwareSigner (Ed25519, Web Crypto) loads its key from a Worker secret, never logs it, and is allowed only under Basic"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- key-provider"
+    "command": "pnpm --filter @amk-authority/shared-crypto test -- signer"
   },
   "status": "todo",
   "blocked_by": [],

@@ -1,0 +1,22 @@
+{
+  "id": "AUT-085",
+  "stage": "S9",
+  "title": "Versioning",
+  "description": "Versioning.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-057"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Authority and SDK use semver and metadata_version continuity is documented against the spec version"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

@@ -1,29 +1,32 @@
 {
   "id": "AUT-024",
   "stage": "S2",
-  "title": "Enrollment flow for controller and router",
-  "description": "Enrollment flow for controller and router.",
+  "title": "Controller identity pinning and session record intake",
+  "description": "Controller identity pinning and session record intake.",
   "spec_refs": [
+    "ATA-02:02",
     "O-ATA-05"
   ],
   "depends_on": [
-    "AUT-003",
-    "AUT-009"
+    "AUT-062",
+    "AUT-066",
+    "AUT-068"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/issuance/enroll.ts"
+    "impl/core/amk-authority/packages/authority/src/session-record.ts"
   ],
   "acceptance": [
-    "Enrollment follows AUT-003",
-    "Unenrolled callers are rejected"
+    "The controller identity is pinned out of band; no online enrollment handshake exists",
+    "Records are accepted only from that identity, and are immutable per (session_handle, epoch)",
+    "declared_roles are unique, non-empty UTF-8 strings of at most 256 bytes"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- enroll"
+    "command": "pnpm --filter @amk-authority/authority test -- session-record"
   },
   "status": "todo",
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "Replaces enrollment with the router. Router and factory no longer exist in the spec."
 }

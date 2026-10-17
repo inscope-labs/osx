@@ -3,22 +3,18 @@
   "stage": "S0",
   "title": "Resolve enrollment of controller and router at first use",
   "description": "Resolve enrollment of controller and router at first use.",
-  "spec_refs": [
-    "O-ATA-05"
-  ],
+  "spec_refs": [],
   "depends_on": [],
-  "deliverables": [
-    "specs/core/amk-authority/99-open-items.md"
-  ],
+  "deliverables": [],
   "acceptance": [
     "Enrollment flow, trust anchor pinning and failure behavior are specified"
   ],
   "verify": {
     "method": "manual"
   },
-  "status": "todo",
+  "status": "dropped",
   "blocked_by": [],
   "evidence": {},
-  "dropped_reason": "",
+  "dropped_reason": "Resolved: out-of-band pinning, no enrollment handshake (O-ATA-05); landing tracked by AUT-061.",
   "findings": ""
 }

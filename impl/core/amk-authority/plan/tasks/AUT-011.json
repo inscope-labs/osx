@@ -5,7 +5,8 @@
   "description": "Deploy the empty Worker manually.",
   "spec_refs": [],
   "depends_on": [
-    "AUT-010"
+    "AUT-010",
+    "AUT-061"
   ],
   "deliverables": [],
   "acceptance": [

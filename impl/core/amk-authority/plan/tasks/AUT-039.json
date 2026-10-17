@@ -1,20 +1,20 @@
 {
   "id": "AUT-039",
-  "stage": "S4",
-  "title": "Declare Basic profile metadata",
-  "description": "Declare Basic profile metadata.",
+  "stage": "S5",
+  "title": "Basic profile metadata",
+  "description": "Basic profile metadata.",
   "spec_refs": [
-    "ATA-06:05"
+    "ATA-06:05",
+    "ATA-06:09"
   ],
   "depends_on": [
     "AUT-037"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/profiles/basic.ts"
+    "impl/core/amk-authority/packages/authority/src/profiles/basic.ts"
   ],
   "acceptance": [
-    "Authority declares its profile as ATA-06:05 requires",
-    "Unsupported features are listed"
+    "Metadata publishes profile basic and the unsupported-feature list"
   ],
   "verify": {
     "method": "files"

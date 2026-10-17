@@ -3,15 +3,9 @@
   "stage": "S0",
   "title": "Resolve revocation distribution and unknown-status behavior for Basic",
   "description": "Resolve revocation distribution and unknown-status behavior for Basic.",
-  "spec_refs": [
-    "ATA-04:01",
-    "ATA-03:05",
-    "O-ATA-04"
-  ],
+  "spec_refs": [],
   "depends_on": [],
-  "deliverables": [
-    "specs/core/amk-authority/04-revocation.md"
-  ],
+  "deliverables": [],
   "acceptance": [
     "Distribution mechanism for Basic is chosen",
     "Behavior when revocation status is unknown is deny, suspend or restrict, never proceed"
@@ -19,9 +13,9 @@
   "verify": {
     "method": "manual"
   },
-  "status": "todo",
+  "status": "dropped",
   "blocked_by": [],
   "evidence": {},
-  "dropped_reason": "",
-  "findings": "E-ATA-01 (blocking): Basic currently lets clients proceed without a revocation list."
+  "dropped_reason": "Resolved: pull-only list, fail closed under every profile (ATA-04:01, ATA-04:03); landing tracked by AUT-061.",
+  "findings": ""
 }

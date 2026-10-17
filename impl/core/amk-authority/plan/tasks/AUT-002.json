@@ -3,14 +3,9 @@
   "stage": "S0",
   "title": "Resolve role list format and how it reaches the Authority",
   "description": "Resolve role list format and how it reaches the Authority.",
-  "spec_refs": [
-    "ATA-02:04",
-    "O-ATA-02"
-  ],
+  "spec_refs": [],
   "depends_on": [],
-  "deliverables": [
-    "specs/core/amk-authority/02-issuance.md"
-  ],
+  "deliverables": [],
   "acceptance": [
     "Format of the declared role list and its delivery to the Authority are specified",
     "Behavior when no role list is supplied is specified and fails closed"
@@ -18,9 +13,9 @@
   "verify": {
     "method": "manual"
   },
-  "status": "todo",
+  "status": "dropped",
   "blocked_by": [],
   "evidence": {},
-  "dropped_reason": "",
-  "findings": "E-ATA-05 (blocking): absent role list currently permits any role."
+  "dropped_reason": "Resolved: role list comes from the controller's session record (ATA-02:02); landing tracked by AUT-061.",
+  "findings": ""
 }

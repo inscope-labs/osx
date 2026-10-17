@@ -1,11 +1,14 @@
 {
   "id": "AUT-059",
-  "stage": "S8",
+  "stage": "S9",
   "title": "Release",
   "description": "Release.",
   "spec_refs": [],
   "depends_on": [
-    "AUT-058"
+    "AUT-058",
+    "AUT-086",
+    "AUT-087",
+    "AUT-088"
   ],
   "deliverables": [],
   "acceptance": [

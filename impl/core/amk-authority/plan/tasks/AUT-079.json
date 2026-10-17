@@ -1,0 +1,22 @@
+{
+  "id": "AUT-079",
+  "stage": "S8",
+  "title": "Alerts",
+  "description": "Alerts.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-078"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Alerts fire for revocation list age above R_MAX, metadata cache-miss surge, PoP failure spike and audit chain break"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

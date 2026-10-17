@@ -1,30 +1,30 @@
 {
   "id": "AUT-050",
-  "stage": "S6",
-  "title": "Signed audit trail",
-  "description": "Signed audit trail.",
+  "stage": "S7",
+  "title": "Audit coverage and checkpoints",
+  "description": "Audit coverage and checkpoints.",
   "spec_refs": [
-    "ATA-05:05"
+    "ATA-05:05",
+    "ATA-06:10"
   ],
   "depends_on": [
-    "AUT-048",
-    "AUT-023",
-    "AUT-030"
+    "AUT-068",
+    "AUT-049"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/audit/trail.ts"
+    "impl/core/amk-authority/packages/authority/src/audit-checkpoint.ts"
   ],
   "acceptance": [
-    "Issuance, revocation and binding events are recorded and signed",
-    "Records contain no secrets"
+    "Binding, key status, metadata publication and rejection events are audited",
+    "Periodic signed checkpoints are archived to R2"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- audit"
+    "command": "pnpm --filter @amk-authority/authority test -- audit-checkpoint"
   },
   "status": "todo",
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "Correction: imported plan listed ATA-06:04 here. Hardware audit is a High requirement and out of scope."
 }

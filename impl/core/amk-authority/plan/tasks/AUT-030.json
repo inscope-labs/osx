@@ -1,27 +1,28 @@
 {
   "id": "AUT-030",
-  "stage": "S3",
-  "title": "Revocation write path in the Durable Object",
-  "description": "Revocation write path in the Durable Object.",
+  "stage": "S4",
+  "title": "Revocation request path",
+  "description": "Revocation request path.",
   "spec_refs": [
-    "ATA-04:01"
+    "ATA-04:02",
+    "ATA-06:10"
   ],
   "depends_on": [
-    "AUT-006",
-    "AUT-022",
-    "AUT-029"
+    "AUT-062",
+    "AUT-029",
+    "AUT-068"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/revocation/revoke.ts"
+    "impl/core/amk-authority/packages/authority/src/revocation/revoke.ts"
   ],
   "acceptance": [
-    "Revocation is serialized in the Authority Durable Object",
-    "Authorization follows AUT-006",
-    "Revoked state survives restart"
+    "POST /v1/revocations accepts only the controller or the operator over an authenticated channel",
+    "Requests from session participants are rejected",
+    "Every revocation writes an audit record and never alters earlier records"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- revoke"
+    "command": "pnpm --filter @amk-authority/authority test -- revoke"
   },
   "status": "todo",
   "blocked_by": [],

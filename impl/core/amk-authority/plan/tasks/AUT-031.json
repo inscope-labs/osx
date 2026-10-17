@@ -1,8 +1,8 @@
 {
   "id": "AUT-031",
-  "stage": "S3",
-  "title": "Revocation list pull endpoint",
-  "description": "Revocation list pull endpoint.",
+  "stage": "S4",
+  "title": "Revocation list publication",
+  "description": "Revocation list publication.",
   "spec_refs": [
     "ATA-04:01",
     "DV-ATA-06"
@@ -11,19 +11,20 @@
     "AUT-030"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/revocation/endpoint.ts"
+    "impl/core/amk-authority/packages/authority/src/revocation/publish.ts"
   ],
   "acceptance": [
-    "List is served with the publication interval DV-ATA-06",
-    "Caching headers match the interval"
+    "List is republished with a new published_at at least every RL_INTERVAL even when unchanged, scheduled by a Durable Object alarm",
+    "Version increases whenever contents change; entries expire after the revoked attestation's valid_to",
+    "Served from R2 behind the cache"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- revocation-endpoint"
+    "command": "pnpm --filter @amk-authority/authority test -- revocation-publish"
   },
   "status": "todo",
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "Correction: Cron Triggers run no more often than once a minute, so they can miss a strict 60 s interval; use Durable Object alarms."
 }

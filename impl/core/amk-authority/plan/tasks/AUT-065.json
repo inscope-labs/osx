@@ -1,0 +1,31 @@
+{
+  "id": "AUT-065",
+  "stage": "S1",
+  "title": "D1 migrations for the data model",
+  "description": "D1 migrations for the data model.",
+  "spec_refs": [
+    "ATA-01:01",
+    "ATA-02:02",
+    "INV-ATA-03"
+  ],
+  "depends_on": [
+    "AUT-064"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/authority/migrations/0001_init.sql"
+  ],
+  "acceptance": [
+    "Tables exist for attestations, revocations, request_nonces, session_records, identity_bindings, signing_keys and audit_events",
+    "Columns match ATA-01:01; no column holds long-term identity or personal data",
+    "There is no attestation_nonces table: the attestation nonce is not a replay token",
+    "Migrations are idempotent"
+  ],
+  "verify": {
+    "method": "files"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "Imported schema had attestation_nonces for client replay guards. The spec now uses verifier nonces (ATA-03:04) and request nonces at issuance, and adds session_records."
+}

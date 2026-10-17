@@ -1,0 +1,22 @@
+{
+  "id": "AUT-082",
+  "stage": "S8",
+  "title": "Threat model",
+  "description": "Threat model.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-046"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Covers elevation, replay, revocation list withholding, opaque-error leakage and personal data in logs"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

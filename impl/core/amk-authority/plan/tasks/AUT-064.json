@@ -1,0 +1,25 @@
+{
+  "id": "AUT-064",
+  "stage": "S0",
+  "title": "Configure Wrangler bindings for D1, R2, KV and the Durable Object",
+  "description": "Configure Wrangler bindings for D1, R2, KV and the Durable Object.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-009"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/authority/wrangler.jsonc"
+  ],
+  "acceptance": [
+    "wrangler.jsonc declares D1, R2, KV and Durable Object bindings by name only",
+    "No secrets in the repository; required secret names are documented in the README"
+  ],
+  "verify": {
+    "method": "files"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

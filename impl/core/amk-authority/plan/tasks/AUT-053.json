@@ -1,8 +1,8 @@
 {
   "id": "AUT-053",
-  "stage": "S7",
-  "title": "Implement the hardware-backed key provider",
-  "description": "Implement the hardware-backed key provider.",
+  "stage": "S10",
+  "title": "Hardware-backed key provider",
+  "description": "Hardware-backed key provider.",
   "spec_refs": [
     "ATA-06:04"
   ],
@@ -10,19 +10,17 @@
     "AUT-052",
     "AUT-042"
   ],
-  "deliverables": [
-    "impl/core/amk-authority/src/keys/high.ts"
-  ],
+  "deliverables": [],
   "acceptance": [
-    "Provider uses the chosen hardware host",
-    "Keys cannot be exported"
+    "Provider uses the chosen host and keys cannot be exported"
   ],
   "verify": {
-    "method": "command",
-    "command": "pnpm test -- key-high"
+    "method": "manual"
   },
-  "status": "todo",
-  "blocked_by": [],
+  "status": "blocked",
+  "blocked_by": [
+    "Scope decision: High is out of scope on the Cloudflare stack (see AUT-087)"
+  ],
   "evidence": {},
   "dropped_reason": "",
   "findings": ""

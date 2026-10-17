@@ -1,6 +1,6 @@
 {
   "id": "AUT-051",
-  "stage": "S6",
+  "stage": "S7",
   "title": "Binding and audit tests",
   "description": "Binding and audit tests.",
   "spec_refs": [],
@@ -9,14 +9,14 @@
     "AUT-050"
   ],
   "deliverables": [
-    "impl/core/amk-authority/test/binding-audit.test.ts"
+    "impl/core/amk-authority/packages/conformance/test/binding-audit.test.ts"
   ],
   "acceptance": [
-    "Binding scope and audit content tests pass"
+    "No identity, key or proof material appears in any audit record or log"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- binding-audit"
+    "command": "pnpm --filter @amk-authority/conformance test -- binding-audit"
   },
   "status": "todo",
   "blocked_by": [],

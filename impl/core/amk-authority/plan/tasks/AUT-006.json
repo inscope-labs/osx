@@ -3,14 +3,9 @@
   "stage": "S0",
   "title": "Specify who may request revocation and how they authenticate",
   "description": "Specify who may request revocation and how they authenticate.",
-  "spec_refs": [
-    "ATA-04:01",
-    "ATA-04:02"
-  ],
+  "spec_refs": [],
   "depends_on": [],
-  "deliverables": [
-    "specs/core/amk-authority/04-revocation.md"
-  ],
+  "deliverables": [],
   "acceptance": [
     "The revocation authorization model is specified (not defined today)",
     "Failure behavior for unauthorized revocation requests is specified"
@@ -18,9 +13,9 @@
   "verify": {
     "method": "manual"
   },
-  "status": "todo",
+  "status": "dropped",
   "blocked_by": [],
   "evidence": {},
-  "dropped_reason": "",
+  "dropped_reason": "Resolved: revocation requests only from controller or operator (ATA-04:02); landing tracked by AUT-061.",
   "findings": ""
 }

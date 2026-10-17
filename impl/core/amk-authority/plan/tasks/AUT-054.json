@@ -1,26 +1,26 @@
 {
   "id": "AUT-054",
-  "stage": "S7",
-  "title": "Remote attestation of the Authority",
-  "description": "Remote attestation of the Authority.",
+  "stage": "S10",
+  "title": "Publish attestation evidence",
+  "description": "Publish attestation evidence.",
   "spec_refs": [
-    "ATA-06:04"
+    "ATA-06:04",
+    "ATA-06:05"
   ],
   "depends_on": [
     "AUT-052"
   ],
-  "deliverables": [
-    "impl/core/amk-authority/src/profiles/attestation-evidence.ts"
-  ],
+  "deliverables": [],
   "acceptance": [
-    "Evidence of the running Authority is published and verifiable"
+    "Metadata evidence is an EAT (RFC 9711) under RATS (RFC 9334) and verifies"
   ],
   "verify": {
-    "method": "command",
-    "command": "pnpm test -- attestation-evidence"
+    "method": "manual"
   },
-  "status": "todo",
-  "blocked_by": [],
+  "status": "blocked",
+  "blocked_by": [
+    "Scope decision: High is out of scope on the Cloudflare stack (see AUT-087)"
+  ],
   "evidence": {},
   "dropped_reason": "",
   "findings": ""

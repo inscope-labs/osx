@@ -1,0 +1,31 @@
+{
+  "id": "AUT-068",
+  "stage": "S1",
+  "title": "Audit writer with hash chain and redaction",
+  "description": "Audit writer with hash chain and redaction.",
+  "spec_refs": [
+    "ATA-06:10",
+    "INV-ATA-03"
+  ],
+  "depends_on": [
+    "AUT-065",
+    "AUT-013"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/authority/src/audit.ts"
+  ],
+  "acceptance": [
+    "Records follow ATA-06:10 (JSON Lines, SHA-256 hash chain, defined event types)",
+    "Redaction is enforced at write time: no keys, proof material, long-term identity or personal data",
+    "Chain head is serialized in the Durable Object"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm --filter @amk-authority/authority test -- audit"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "Correction: imported plan built the audit chain in phase 5 but required every write to be audited from phase 2."
+}

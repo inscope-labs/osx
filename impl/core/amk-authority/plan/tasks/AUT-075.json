@@ -1,0 +1,31 @@
+{
+  "id": "AUT-075",
+  "stage": "S5",
+  "title": "Retention jobs",
+  "description": "Retention jobs.",
+  "spec_refs": [
+    "DV-ATA-10",
+    "DV-ATA-04",
+    "ATA-06:10"
+  ],
+  "depends_on": [
+    "AUT-031",
+    "AUT-068"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/authority/src/retention.ts"
+  ],
+  "acceptance": [
+    "Request nonces, session records, expired revocation entries and audit records are removed or archived per DV-ATA-04, epoch end plus G and DV-ATA-10",
+    "R2 archival keeps the audit chain verifiable"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm --filter @amk-authority/authority test -- retention"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "Correction: imported plan tied retention to DV-ATA-03 and DV-ATA-07, which are the validity window and clock skew."
+}

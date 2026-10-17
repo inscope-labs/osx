@@ -1,0 +1,29 @@
+{
+  "id": "AUT-069",
+  "stage": "S2",
+  "title": "Opaque error mapping with correlation ID",
+  "description": "Opaque error mapping with correlation ID.",
+  "spec_refs": [
+    "INV-ATA-04",
+    "ATA-02:02"
+  ],
+  "depends_on": [
+    "AUT-019"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/authority/src/errors.ts"
+  ],
+  "acceptance": [
+    "Every denial returns one response shape with a correlation ID and no cause",
+    "Internal reasons reach logs only, redacted"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm --filter @amk-authority/authority test -- errors"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

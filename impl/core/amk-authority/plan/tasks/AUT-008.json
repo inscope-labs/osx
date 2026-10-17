@@ -1,20 +1,24 @@
 {
   "id": "AUT-008",
   "stage": "S0",
-  "title": "Scaffold the TypeScript project",
-  "description": "Scaffold the TypeScript project.",
+  "title": "Scaffold the pnpm workspace with four packages",
+  "description": "Scaffold the pnpm workspace with four packages.",
   "spec_refs": [],
   "depends_on": [
     "AUT-007"
   ],
   "deliverables": [
     "impl/core/amk-authority/package.json",
-    "impl/core/amk-authority/tsconfig.json"
+    "impl/core/amk-authority/pnpm-workspace.yaml",
+    "impl/core/amk-authority/packages/authority/package.json",
+    "impl/core/amk-authority/packages/client-sdk/package.json",
+    "impl/core/amk-authority/packages/shared-crypto/package.json",
+    "impl/core/amk-authority/packages/conformance/package.json"
   ],
   "acceptance": [
-    "pnpm project with tsconfig, src/, test/, vectors/ exists under impl/core/amk-authority",
-    "No runtime dependencies beyond the Worker platform",
-    "Nothing outside impl/core/amk-authority and its own workflows is touched"
+    "Workspace has packages/authority, packages/client-sdk, packages/shared-crypto and packages/conformance under impl/core/amk-authority",
+    "No file outside impl/core/amk-authority and its own workflows is touched",
+    "No runtime dependencies beyond the platform and the declared tooling"
   ],
   "verify": {
     "method": "files"
@@ -23,5 +27,5 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "Imported plan placed packages at a monorepo root. They must live inside this directory because the repository root belongs to the Android app."
 }

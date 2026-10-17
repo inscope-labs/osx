@@ -1,0 +1,31 @@
+{
+  "id": "AUT-077",
+  "stage": "S6",
+  "title": "Profile enforcement and startup assertions",
+  "description": "Profile enforcement and startup assertions.",
+  "spec_refs": [
+    "ATA-06:03",
+    "ATA-06:05"
+  ],
+  "depends_on": [
+    "AUT-042",
+    "AUT-045"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/authority/src/profiles/standard.ts"
+  ],
+  "acceptance": [
+    "Standard refuses to start with the software signer",
+    "Metadata advertises the actual profile and never High without verified evidence",
+    "The isolation approach for Standard is documented"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm --filter @amk-authority/authority test -- profile-enforcement"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

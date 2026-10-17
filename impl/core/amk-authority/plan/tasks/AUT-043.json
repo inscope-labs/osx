@@ -1,30 +1,31 @@
 {
   "id": "AUT-043",
-  "stage": "S5",
+  "stage": "S6",
   "title": "Real-time revocation endpoint",
   "description": "Real-time revocation endpoint.",
   "spec_refs": [
     "ATA-04:04",
-    "ATA-04:05"
+    "DV-ATA-09"
   ],
   "depends_on": [
     "AUT-031",
-    "AUT-040"
+    "AUT-042"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/revocation/realtime.ts"
+    "impl/core/amk-authority/packages/authority/src/revocation/status.ts"
   ],
   "acceptance": [
-    "Endpoint reflects revocation without waiting for the list interval",
-    "Clients' obligation to query it is specified"
+    "Query by attestation nonce returns a signed response with nonce, status, checked_at and kid",
+    "Clients ignore responses older than DV-ATA-09",
+    "Endpoint is authenticated or rate-limited"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- revocation-realtime"
+    "command": "pnpm --filter @amk-authority/authority test -- revocation-status"
   },
   "status": "todo",
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": "E-ATA-04 and E-ATA-08: normative level of revocation conflicts between files."
+  "findings": "Correction: imported endpoint was GET by id with no signed response. The spec's response must be signed and fresh."
 }

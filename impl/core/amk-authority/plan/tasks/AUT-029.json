@@ -1,30 +1,29 @@
 {
   "id": "AUT-029",
-  "stage": "S3",
+  "stage": "S4",
   "title": "Revocation list structure and signing",
   "description": "Revocation list structure and signing.",
   "spec_refs": [
-    "ATA-04:01",
-    "ATA-04:02"
+    "ATA-04:01"
   ],
   "depends_on": [
     "AUT-014",
-    "AUT-004"
+    "AUT-045"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/revocation/list.ts"
+    "impl/core/amk-authority/packages/authority/src/revocation/list.ts"
   ],
   "acceptance": [
-    "List is signed, versioned and carries reasons",
-    "Format matches ATA-04:01 and ATA-04:02"
+    "List holds issuer, kid, version, published_at and revoked entries of nonce, revoked_at and optional reason",
+    "Signed with an active metadata key; no dedicated revocation key"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- revocation-list"
+    "command": "pnpm --filter @amk-authority/authority test -- revocation-list"
   },
   "status": "todo",
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "Correction: imported list identified entries by attestation_id; the spec uses the attestation nonce."
 }

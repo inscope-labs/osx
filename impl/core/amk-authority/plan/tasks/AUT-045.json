@@ -1,29 +1,32 @@
 {
   "id": "AUT-045",
-  "stage": "S5",
-  "title": "Metadata endpoint",
-  "description": "Metadata endpoint.",
+  "stage": "S1",
+  "title": "Signed metadata document and endpoint",
+  "description": "Signed metadata document and endpoint.",
   "spec_refs": [
-    "O-ATA-08",
-    "ATA-06:05"
+    "ATA-01:07",
+    "DV-ATA-08",
+    "O-ATA-08"
   ],
   "depends_on": [
-    "AUT-040"
+    "AUT-025",
+    "AUT-064"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/profiles/metadata.ts"
+    "impl/core/amk-authority/packages/authority/src/metadata.ts"
   ],
   "acceptance": [
-    "Algorithms, profile and public key published at a well-known path",
-    "Matches the decision on O-ATA-08"
+    "GET /.well-known/amk-authority serves metadata with issuer, metadata_version, published_at, profile, root_kid, signing_keys, revocation_list_url and signature",
+    "Signed by the root key only; Cache-Control max-age does not exceed DV-ATA-08",
+    "Published through R2 with a KV mirror"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- metadata"
+    "command": "pnpm --filter @amk-authority/authority test -- metadata"
   },
   "status": "todo",
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "Corrections: path is /.well-known/amk-authority (not /metadata); cache default is 300 s (not 3600 s); field names are revocation_list_url and revocation_status_url; the root key signs metadata only."
 }

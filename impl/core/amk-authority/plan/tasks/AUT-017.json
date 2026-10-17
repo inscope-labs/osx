@@ -12,11 +12,11 @@
     "AUT-015"
   ],
   "deliverables": [
-    "impl/core/amk-authority/vectors/v1/README.md"
+    "impl/core/amk-authority/packages/conformance/vectors/v1/README.md"
   ],
   "acceptance": [
-    "Language-neutral JSON vectors cover valid, malformed, expired, tampered, wrong-key and unknown-algorithm cases",
-    "A README describes the schema so the Kotlin console can consume them"
+    "Language-neutral JSON vectors cover valid, malformed, expired, tampered, wrong-key, unknown-kid and unknown-algorithm cases",
+    "A README describes the schema so the Kotlin console can consume the vectors"
   ],
   "verify": {
     "method": "files"

@@ -1,0 +1,26 @@
+{
+  "id": "AUT-063",
+  "stage": "S0",
+  "title": "Configure the toolchain",
+  "description": "Configure the toolchain.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-008"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/tsconfig.base.json"
+  ],
+  "acceptance": [
+    "Node 20, TypeScript, ESLint and Vitest with @cloudflare/vitest-pool-workers are configured",
+    "typecheck, lint and test scripts run in every package"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm -r typecheck"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

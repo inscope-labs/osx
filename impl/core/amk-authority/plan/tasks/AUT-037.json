@@ -1,24 +1,25 @@
 {
   "id": "AUT-037",
-  "stage": "S4",
+  "stage": "S5",
   "title": "Basic conformance suite with rule traceability",
   "description": "Basic conformance suite with rule traceability.",
   "spec_refs": [
-    "ATA-06:02"
+    "ATA-06:09"
   ],
   "depends_on": [
     "AUT-036"
   ],
   "deliverables": [
-    "impl/core/amk-authority/test/conformance/basic.test.ts"
+    "impl/core/amk-authority/packages/conformance/test/basic.test.ts"
   ],
   "acceptance": [
     "Every Basic-applicable ATA rule maps to at least one test",
+    "Vectors include role outside session record, missing session record, epoch-window violation, revoked key, replayed verifier nonce, kid mismatch and untrusted issuer",
     "Mapping table is generated"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- conformance/basic"
+    "command": "pnpm --filter @amk-authority/conformance test -- basic"
   },
   "status": "todo",
   "blocked_by": [],

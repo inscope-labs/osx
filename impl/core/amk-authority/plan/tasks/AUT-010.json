@@ -5,16 +5,16 @@
   "description": "Add manual-dispatch workflows for test and deploy.",
   "spec_refs": [],
   "depends_on": [
-    "AUT-009"
+    "AUT-063",
+    "AUT-064"
   ],
   "deliverables": [
     ".github/workflows/amk-authority-ci.yml",
     ".github/workflows/amk-authority-deploy.yml"
   ],
   "acceptance": [
-    "Workflows exist for typecheck/test and deploy, trigger only on workflow_dispatch",
-    "They are separate files that do not touch the Android build workflow",
-    "No secrets are stored in the repository; required secret names are documented"
+    "Workflows exist for typecheck/test and deploy and trigger only on workflow_dispatch",
+    "They are separate files that do not touch the Android build workflow"
   ],
   "verify": {
     "method": "files"
@@ -23,5 +23,5 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "Imported plan implied automatic CI. Kept manual-only, consistent with the other merge and plan workflows."
 }

@@ -1,0 +1,27 @@
+{
+  "id": "AUT-074",
+  "stage": "S3",
+  "title": "Controller integration contract and failure-log hook",
+  "description": "Controller integration contract and failure-log hook.",
+  "spec_refs": [
+    "ATA-03:07"
+  ],
+  "depends_on": [
+    "AUT-027"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/client-sdk/README.md"
+  ],
+  "acceptance": [
+    "Document the call site the controller uses; verdict is an input to policy only",
+    "Failure log hook redacts secrets and personal data"
+  ],
+  "verify": {
+    "method": "files"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

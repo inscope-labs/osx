@@ -1,0 +1,32 @@
+{
+  "id": "AUT-071",
+  "stage": "S3",
+  "title": "SDK metadata resolver",
+  "description": "SDK metadata resolver.",
+  "spec_refs": [
+    "ATA-01:07",
+    "ATA-03:02",
+    "DV-ATA-08"
+  ],
+  "depends_on": [
+    "AUT-017",
+    "AUT-045"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/client-sdk/src/metadata.ts"
+  ],
+  "acceptance": [
+    "Verifies the root signature and rejects a lower metadata_version",
+    "Caches no longer than DV-ATA-08 and rejects when refresh fails with an older cache",
+    "Rejects unknown or revoked kid"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm --filter @amk-authority/client-sdk test -- metadata"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

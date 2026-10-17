@@ -3,25 +3,18 @@
   "stage": "S3",
   "title": "Router and factory behavior in the verifier",
   "description": "Router and factory behavior in the verifier.",
-  "spec_refs": [
-    "ATA-03:07"
-  ],
-  "depends_on": [
-    "AUT-027"
-  ],
-  "deliverables": [
-    "impl/core/amk-authority/src/verification/router.ts"
-  ],
+  "spec_refs": [],
+  "depends_on": [],
+  "deliverables": [],
   "acceptance": [
     "Malformed, expired, mis-scoped and session-inconsistent claims are rejected or isolated"
   ],
   "verify": {
-    "method": "command",
-    "command": "pnpm test -- verifier-router"
+    "method": "manual"
   },
-  "status": "todo",
+  "status": "dropped",
   "blocked_by": [],
   "evidence": {},
-  "dropped_reason": "",
+  "dropped_reason": "Router and Router Factory were removed from the Authority spec; controller behavior is AUT-074.",
   "findings": ""
 }

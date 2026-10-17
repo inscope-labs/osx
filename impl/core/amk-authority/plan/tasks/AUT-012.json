@@ -8,18 +8,18 @@
   ],
   "depends_on": [
     "AUT-008",
-    "AUT-001"
+    "AUT-063"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/attestation/types.ts"
+    "impl/core/amk-authority/packages/shared-crypto/src/attestation.ts"
   ],
   "acceptance": [
-    "All fields in ATA-01:01 are typed and validated",
+    "All fields in ATA-01:01 including kid are typed and validated",
     "Missing, extra and wrongly typed fields are rejected"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- attestation-types"
+    "command": "pnpm --filter @amk-authority/shared-crypto test -- attestation"
   },
   "status": "todo",
   "blocked_by": [],
