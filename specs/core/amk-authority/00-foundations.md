@@ -8,21 +8,21 @@
 
 ## ATA-00:01 Role
 
-- The Attestation Authority is the sole issuer of role attestations. [S-01]
+- The Attestation Authority is the sole issuer of role attestations.
 - A role attestation binds a session public key to a role for a specific session handle and epoch, within a validity window.
-- The Authority never issues long-term identity certificates to the router. Identity binding, if supported, stays internal. [S-02]
+- The Authority never issues long-term identity certificates to the AMK core entities. Identity binding, if supported, stays internal.
 
 ## ATA-00:02 Trust Boundary
 
-- Trusted for the statements it signs. [S-05]
-- Untrusted for enforcement: the router and controller enforce.
-- Clients verify signatures against a pinned Authority public key. [S-06]
+- Trusted for the statements it signs.
+- Untrusted for enforcement: the controller enforces.
+- Clients verify signatures against a pinned Authority public key.
 - The Authority verifies proof-of-possession before issuance.
 
 ## ATA-00:03 Self-Containment
 
 - The Authority only defines the attestation format, issuance and verification rules, revocation semantics, and its own key obligations.
-- It does not know or care how clients are implemented. [S-03]
+- It does not know or care how clients are implemented.
 
 ## ATA-00:04 Invariants
 
@@ -35,9 +35,7 @@
 
 ## ATA-00:05 Relationship to Other Components
 
-- Session Router: verifies attestations; never sees long-term identity.
-- Router Factory: may require attestations for Binding Data.
-- amk-controller: may consume attestations for Host AI capability or HIL.
+- amk-controller: consumes attestations; verifies them under ATA-03 before relying on them and decides their effect under its own policy.
 - amk-console: no direct interaction.
 - Entities: request attestations for assumed roles.
 

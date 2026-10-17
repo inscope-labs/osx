@@ -11,7 +11,7 @@
 - The Authority supports three operational profiles:
   - **Basic:** software keys allowed, simplified revocation, suitable for any language.
   - **Standard:** non-exportable keys (OS keystore or equivalent), full revocation list, process isolation.
-  - **High:** HSM/TEE-protected signing keys, measured boot / remote attestation of the Authority itself, hardware-protected audit of issuance. [S-10]
+  - **High:** HSM/TEE-protected signing keys, measured boot / remote attestation of the Authority itself, hardware-protected audit of issuance.
 - The profile in use MUST be documented and discoverable by clients.
 
 ## ATA-06:02 Basic Profile
@@ -24,7 +24,7 @@
 
 ## ATA-06:03 Standard Profile
 
-- Signing keys MUST be non-exportable and stored in an OS keystore or equivalent. [S-11]
+- Signing keys MUST be non-exportable and stored in an OS keystore or equivalent.
 - Revocation list is required.
 - Real-time revocation endpoint is permitted.
 - Identity binding MAY be required.
@@ -33,7 +33,7 @@
 
 ## ATA-06:04 High Profile
 
-- Signing keys MUST be HSM- or TEE-protected. [S-12]
+- Signing keys MUST be HSM- or TEE-protected.
 - Measured boot and remote attestation of the Authority itself SHOULD be supported.
 - Hardware-protected audit of issuance MUST be enabled.
 - Revocation list is required.
@@ -46,7 +46,7 @@
 
 - The profile MUST be selected at deployment time.
 - The profile MUST NOT be changed without re-provisioning.
-- Clients MUST verify the profile matches their requirements before trusting attestations. [P-14]
+- Clients MUST verify the profile matches their requirements before trusting attestations.
 
 ## ATA-06:06 Profile Summary
 

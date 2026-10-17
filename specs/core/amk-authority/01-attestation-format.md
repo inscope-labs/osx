@@ -18,12 +18,12 @@
   - `valid_to`: the end of the validity window.
   - `nonce`: a unique nonce for this attestation.
   - `signature`: the Authority's signature over the canonical serialization.
-- A role attestation MAY contain additional fields as defined by the Authority or profile. [P-01]
+- A role attestation MAY contain additional fields as defined by the Authority or profile.
 
 ## ATA-01:02 Canonical Serialization
 
 - The signature MUST be computed over a canonical serialization of the attestation fields.
-- The canonical serialization MUST be deterministic and language-agnostic (for example, JCS or a defined byte layout). [S-07]
+- The canonical serialization MUST be deterministic and language-agnostic (for example, JCS or a defined byte layout).
 - The canonical serialization MUST include all fields except `signature`.
 
 ## ATA-01:03 Validity Window
@@ -41,7 +41,7 @@
 ## ATA-01:05 Signature
 
 - The `signature` field MUST be computed using the Authority's signing key as defined by the profile (`ATA-06`).
-- The signature algorithm MUST be specified in the attestation or in the Authority's published metadata. [P-02]
+- The signature algorithm MUST be specified in the attestation or in the Authority's published metadata.
 - Clients MUST reject attestations with an unknown or unsupported algorithm.
 
 ## ATA-01:06 Example

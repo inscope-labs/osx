@@ -41,11 +41,11 @@
 ## ATA-02:04 Role Validation
 
 - If the request includes a declared role list, the Authority MUST verify the requested role is present. [INV-ATA-02]
-- If the request does not include a role list, the Authority MAY issue the attestation for any role, subject to policy. [P-03]
+- If the request does not include a role list, the Authority MAY issue the attestation for any role, subject to policy.
 
 ## ATA-02:05 Identity Authentication (Profile-Dependent)
 
-- Under the Standard and High profiles, the Authority MAY require additional authentication of the long-term identity before issuance. [P-04]
+- Under the Standard and High profiles, the Authority MAY require additional authentication of the long-term identity before issuance.
 - Under the Basic profile, identity authentication is not required.
 - When identity authentication is required, the method MUST be specified in the profile (`ATA-06`).
 - Long-term identity MUST NOT be included in the attestation. [INV-ATA-03]
@@ -68,7 +68,7 @@
   - the session handle,
   - the epoch.
 - A change in any of these requires a new attestation.
-- The Authority MUST NOT issue an attestation that conflicts with an existing valid attestation for the same session, epoch, and role unless the existing one is revoked. [P-05]
+- The Authority MUST NOT issue an attestation that conflicts with an existing valid attestation for the same session, epoch, and role unless the existing one is revoked.
 
 ## ATA-02:08 Summary
 

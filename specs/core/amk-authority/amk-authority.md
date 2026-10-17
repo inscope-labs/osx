@@ -1,16 +1,12 @@
 # amk-authority.md (Attestation Authority)
 
-**Boundary:** Attestation Authority (amk-authority) of OS/10 AMK. Formerly named `amk-registry`.
+**Boundary:** Attestation Authority (amk-authority) of OS/10 AMK.
 **Spec version:** 1.2.0-draft.
 **Suite compatibility:** `OS10-AMK 2.x` (suite version defined in `amk-ssot.md`).
 **Reference ID policy:** Once published, an ID is never reassigned. A withdrawn requirement keeps its ID and is marked `RETIRED`. Ordinal file numbers and per-bullet IDs (`ATA-<file>:<rule>`) are the target scheme; conversion of this specification is pending (see `specs/core/OPEN-ITEMS.md`, CORE-O-05).
-**Trust:** Trusted for the attestations it signs. Untrusted for enforcement, which belongs to the session router and `amk-controller`.
-**Companions:** `amk-controller.md`, `amk-console.md`, and the session-router specification (`specs/modules/session-router`, which includes the `router-factory` endpoint). `amk-contracts`, `os10-lifecycle` and `amk-defaults-manifest` are discontinued; their content is distributed into the individual spec files.
+**Trust:** Trusted for the attestations it signs. Untrusted for enforcement, which belongs to the `amk-controller`.
+**Companions:** `amk-controller.md`, `amk-console.md`, `amk-prompt.md`, and `amk-runtime.md`.
 **Normative language:** MUST, MUST NOT, SHOULD and MAY as in RFC 2119. Default values are stated in this specification under `DV-ATA-nn` IDs (see the Defaults section).
-
-**Review markers.** `[S-xx]` = settled by the operator. `[P-xx]` = provisional; needs confirmation. `[OPEN O-xx]` = undecided; the text is a placeholder. Markers are for review and are removed before release.
-
-**What changed from 1.1.0.** The Attestation Authority is formalized as a standalone component with an exclusive reference scheme (`ATA-<file>:<rule>`). Role attestations replace ad-hoc session tokens for role binding. Three operational profiles (Basic, Standard, High) are defined. The Authority never issues long-term identity certificates to the router; identity binding, when supported, remains internal.
 
 ---
 
@@ -22,10 +18,25 @@
 - **Attest only; never decide or act.** Attestation, authentication, authorization, and enforcement stay logically distinct, even when co-located. The Authority does not grant permission, execute tasks, run the Host AI, route sessions, or bypass the controller, which alone applies policy and enforces.
 - **No self-minting or elevation.** The Host AI, console, tasks, packages, adapters, and external inputs may carry or request attestations but cannot mint, alter, or escalate them. Authority material never overrides kernel invariants, controller policy, or higher governance.
 - **Fail closed, with explicit validity.** Unverifiable, ambiguous, stale, expired, revoked, malformed, or scope-mismatched attestations are never accepted as current. Outcomes when revocation status is unknown are set by policy (deny, suspend, restrict), never by a permissive fallback, and revocation never rewrites audit history.
-- **Minimal, scoped identity.** Disclose only what verification needs. Keep session, user, agent, and gateway identities distinct, and keep secrets and personal data out of logs.
-- **Platform-independent and conformance-tested.** The contract is independent of any Host AI, OS, or language. Implementations declare algorithms, trust anchors, and failure behavior; optional features cannot weaken mandatory checks; conformance tests cover valid, malformed, expired, revoked, mismatched, and untrusted attestations.
+- **Minimal, scoped identity.** Disclose only what verification needs. Keep session, entity, agent, and gateway identities distinct. There is no separate user identity: the console, as an entity, is the sole representative of the operator. Keep secrets and personal data out of logs.
+- **Platform-independent and conformance-tested.** This contract is independent of any Host AI, OS, platform or language. Implementations declare algorithms, trust anchors, and failure behavior; optional features cannot weaken mandatory checks; conformance tests cover valid, malformed, expired, revoked, mismatched, and untrusted attestations.
 
 **Essence:** the Authority proves who or what is participating, within bounded and verifiable limits, and leaves every decision about what they may do to the controller.
+
+---
+
+## Module Index & File Numbers
+
+| File # | File | Prefix | Scope |
+|--------|------|--------|-------|
+| 1 | [00-foundations.md](00-foundations.md) | `ATA-00` | Role, trust boundary, invariants |
+| 2 | [01-attestation-format.md](01-attestation-format.md) | `ATA-01` | Attestation structure, required fields, validity rules |
+| 3 | [02-issuance.md](02-issuance.md) | `ATA-02` | Issuance protocol, proof-of-possession, binding rules |
+| 4 | [03-verification.md](03-verification.md) | `ATA-03` | Verification obligations for clients and the controller |
+| 5 | [04-revocation.md](04-revocation.md) | `ATA-04` | Revocation list and real-time revocation |
+| 6 | [05-identity-binding.md](05-identity-binding.md) | `ATA-05` | Optional long-term identity binding (profile-dependent) |
+| 7 | [06-profiles.md](06-profiles.md) | `ATA-06` | Basic / Standard / High requirements |
+| 8 | [99-open-items.md](99-open-items.md) | `ATA-99` | Open questions (non-normative) |
 
 ---
 
@@ -35,7 +46,8 @@ Definitions in this section are authoritative for this specification.
 
 - **Attestation Authority (AA):** the sole issuer of role attestations. This component.
 - **Role attestation:** a signed statement binding a session public key to a role for a session handle and epoch.
-- **Session public key:** the public key of a key pair generated by a session participant (entity, router, factory, console, or controller).
+- **Session public key:** the public key of a key pair generated by a session participant (entity, console, or controller).
+- **Attestation client:** any AMK core entity or session participant that requests, presents, or verifies an attestation.
 - **Session handle:** the unique identifier the controller assigns to a session.
 - **Epoch:** a monotonic counter within a session, incremented on re-key or role change.
 - **Grace window (G):** the period after epoch end during which an attestation remains valid.
@@ -48,26 +60,26 @@ Definitions in this section are authoritative for this specification.
 
 ## ATA-1: Role
 
-- The Attestation Authority is the sole issuer of **role attestations** for the session-router ecosystem. [S-01]
+- The Attestation Authority is the sole issuer of **role attestations** for the AMK ecosystem.
 - A role attestation cryptographically binds:
   - a session public key,
   - to a role (an arbitrary string declared in the session's Init Envelope),
   - for a specific session handle and epoch,
   - within a validity window (`valid_from` / `valid_to`).
-- The Authority never issues long-term identity certificates to the router or other session participants. Long-term identity, if supported, stays inside the Authority and is never revealed to the router. [S-02]
-- The Authority does not know or care how the router, factory, or entities are implemented. It treats all clients as black boxes. [S-03]
+- The Authority never issues long-term identity certificates to the AMK core entities or other session participants. Long-term identity, if supported, stays inside the Authority and is never revealed to the attestation clients.
+- The Authority does not know or care how the attestation clients are implemented. It treats all clients as black boxes.
 
 ## ATA-2: Platform
 
-- The Authority is language- and platform-agnostic. Its interface is envelope- and structured-message-oriented. [S-04]
+- The Authority is language- and platform-agnostic. Its interface is envelope- and structured-message-oriented.
 - It has zero UI/UX; all interaction is programmatic.
 - The Authority MAY run as a standalone service, a library, or an embedded component, provided it meets the profile requirements of `ATA-06`.
 
 ## ATA-3: Trust
 
-- Trusted for the statements it signs. [S-05]
-- Untrusted for enforcement: the router and controller enforce. The Authority's attestations are inputs to enforcement, not enforcement itself.
-- Clients verify attestation signatures against a pinned Authority public key. [S-06]
+- Trusted for the statements it signs.
+- Untrusted for enforcement: the controller enforces. The Authority's attestations are inputs to enforcement, not enforcement itself.
+- Clients verify attestation signatures against a pinned Authority public key.
 - The Authority and its clients do not trust each other blindly: clients verify signatures; the Authority verifies proof-of-possession before issuance.
 
 ## ATA-4: Self-Containment
@@ -79,7 +91,7 @@ Definitions in this section are authoritative for this specification.
   - identity binding rules when applicable (`ATA-05`),
   - profile requirements (`ATA-06`),
   - and the cryptographic obligations on its own signing keys.
-- It does not define or constrain the behavior of routers, factories, entities, consoles, or controllers beyond the attestation interface. [S-03]
+- It does not define or constrain the behavior of AMK components beyond the attestation interface.
 
 ## ATA-5: Invariants
 
@@ -96,17 +108,14 @@ Definitions in this section are authoritative for this specification.
 
 | Component | Interaction |
 |-----------|-------------|
-| Session Router | Verifies role attestations at registration and during channel handshake. Never sees long-term identity. |
-| Router Factory | May require attestations when accepting Binding Data. |
-| amk-controller | May consume attestations for Host AI capability or HIL channel (future extension). |
-| amk-console | Does not directly interact; operator identity is handled by console keys. |
-| Entities | Request attestations for the roles they will assume in a session. |
+| amk-controller | Consumes role attestations; verifies them under ATA-03 before relying on them and decides their effect under its own policy. |
+| Entities | Must request attestations for the roles they will assume in a session. |
 
 ---
 
 ## ATA-7: Summary
 
-- The Attestation Authority is the sole issuer of role attestations, binding session public keys to roles within a session and epoch. It is language-agnostic, envelope-oriented, and self-contained. It never issues long-term identity certificates to the router. Three operational profiles define its security requirements.
+- The Attestation Authority is the sole issuer of role attestations, binding session public keys to roles within a session and epoch. It is language-agnostic, envelope-oriented, and self-contained. It never issues long-term identity certificates to the AMK Components / Entities. Three operational profiles define its security requirements.
 
 ---
 
@@ -125,7 +134,7 @@ Definitions in this section are authoritative for this specification.
 - **O-ATA-02** The exact format of the session's declared role list and how it is communicated to the Authority.
 - **O-ATA-03** Whether identity binding is per-role or per-session.
 - **O-ATA-04** The revocation list distribution mechanism (push, pull, or both).
-- **O-ATA-05** How the Authority is enrolled with the controller or router at first use.
+- **O-ATA-05** How the Authority is enrolled with the controller at first use.
 - **O-ATA-06** Whether the Authority can delegate issuance to sub-authorities.
 
 ## Errors, inconsistencies and critical deficiencies (cursory)
@@ -141,7 +150,7 @@ Definitions in this section are authoritative for this specification.
 ### STANDARD
 
 - **E-ATA-04 (BLOCKING):** Normative level of the revocation list conflicts. `ATA-04:01` says the Authority SHOULD publish one, while `ATA-06:03` and `ATA-06:04` require it and `ATA-04:03` has clients MUST reject without one. `INV-ATA-05` ("checked when available") is weaker still. Also affects HIGH.
-- **E-ATA-05 (BLOCKING):** If the request has no role list, the Authority MAY issue the attestation for any role (`02-issuance.md`, [P-03]), and `INV-ATA-02` applies only "when that list is supplied". This opens a role-elevation path that Core Intent forbids. Depends on `O-ATA-02`. Also affects HIGH.
+- **E-ATA-05 (BLOCKING):** If the request has no role list, the Authority MAY issue the attestation for any role (`02-issuance.md`,), and `INV-ATA-02` applies only "when that list is supplied". This opens a role-elevation path that Core Intent forbids. Depends on `O-ATA-02`. Also affects HIGH.
 - **E-ATA-06 (non-blocking):** Effective revocation latency is unclear. `ATA-04:05` says revocation SHOULD take effect within `RL_INTERVAL` (60 s), but clients may rely on a list up to `R_MAX` (300 s) old. Also affects HIGH.
 - **E-ATA-07 (non-blocking):** Clock-skew tolerance (30 s, `DV-ATA-07`) is added on top of grace window `G` (30 s), so an attestation can be accepted up to about 60 s past epoch end, which conflicts with the intent of `INV-ATA-06`. Also affects HIGH.
 
@@ -161,4 +170,4 @@ Definitions in this section are authoritative for this specification.
 
 ## Dependent files
 
-Drafted for 1.2 together with this file: `session-router` (including its `router-factory` endpoint). Not yet updated: `amk-test-matrix`, `ssot-index`. Discontinued: `amk-contracts`, `os10-lifecycle`, `amk-defaults-manifest`.
+Not yet updated: `amk-test-matrix`, `ssot-index`. Discontinued: `amk-contracts`, `os10-lifecycle`, `amk-defaults-manifest`.

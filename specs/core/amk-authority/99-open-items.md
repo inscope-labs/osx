@@ -12,7 +12,7 @@
 - **O-ATA-02** The exact format of the session's declared role list and how it is communicated to the Authority.
 - **O-ATA-03** Whether identity binding is per-role or per-session.
 - **O-ATA-04** The revocation list distribution mechanism (push, pull, or both).
-- **O-ATA-05** How the Authority is enrolled with the controller or router at first use.
+- **O-ATA-05** How the Authority is enrolled with the controller at first use.
 - **O-ATA-06** Whether the Authority can delegate issuance to sub-authorities.
 - **O-ATA-07** The exact PoP challenge format and whether it is standardized across profiles.
 - **O-ATA-08** Whether the Authority publishes metadata (algorithms, profile, public key) at a well-known endpoint.
@@ -44,7 +44,7 @@
 
 ## Dependent files
 
-Drafted for 1.2 together with this file: `session-router` (including its `router-factory` endpoint). Not yet updated: `amk-test-matrix`, `ssot-index`. Discontinued: `amk-contracts`, `os10-lifecycle`, `amk-defaults-manifest`.
+Not yet updated: `amk-test-matrix`, `ssot-index`. Discontinued: `amk-contracts`, `os10-lifecycle`, `amk-defaults-manifest`.
 
 ## Cross-spec items
 

@@ -8,7 +8,7 @@
 
 ## ATA-05:01 Purpose
 
-- Identity binding allows the Authority to associate a session public key with a long-term identity for policy or audit purposes. [P-12]
+- Identity binding allows the Authority to associate a session public key with a long-term identity for policy or audit purposes.
 - Identity binding is optional and profile-dependent.
 - Long-term identity MUST NOT be revealed to session participants. [INV-ATA-03]
 
@@ -16,11 +16,11 @@
 
 - Identity binding MAY be required under the Standard and High profiles.
 - Identity binding is not required under the Basic profile.
-- The Authority MUST document whether identity binding is enabled and what identity providers are supported. [P-13]
+- The Authority MUST document whether identity binding is enabled and what identity providers are supported.
 
 ## ATA-05:03 Binding Process
 
-- When identity binding is required, the Authority MUST authenticate the long-term identity before issuance. [P-04]
+- When identity binding is required, the Authority MUST authenticate the long-term identity before issuance.
 - The authentication method MUST be specified in the profile (`ATA-06`).
 - On successful authentication, the Authority MAY store the binding internally.
 - The binding MUST NOT be included in the attestation or revealed to any session participant. [INV-ATA-03]
