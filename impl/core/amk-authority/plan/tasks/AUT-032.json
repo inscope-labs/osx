@@ -1,32 +1,34 @@
 {
   "id": "AUT-032",
-  "stage": "S3",
-  "title": "Client obligations in the verifier",
-  "description": "Client obligations in the verifier.",
+  "stage": "S4",
+  "title": "SDK revocation handling",
+  "description": "SDK revocation handling.",
   "spec_refs": [
-    "ATA-04:03",
     "ATA-03:05",
-    "DV-ATA-02"
+    "ATA-04:03",
+    "DV-ATA-02",
+    "INV-ATA-05"
   ],
   "depends_on": [
     "AUT-027",
-    "AUT-029",
-    "AUT-004"
+    "AUT-029"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/verification/revocation.ts"
+    "impl/core/amk-authority/packages/client-sdk/src/revocation.ts"
   ],
   "acceptance": [
-    "Lists older than R_MAX are rejected",
-    "Unknown revocation status follows AUT-004 and fails closed"
+    "List signature is verified with its kid; lower versions are rejected",
+    "Lists older than R_MAX, or missing, are never accepted as current under any profile",
+    "Policy hook may define suspend or restrict; the default is deny",
+    "Cache lifetime never exceeds R_MAX"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- verifier-revocation"
+    "command": "pnpm --filter @amk-authority/client-sdk test -- revocation"
   },
   "status": "todo",
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": "E-ATA-06: effective latency can reach R_MAX, longer than the publication interval."
+  "findings": "Corrections: imported plan denied only under Standard and cached for min(RL_INTERVAL, R_MAX). The spec denies under every profile, and worst-case latency is about RL_INTERVAL plus R_MAX, not the minimum of the two."
 }

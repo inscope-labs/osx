@@ -7,18 +7,17 @@
   "depends_on": [
     "AUT-028",
     "AUT-032",
-    "AUT-033"
+    "AUT-073"
   ],
   "deliverables": [
-    "impl/core/amk-authority/test/verifier.negative.test.ts"
+    "impl/core/amk-authority/packages/client-sdk/test/verify.negative.test.ts"
   ],
   "acceptance": [
-    "Malformed, expired, revoked, mismatched, untrusted and unknown-status cases all reject",
-    "No case is accepted silently"
+    "Malformed, expired, revoked, mismatched, untrusted, unknown-kid, replayed-verifier-nonce and unknown-revocation-status cases all reject"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- verifier.negative"
+    "command": "pnpm --filter @amk-authority/client-sdk test -- verify.negative"
   },
   "status": "todo",
   "blocked_by": [],

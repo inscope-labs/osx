@@ -1,8 +1,8 @@
 {
   "id": "AUT-016",
   "stage": "S1",
-  "title": "Nonce generation and format",
-  "description": "Nonce generation and format.",
+  "title": "Attestation nonce generation",
+  "description": "Attestation nonce generation.",
   "spec_refs": [
     "ATA-01:04"
   ],
@@ -10,15 +10,15 @@
     "AUT-012"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/attestation/nonce.ts"
+    "impl/core/amk-authority/packages/shared-crypto/src/nonce.ts"
   ],
   "acceptance": [
-    "Nonces are unique and unpredictable",
-    "Format is documented"
+    "Nonces are at least 128 bits from a CSPRNG and encoded base64url",
+    "The nonce is also the identifier used in revocation"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- nonce"
+    "command": "pnpm --filter @amk-authority/shared-crypto test -- nonce"
   },
   "status": "todo",
   "blocked_by": [],

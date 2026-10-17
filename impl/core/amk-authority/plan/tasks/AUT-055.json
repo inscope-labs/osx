@@ -1,29 +1,27 @@
 {
   "id": "AUT-055",
-  "stage": "S7",
+  "stage": "S10",
   "title": "Enforce mandatory real-time revocation",
   "description": "Enforce mandatory real-time revocation.",
   "spec_refs": [
     "ATA-04:04",
-    "ATA-06:04"
+    "ATA-03:05"
   ],
   "depends_on": [
     "AUT-043",
     "AUT-052"
   ],
-  "deliverables": [
-    "impl/core/amk-authority/src/revocation/high.ts"
-  ],
+  "deliverables": [],
   "acceptance": [
-    "High requires and exercises the real-time endpoint",
-    "Clients cannot skip it"
+    "High clients query the endpoint and reject when it is unavailable"
   ],
   "verify": {
-    "method": "command",
-    "command": "pnpm test -- revocation-high"
+    "method": "manual"
   },
-  "status": "todo",
-  "blocked_by": [],
+  "status": "blocked",
+  "blocked_by": [
+    "Scope decision: High is out of scope on the Cloudflare stack (see AUT-087)"
+  ],
   "evidence": {},
   "dropped_reason": "",
   "findings": ""

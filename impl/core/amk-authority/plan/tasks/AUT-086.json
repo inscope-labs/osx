@@ -1,0 +1,25 @@
+{
+  "id": "AUT-086",
+  "stage": "S9",
+  "title": "Staged deployment",
+  "description": "Staged deployment.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-085",
+    "AUT-081"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Staging runs Basic, production runs Standard",
+    "Blue/green by kid rotation",
+    "Rollback publishes the previous content with a higher metadata_version and an unchanged or higher RL version"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "Correction: imported rollback republished earlier metadata, which clients reject as a lower metadata_version."
+}

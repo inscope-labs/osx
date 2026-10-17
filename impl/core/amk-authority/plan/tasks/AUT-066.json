@@ -1,0 +1,28 @@
+{
+  "id": "AUT-066",
+  "stage": "S1",
+  "title": "Indexes and unique constraints as atomic guards",
+  "description": "Indexes and unique constraints as atomic guards.",
+  "spec_refs": [
+    "ATA-02:02",
+    "ATA-02:07"
+  ],
+  "depends_on": [
+    "AUT-065"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/authority/migrations/0002_constraints.sql"
+  ],
+  "acceptance": [
+    "Unique constraints enforce request-nonce uniqueness and one active attestation per (session_handle, epoch, role)",
+    "Constraints, not application checks alone, are the backstop for races"
+  ],
+  "verify": {
+    "method": "files"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "Correction: a decision split across a Durable Object and D1 is not atomic. D1 unique constraints and batch transactions are the guard; the Durable Object serializes only revocation list builds, metadata publication and the audit head."
+}

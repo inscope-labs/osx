@@ -1,0 +1,29 @@
+{
+  "id": "AUT-076",
+  "stage": "S6",
+  "title": "Requester and controller authentication",
+  "description": "Requester and controller authentication.",
+  "spec_refs": [
+    "ATA-02:05"
+  ],
+  "depends_on": [
+    "AUT-070",
+    "AUT-041"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/authority/src/auth.ts"
+  ],
+  "acceptance": [
+    "mTLS (RFC 8705) or a JWT client assertion (RFC 7523) is supported and listed in metadata client_authentication",
+    "Used on the controller channel and, under Standard, on issuance requests"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm --filter @amk-authority/authority test -- auth"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "Missing from the imported plan. It proposed an OIDC adapter, which the spec does not define."
+}

@@ -1,17 +1,17 @@
 {
   "id": "AUT-057",
-  "stage": "S8",
+  "stage": "S9",
   "title": "Full conformance run per profile",
   "description": "Full conformance run per profile.",
   "spec_refs": [],
   "depends_on": [
+    "AUT-037",
     "AUT-046",
-    "AUT-051",
-    "AUT-056"
+    "AUT-051"
   ],
   "deliverables": [],
   "acceptance": [
-    "Basic, Standard and High suites run green from the manual CI workflow"
+    "Basic and Standard suites run green from the manual CI workflow"
   ],
   "verify": {
     "method": "manual"

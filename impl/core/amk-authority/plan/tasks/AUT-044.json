@@ -3,26 +3,19 @@
   "stage": "S5",
   "title": "Multiple signing keys and rotation",
   "description": "Multiple signing keys and rotation.",
-  "spec_refs": [
-    "O-ATA-01"
-  ],
-  "depends_on": [
-    "AUT-042"
-  ],
-  "deliverables": [
-    "impl/core/amk-authority/src/keys/rotation.ts"
-  ],
+  "spec_refs": [],
+  "depends_on": [],
+  "deliverables": [],
   "acceptance": [
     "Two keys valid at once during rotation",
     "Epoch changes handled and old keys retire cleanly"
   ],
   "verify": {
-    "method": "command",
-    "command": "pnpm test -- rotation"
+    "method": "manual"
   },
-  "status": "todo",
+  "status": "dropped",
   "blocked_by": [],
   "evidence": {},
-  "dropped_reason": "",
+  "dropped_reason": "Superseded by AUT-067 (rotation moved to S1 because Basic already needs the signed key set).",
   "findings": ""
 }

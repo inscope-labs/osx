@@ -1,8 +1,8 @@
 {
   "id": "AUT-018",
   "stage": "S1",
-  "title": "Run vectors in CI",
-  "description": "Run vectors in CI.",
+  "title": "Run vectors in the manual CI workflow",
+  "description": "Run vectors in the manual CI workflow.",
   "spec_refs": [],
   "depends_on": [
     "AUT-017",
@@ -10,12 +10,11 @@
   ],
   "deliverables": [],
   "acceptance": [
-    "Vector runner executes every vector and fails on any mismatch",
-    "Runs via the manual CI workflow"
+    "Vector runner executes every vector and fails on any mismatch"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- vectors"
+    "command": "pnpm --filter @amk-authority/conformance test -- vectors"
   },
   "status": "todo",
   "blocked_by": [],

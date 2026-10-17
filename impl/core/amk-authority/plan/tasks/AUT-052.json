@@ -1,25 +1,25 @@
 {
   "id": "AUT-052",
-  "stage": "S7",
-  "title": "Decide the High key host and how the High claim is verified",
-  "description": "Decide the High key host and how the High claim is verified.",
+  "stage": "S10",
+  "title": "Decide the High key host and evidence source",
+  "description": "Decide the High key host and evidence source.",
   "spec_refs": [
     "ATA-06:04"
   ],
-  "depends_on": [
-    "AUT-046"
-  ],
+  "depends_on": [],
   "deliverables": [],
   "acceptance": [
     "Hardware or TEE host chosen",
-    "A way for relying parties to verify the High claim is specified"
+    "Evidence verifier trust anchor and EAT format agreed"
   ],
   "verify": {
     "method": "manual"
   },
-  "status": "todo",
-  "blocked_by": [],
+  "status": "blocked",
+  "blocked_by": [
+    "Scope decision: High is out of scope on the Cloudflare stack (see AUT-087)"
+  ],
   "evidence": {},
   "dropped_reason": "",
-  "findings": "E-ATA-09 (blocking): High is currently a self-declaration."
+  "findings": ""
 }

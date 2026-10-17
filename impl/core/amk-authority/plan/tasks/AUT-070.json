@@ -1,0 +1,31 @@
+{
+  "id": "AUT-070",
+  "stage": "S2",
+  "title": "Issuance endpoint",
+  "description": "Issuance endpoint.",
+  "spec_refs": [
+    "ATA-02:01",
+    "ATA-02:02"
+  ],
+  "depends_on": [
+    "AUT-023",
+    "AUT-069",
+    "AUT-068"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/authority/src/issuance/endpoint.ts"
+  ],
+  "acceptance": [
+    "POST /v1/attestations over TLS 1.3 with rate limiting and request size limits",
+    "Every issuance and rejection writes an audit record"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm --filter @amk-authority/authority test -- issuance-endpoint"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

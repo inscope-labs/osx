@@ -1,0 +1,24 @@
+{
+  "id": "AUT-080",
+  "stage": "S8",
+  "title": "Runbooks",
+  "description": "Runbooks.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-067",
+    "AUT-031"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Runbooks cover key rotation, emergency revocation, profile downgrade and restore",
+    "Rollback instructions publish a higher metadata_version"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

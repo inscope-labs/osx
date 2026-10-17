@@ -1,0 +1,30 @@
+{
+  "id": "AUT-067",
+  "stage": "S1",
+  "title": "Metadata publication and key rotation",
+  "description": "Metadata publication and key rotation.",
+  "spec_refs": [
+    "ATA-01:07",
+    "O-ATA-01"
+  ],
+  "depends_on": [
+    "AUT-045"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/authority/src/rotation.ts"
+  ],
+  "acceptance": [
+    "Publication is serialized in the Durable Object and metadata_version only increases",
+    "Key statuses active, retired and revoked behave as in ATA-01:07",
+    "Rotation and rollback both publish content with a higher metadata_version"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm --filter @amk-authority/authority test -- rotation"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "Replaces AUT-044. Correction: rolling back by republishing earlier metadata would be rejected by clients (they reject a lower metadata_version)."
+}

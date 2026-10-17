@@ -1,12 +1,13 @@
 {
   "id": "AUT-040",
-  "stage": "S4",
-  "title": "Tag Basic candidate",
-  "description": "Tag Basic candidate.",
+  "stage": "S5",
+  "title": "Tag the Basic candidate",
+  "description": "Tag the Basic candidate.",
   "spec_refs": [],
   "depends_on": [
     "AUT-038",
-    "AUT-039"
+    "AUT-039",
+    "AUT-075"
   ],
   "deliverables": [],
   "acceptance": [

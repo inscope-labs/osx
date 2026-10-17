@@ -1,0 +1,22 @@
+{
+  "id": "AUT-084",
+  "stage": "S8",
+  "title": "Secret scanning and dependency audit",
+  "description": "Secret scanning and dependency audit.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-010"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "A manual workflow runs secret scanning and dependency audit and reports clean or tracked findings"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

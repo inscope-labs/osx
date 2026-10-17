@@ -3,25 +3,18 @@
   "stage": "S6",
   "title": "Resolve audit format and retention",
   "description": "Resolve audit format and retention.",
-  "spec_refs": [
-    "ATA-05:05",
-    "O-ATA-09"
-  ],
-  "depends_on": [
-    "AUT-040"
-  ],
-  "deliverables": [
-    "specs/core/amk-authority/05-identity-binding.md"
-  ],
+  "spec_refs": [],
+  "depends_on": [],
+  "deliverables": [],
   "acceptance": [
     "Format and retention per profile specified"
   ],
   "verify": {
     "method": "manual"
   },
-  "status": "todo",
+  "status": "dropped",
   "blocked_by": [],
   "evidence": {},
-  "dropped_reason": "",
-  "findings": "E-ATA-10 (blocking for High): hardware audit is required but its format is undefined."
+  "dropped_reason": "Resolved: audit format and retention defined (ATA-06:10, DV-ATA-10).",
+  "findings": ""
 }

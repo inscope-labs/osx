@@ -10,22 +10,23 @@
   ],
   "depends_on": [
     "AUT-012",
-    "AUT-002"
+    "AUT-024"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/issuance/request.ts"
+    "impl/core/amk-authority/packages/authority/src/issuance/request.ts"
   ],
   "acceptance": [
-    "Request fields are validated and rejected when malformed",
-    "Request freshness uses DV-ATA-04"
+    "Request carries session_public_key, role, session_handle, epoch, proof_of_possession, request_nonce, request_timestamp and no role list or epoch bounds",
+    "Freshness uses DV-ATA-04 and skew uses DV-ATA-07",
+    "A session record must exist and the epoch must not have ended beyond G"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- issuance-request"
+    "command": "pnpm --filter @amk-authority/authority test -- issuance-request"
   },
   "status": "todo",
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "Correction: imported plan carried declared_roles in the request, which a requester could set freely."
 }

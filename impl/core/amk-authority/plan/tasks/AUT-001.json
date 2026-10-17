@@ -3,14 +3,9 @@
   "stage": "S0",
   "title": "Decide signature algorithm and canonical serialization",
   "description": "Decide signature algorithm and canonical serialization.",
-  "spec_refs": [
-    "ATA-01:02",
-    "ATA-01:05"
-  ],
+  "spec_refs": [],
   "depends_on": [],
-  "deliverables": [
-    "specs/core/amk-authority/01-attestation-format.md"
-  ],
+  "deliverables": [],
   "acceptance": [
     "Specification names one signature algorithm and one canonical serialization (proposal: Ed25519 and JCS, RFC 8785)",
     "[P-02] and [S-07] are resolved and the change is merged in specs/core/amk-authority"
@@ -18,9 +13,9 @@
   "verify": {
     "method": "manual"
   },
-  "status": "todo",
+  "status": "dropped",
   "blocked_by": [],
   "evidence": {},
-  "dropped_reason": "",
+  "dropped_reason": "Resolved in the spec rewrite (Ed25519 and JCS in ATA-01:02/05); landing tracked by AUT-061.",
   "findings": ""
 }

@@ -1,0 +1,23 @@
+{
+  "id": "AUT-081",
+  "stage": "S8",
+  "title": "Backup and restore drill",
+  "description": "Backup and restore drill.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-075",
+    "AUT-080"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "D1 and R2 are restored in a drill and the audit chain still verifies"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

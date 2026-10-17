@@ -1,28 +1,32 @@
 {
   "id": "AUT-028",
   "stage": "S3",
-  "title": "Nonce freshness and session context verification",
-  "description": "Nonce freshness and session context verification.",
+  "title": "Presentation proof and session context verification",
+  "description": "Presentation proof and session context verification.",
   "spec_refs": [
     "ATA-03:04",
-    "ATA-03:06"
+    "ATA-03:06",
+    "DV-ATA-05"
   ],
   "depends_on": [
     "AUT-027"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/verification/session.ts"
+    "impl/core/amk-authority/packages/client-sdk/src/presentation.ts"
   ],
   "acceptance": [
-    "Stale or replayed nonces and wrong session context are rejected"
+    "Verifier issues a single-use verifier_nonce of at least DV-ATA-05 bits that expires after DV-ATA-04",
+    "Proof is an Ed25519 signature over typ amk-ata-presentation-v1, aud, attestation_nonce, verifier_nonce and timestamp",
+    "Re-presenting the same attestation with a fresh proof is accepted; a reused verifier_nonce is rejected",
+    "Mismatched session handle or epoch is rejected"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- verifier-session"
+    "command": "pnpm --filter @amk-authority/client-sdk test -- presentation"
   },
   "status": "todo",
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "Correction: imported plan tracked attestation nonces at every verifier. That blocks legitimate re-presentation and does not stop a stolen attestation. Replay defence is the presentation proof; request nonces are tracked at issuance."
 }

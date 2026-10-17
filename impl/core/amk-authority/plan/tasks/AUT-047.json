@@ -3,25 +3,18 @@
   "stage": "S6",
   "title": "Resolve identity binding scope",
   "description": "Resolve identity binding scope.",
-  "spec_refs": [
-    "ATA-05:04",
-    "O-ATA-03"
-  ],
-  "depends_on": [
-    "AUT-040"
-  ],
-  "deliverables": [
-    "specs/core/amk-authority/05-identity-binding.md"
-  ],
+  "spec_refs": [],
+  "depends_on": [],
+  "deliverables": [],
   "acceptance": [
     "Per-role or per-session scope decided and merged in the specification"
   ],
   "verify": {
     "method": "manual"
   },
-  "status": "todo",
+  "status": "dropped",
   "blocked_by": [],
   "evidence": {},
-  "dropped_reason": "",
+  "dropped_reason": "Resolved: identity binding is per-session (ATA-05:04).",
   "findings": ""
 }

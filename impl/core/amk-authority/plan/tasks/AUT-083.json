@@ -1,0 +1,23 @@
+{
+  "id": "AUT-083",
+  "stage": "S8",
+  "title": "Fuzz the parsers and verifiers",
+  "description": "Fuzz the parsers and verifiers.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-028",
+    "AUT-020"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Canonicalizer, request parser and proof verifiers are fuzzed without a crash or acceptance of invalid input"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

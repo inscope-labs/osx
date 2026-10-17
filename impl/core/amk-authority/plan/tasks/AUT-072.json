@@ -1,0 +1,29 @@
+{
+  "id": "AUT-072",
+  "stage": "S3",
+  "title": "Pluggable verifier nonce store",
+  "description": "Pluggable verifier nonce store.",
+  "spec_refs": [
+    "ATA-03:04"
+  ],
+  "depends_on": [
+    "AUT-028",
+    "AUT-066"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/client-sdk/src/nonce-store.ts"
+  ],
+  "acceptance": [
+    "Interface with in-memory and D1 adapters",
+    "Atomic insert-or-reject; retention is the challenge lifetime only"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm --filter @amk-authority/client-sdk test -- nonce-store"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

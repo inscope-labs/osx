@@ -1,26 +1,29 @@
 {
   "id": "AUT-049",
-  "stage": "S6",
-  "title": "Identity binding process",
-  "description": "Identity binding process.",
+  "stage": "S7",
+  "title": "Per-session identity binding",
+  "description": "Per-session identity binding.",
   "spec_refs": [
     "ATA-05:03",
-    "ATA-05:04"
+    "ATA-05:04",
+    "ATA-05:02",
+    "INV-ATA-03"
   ],
   "depends_on": [
-    "AUT-047",
-    "AUT-023"
+    "AUT-076",
+    "AUT-066"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/identity/binding.ts"
+    "impl/core/amk-authority/packages/authority/src/identity/binding.ts"
   ],
   "acceptance": [
-    "Binding follows ATA-05:03 and the decided scope",
-    "Disclosure stays minimal"
+    "Binding scope is per-session; a scope change needs a new attestation",
+    "Only an HMAC of the identity reference is stored; it never appears in an attestation or a log",
+    "Authentication method comes from the metadata list"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- binding"
+    "command": "pnpm --filter @amk-authority/authority test -- binding"
   },
   "status": "todo",
   "blocked_by": [],

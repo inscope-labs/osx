@@ -2,65 +2,79 @@
   "stages": [
     {
       "id": "S0",
-      "title": "Decisions and scaffold",
-      "goal": "Settle the specification decisions that block Basic, and create the project skeleton.",
-      "exit": "All S0 tasks done: blocking Basic decisions recorded in the specification, AGENTS.md local to this directory in place, and an empty Worker deployed manually.",
+      "title": "Spec landing and project foundation",
+      "goal": "Land the standards-based specification, then create the project skeleton, toolchain and manual workflows.",
+      "exit": "Spec PR merged, AGENTS.md local to this directory in place, toolchain and bindings configured, an empty Worker deployed manually.",
       "gate": true
     },
     {
       "id": "S1",
-      "title": "Attestation core",
-      "goal": "Implement the attestation format, canonical serialization, signing, validity and the shared test vectors.",
-      "exit": "Vector set v1 passes in CI, including malformed, expired, tampered and unknown-algorithm cases.",
+      "title": "Keys, serialization, metadata and storage",
+      "goal": "Build the data model, canonical serialization, key handling, signed metadata and the audit writer that everything else depends on.",
+      "exit": "Vectors pass in Node and Workers, metadata verifies against a pinned root key, audit chain verifies.",
       "gate": false
     },
     {
       "id": "S2",
       "title": "Issuance (Basic)",
-      "goal": "Implement issuance with proof of possession, role validation, replay protection and enrollment.",
-      "exit": "A test client obtains a valid attestation; bad proof of possession, replayed nonces and out-of-list roles are rejected.",
+      "goal": "Issue attestations from controller-supplied session records, with proof of possession and replay protection.",
+      "exit": "A test client obtains a valid attestation; every deny vector is rejected opaquely.",
       "gate": false
     },
     {
       "id": "S3",
-      "title": "Verification and revocation (Basic)",
-      "goal": "Provide the verifier library and the revocation list, failing closed everywhere.",
-      "exit": "The verifier rejects every unverifiable case and revocation takes effect within the published interval.",
+      "title": "Verification and client SDK",
+      "goal": "Implement verification once, reused by the controller and any client.",
+      "exit": "The SDK rejects every unverifiable case and exposes only an opaque verdict.",
       "gate": false
     },
     {
       "id": "S4",
-      "title": "Integration and Basic conformance",
-      "goal": "Prove the Basic profile end to end against controller and router stand-ins and cut a Basic candidate.",
-      "exit": "Basic conformance suite green, deviations documented, candidate tagged.",
-      "gate": true
-    },
-    {
-      "id": "S5",
-      "title": "Standard profile",
-      "goal": "Add non-exportable keys, real-time revocation, rotation and metadata publication.",
-      "exit": "Standard conformance suite green on the chosen key host.",
+      "title": "Revocation",
+      "goal": "Publish a signed pull-only revocation list and a controller-authorized revocation path.",
+      "exit": "Revocation takes effect within the stated worst case and clients fail closed.",
       "gate": false
     },
     {
+      "id": "S5",
+      "title": "Basic integration and conformance",
+      "goal": "Prove Basic end to end against a controller stand-in and cut a Basic candidate.",
+      "exit": "Basic conformance suite green, retention jobs running, candidate tagged.",
+      "gate": true
+    },
+    {
       "id": "S6",
-      "title": "Identity binding and audit",
-      "goal": "Implement identity binding and the signed audit trail.",
-      "exit": "Binding and audit conformance tests green for the profiles that require them.",
+      "title": "Standard profile",
+      "goal": "Add a real non-exportable key host, requester authentication, real-time revocation and profile enforcement.",
+      "exit": "Standard conformance suite green; Standard refuses to start with software keys.",
       "gate": false
     },
     {
       "id": "S7",
-      "title": "High profile",
-      "goal": "Add hardware-backed keys and a verifiable High claim.",
-      "exit": "High conformance suite green, profile claim independently verifiable.",
+      "title": "Identity binding and audit coverage",
+      "goal": "Add per-session identity binding and complete audit coverage.",
+      "exit": "Binding and audit tests green; no identity or secrets in any record.",
       "gate": false
     },
     {
       "id": "S8",
-      "title": "Release hardening",
-      "goal": "Run full conformance per profile, regenerate specifications and release.",
-      "exit": "Release tagged with deviations and unsupported features documented.",
+      "title": "Operations and security review",
+      "goal": "Make the service observable and recoverable, and review its security.",
+      "exit": "Dashboards, alerts, runbooks and restore drill done; threat model and fuzzing complete.",
+      "gate": false
+    },
+    {
+      "id": "S9",
+      "title": "Release and sign-off",
+      "goal": "Run full conformance, regenerate specifications, release and document limits.",
+      "exit": "Release tagged with conformance report; High documented as unsupported on this stack.",
+      "gate": false
+    },
+    {
+      "id": "S10",
+      "title": "High profile (deferred)",
+      "goal": "Hardware-backed keys and verifiable evidence. Out of scope on the current stack.",
+      "exit": "Only started after a scope decision to support High.",
       "gate": false
     }
   ]

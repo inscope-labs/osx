@@ -1,24 +1,23 @@
 {
   "id": "AUT-026",
   "stage": "S2",
-  "title": "Issuance endpoint end-to-end test",
-  "description": "Issuance endpoint end-to-end test.",
+  "title": "Issuance end-to-end test",
+  "description": "Issuance end-to-end test.",
   "spec_refs": [],
   "depends_on": [
-    "AUT-023",
-    "AUT-024",
-    "AUT-025"
+    "AUT-070",
+    "AUT-024"
   ],
   "deliverables": [
-    "impl/core/amk-authority/test/issuance.e2e.test.ts"
+    "impl/core/amk-authority/packages/authority/test/issuance.e2e.test.ts"
   ],
   "acceptance": [
-    "A test client completes enroll, challenge, issue",
-    "Negative cases return opaque failures"
+    "A test client submits a session record, then obtains an attestation",
+    "All deny vectors return the same opaque response"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- issuance.e2e"
+    "command": "pnpm --filter @amk-authority/authority test -- issuance.e2e"
   },
   "status": "todo",
   "blocked_by": [],

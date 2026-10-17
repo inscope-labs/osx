@@ -1,8 +1,8 @@
 {
   "id": "AUT-042",
-  "stage": "S5",
-  "title": "Implement the non-exportable key provider",
-  "description": "Implement the non-exportable key provider.",
+  "stage": "S6",
+  "title": "ProxySigner against the chosen key host",
+  "description": "ProxySigner against the chosen key host.",
   "spec_refs": [
     "ATA-06:03"
   ],
@@ -11,19 +11,20 @@
     "AUT-041"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/keys/standard.ts"
+    "impl/core/amk-authority/packages/shared-crypto/src/proxy-signer.ts"
   ],
   "acceptance": [
-    "Provider implements the key interface and never exposes private bytes",
+    "Implements the Signer interface with Ed25519 and never exposes private bytes",
+    "Complete implementation, not a stub",
     "Signing works end to end through it"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- key-standard"
+    "command": "pnpm --filter @amk-authority/shared-crypto test -- proxy-signer"
   },
   "status": "todo",
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "Correction: imported plan left the Standard signer stubbed, which cannot satisfy Standard."
 }

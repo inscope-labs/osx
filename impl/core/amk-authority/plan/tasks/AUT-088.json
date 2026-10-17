@@ -1,0 +1,22 @@
+{
+  "id": "AUT-088",
+  "stage": "S9",
+  "title": "Conformance report",
+  "description": "Conformance report.",
+  "spec_refs": [],
+  "depends_on": [
+    "AUT-057"
+  ],
+  "deliverables": [],
+  "acceptance": [
+    "Report attached to the release covering Basic and Standard"
+  ],
+  "verify": {
+    "method": "manual"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": ""
+}

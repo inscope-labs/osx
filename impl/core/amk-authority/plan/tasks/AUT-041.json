@@ -1,6 +1,6 @@
 {
   "id": "AUT-041",
-  "stage": "S5",
+  "stage": "S6",
   "title": "Decide the Standard key host",
   "description": "Decide the Standard key host.",
   "spec_refs": [
@@ -11,8 +11,8 @@
   ],
   "deliverables": [],
   "acceptance": [
-    "Host for non-exportable keys is chosen (Oracle VM with OS keystore, external key service, or other)",
-    "Effect on the Worker deployment is recorded"
+    "Host chosen (for example OpenBao Transit on the Oracle VM, a cloud key service, or a hardware token) with Ed25519 support",
+    "Confirmed to meet the non-exportable requirement in ATA-06:03; Worker secrets do not qualify"
   ],
   "verify": {
     "method": "manual"

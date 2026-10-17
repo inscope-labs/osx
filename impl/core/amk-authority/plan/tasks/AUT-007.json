@@ -11,7 +11,7 @@
   "acceptance": [
     "File exists and states that it is the only instruction file for this directory and overrides the repository-root AGENTS.md",
     "Contains no Kotlin or Android rules",
-    "Covers language, tests location, branch-per-task, manual-only workflows, spec conflicts reported not patched"
+    "Covers TypeScript and pnpm, packages layout, tests inside packages, branch-per-task, manual-only workflows, spec conflicts reported not patched"
   ],
   "verify": {
     "method": "files"

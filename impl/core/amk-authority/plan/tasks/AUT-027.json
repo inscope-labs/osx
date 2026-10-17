@@ -1,27 +1,27 @@
 {
   "id": "AUT-027",
   "stage": "S3",
-  "title": "Verifier library",
-  "description": "Verifier library.",
+  "title": "Verifier pipeline",
+  "description": "Verifier pipeline.",
   "spec_refs": [
     "ATA-03:01",
     "ATA-03:02",
     "ATA-03:03"
   ],
   "depends_on": [
-    "AUT-017",
-    "AUT-023"
+    "AUT-071",
+    "AUT-015"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/verification/index.ts"
+    "impl/core/amk-authority/packages/client-sdk/src/verify.ts"
   ],
   "acceptance": [
-    "Verifier package checks issuer, signature, scope, validity and binding",
-    "Exports a single entry point usable by controller and router"
+    "Pipeline order: kid resolution, signature, window, presentation proof, revocation, session context",
+    "Verdict is opaque: callers see only ok or not ok"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- verifier"
+    "command": "pnpm --filter @amk-authority/client-sdk test -- verify"
   },
   "status": "todo",
   "blocked_by": [],

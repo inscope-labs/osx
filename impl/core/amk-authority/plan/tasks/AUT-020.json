@@ -1,11 +1,11 @@
 {
   "id": "AUT-020",
   "stage": "S2",
-  "title": "Proof-of-possession challenge and response",
-  "description": "Proof-of-possession challenge and response.",
+  "title": "Deterministic proof of possession",
+  "description": "Deterministic proof of possession.",
   "spec_refs": [
     "ATA-02:03",
-    "DV-ATA-05",
+    "INV-ATA-01",
     "O-ATA-07"
   ],
   "depends_on": [
@@ -13,20 +13,19 @@
     "AUT-014"
   ],
   "deliverables": [
-    "impl/core/amk-authority/src/issuance/pop.ts"
+    "impl/core/amk-authority/packages/authority/src/issuance/pop.ts"
   ],
   "acceptance": [
-    "Challenge uses DV-ATA-05 length",
-    "Wrong key and replayed responses are rejected",
-    "Challenge format decision from O-ATA-07 recorded"
+    "PoP is an Ed25519 signature over the JCS value with typ amk-ata-issuance-pop-v1, aud, session_public_key, session_handle, epoch, role, request_nonce and request_timestamp",
+    "Wrong key, tampered field, wrong audience and replayed request nonce are all rejected"
   ],
   "verify": {
     "method": "command",
-    "command": "pnpm test -- pop"
+    "command": "pnpm --filter @amk-authority/authority test -- pop"
   },
   "status": "todo",
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "Correction: imported message omitted typ and aud (cross-Authority replay) and included declared_roles."
 }

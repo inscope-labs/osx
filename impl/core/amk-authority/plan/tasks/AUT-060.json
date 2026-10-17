@@ -1,16 +1,16 @@
 {
   "id": "AUT-060",
-  "stage": "S8",
-  "title": "Review and close the plan",
-  "description": "Review and close the plan.",
+  "stage": "S9",
+  "title": "Post-release review and plan close",
+  "description": "Post-release review and plan close.",
   "spec_refs": [],
   "depends_on": [
     "AUT-059"
   ],
   "deliverables": [],
   "acceptance": [
-    "Open and dropped tasks reviewed",
-    "Plan archived or rolled into the next version"
+    "Check whether the spec resolutions held and whether new O-ATA items are needed",
+    "Open, blocked and dropped tasks reviewed"
   ],
   "verify": {
     "method": "manual"
