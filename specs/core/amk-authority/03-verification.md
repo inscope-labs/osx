@@ -9,36 +9,45 @@
 ## ATA-03:01 Verification Obligations
 
 - A client receiving a role attestation MUST verify:
-  - the signature against the pinned Authority public key,
-  - the validity window (`valid_from` <= now <= `valid_to`),
-  - the nonce freshness where applicable,
+  - the signature, using the key named by `kid` in the signed metadata (`ATA-03:02`),
+  - the validity window (`ATA-03:03`),
+  - the presentation proof (`ATA-03:04`),
   - the revocation status (`ATA-04`),
-  - the session handle and epoch match the current session context.
+  - that the session handle and epoch match the current session context (`ATA-03:06`).
 - A client MUST reject an attestation that fails any check.
 
 ## ATA-03:02 Signature Verification
 
-- The client MUST use the Authority's pinned public key to verify the signature.
-- The client MUST verify the signature over the canonical serialization of the attestation fields.
+- The client MUST obtain the verification key by `kid` from the Authority's signed metadata, verified against the pinned root key (`ATA-01:07`).
+- The client MUST reject the attestation if the `kid` is absent from the metadata, the key's status is `revoked`, or the attestation's `valid_from` is outside the key's `not_before` and `not_after`.
+- The client MUST verify the signature over the canonical serialization of the attestation fields, using the algorithm the metadata lists for that key.
 - A signature verification failure MUST result in opaque denial. [INV-ATA-04]
 
 ## ATA-03:03 Validity Window Verification
 
-- The client MUST check that the current time is within `valid_from` and `valid_to`.
+- The client MUST check that `valid_to` has not passed. No clock tolerance applies to `valid_to`.
+- The client MAY allow the clock skew tolerance (`DV-ATA-07`) when checking that `valid_from` has been reached.
 - The client MUST reject an attestation outside its validity window.
-- The client SHOULD allow a small clock skew tolerance as defined in the defaults.
 
-## ATA-03:04 Nonce Freshness
+## ATA-03:04 Presentation Proof
 
-- Where the client tracks nonces, it MUST reject an attestation with a replayed nonce.
-- The nonce freshness window is defined in the defaults.
-- The client MAY skip nonce tracking if the attestation is single-use or short-lived.
+- A verifier MUST obtain proof that the presenter holds the private key for `subject_public_key`.
+- The verifier supplies a fresh `verifier_nonce` of at least `DV-ATA-05` bits. It is single-use and expires after `DV-ATA-04`.
+- The presenter returns an Ed25519 signature by the session private key over the JCS (`ATA-01:02`) serialization of:
+  - `typ`: the string `amk-ata-presentation-v1`,
+  - `aud`: the verifier's identifier,
+  - `attestation_nonce`: the attestation's `nonce`,
+  - `verifier_nonce`,
+  - `timestamp`.
+- The verifier MUST reject a missing or invalid proof, and a reused or expired `verifier_nonce`.
+- The attestation `nonce` identifies the attestation and is not a replay token. The same attestation MAY be presented again with a fresh proof.
 
 ## ATA-03:05 Revocation Status
 
-- The client MUST check the revocation list when available. [INV-ATA-05]
-- If the client's revocation list is older than `R_MAX`, it MUST reject the attestation.
-- If no revocation list is available, the client MAY proceed under the Basic profile, but MUST reject under Standard and High profiles.
+- The client MUST check revocation status on every verification. [INV-ATA-05]
+- If the client's revocation list is older than `R_MAX`, or no revocation list is available, it MUST NOT accept the attestation as current.
+- The relying party's policy MAY define suspension or restricted handling for that case. Absent such a policy, the client MUST deny.
+- Under High, the client MUST also query the real-time status endpoint before relying on the attestation (`ATA-04:04`), and MUST reject it if the endpoint cannot be reached or its answer is not current.
 
 ## ATA-03:06 Session Context Verification
 
@@ -50,15 +59,12 @@
 - The controller is a verifying client: it applies ATA-03:01 to ATA-03:06 before relying on an attestation. What a verified attestation permits is decided by controller policy, not by the attestation.
 - The controller treats a failed verification as opaque denial. [INV-ATA-04]
 - The controller MUST NOT distinguish failure causes to unauthenticated parties.
-- The controller MUST log verification failures for audit.
+- The controller MUST log verification failures for audit, and MUST redact secrets and personal data from those logs.
 
 ## ATA-03:08 Summary
 
-- Clients verify signature, validity window, nonce freshness, revocation status, and session context. A failed verification is opaque denial. Controller behavior follows the same rules.
+- Clients verify signature, validity window, presentation proof, revocation status, and session context. A failed verification is opaque denial. Missing or stale revocation data is never treated as "not revoked". Controller behavior follows the same rules.
 
 ---
 
-## Defaults needed
-
-- Maximum revocation list age `R_MAX` (default: 300 seconds) [DV-ATA-02]
-- Clock skew tolerance (default: 30 seconds) [DV-ATA-07]
+Defaults: values for `DV-ATA-nn` are stated in `amk-authority.md` (Defaults).

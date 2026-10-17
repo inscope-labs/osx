@@ -16,7 +16,7 @@
 
 - Trusted for the statements it signs.
 - Untrusted for enforcement: the controller enforces.
-- Clients verify signatures against a pinned Authority public key.
+- Clients verify attestations against signing keys published in the Authority's signed metadata, which they verify against a pinned root key (`ATA-01:07`).
 - The Authority verifies proof-of-possession before issuance.
 
 ## ATA-00:03 Self-Containment
@@ -26,16 +26,17 @@
 
 ## ATA-00:04 Invariants
 
-- INV-ATA-01: No attestation without proof-of-possession.
-- INV-ATA-02: No attestation for an undeclared role when a role list is supplied.
+- INV-ATA-01: No attestation without proof-of-possession of the session private key.
+- INV-ATA-02: No attestation for a role outside the session's declared role list, which the Authority obtains only from the controller's session record (`ATA-02:02`). No session record, no attestation.
 - INV-ATA-03: Long-term identity is never revealed to session participants.
-- INV-ATA-04: Failed verification is opaque denial.
-- INV-ATA-05: Revocation is checked when a list is available.
-- INV-ATA-06: `valid_to` never exceeds end of epoch plus grace window `G`.
+- INV-ATA-04: Failed verification is opaque denial; clients do not distinguish failure causes to unauthenticated parties.
+- INV-ATA-05: Revocation status is checked on every verification. Unavailable or stale revocation data is never treated as "not revoked".
+- INV-ATA-06: `valid_from` is never before the start of the epoch, and `valid_to` never exceeds the end of the epoch plus grace window `G`.
+- INV-ATA-07: Only attestations signed by a key that the signed metadata lists as `active` or `retired` are accepted.
 
 ## ATA-00:05 Relationship to Other Components
 
-- amk-controller: consumes attestations; verifies them under ATA-03 before relying on them and decides their effect under its own policy.
+- amk-controller: consumes attestations; verifies them under ATA-03 before relying on them and decides their effect under its own policy. It also supplies the session record (`ATA-02:02`).
 - amk-console: no direct interaction.
 - Entities: request attestations for assumed roles.
 
