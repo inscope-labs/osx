@@ -6,7 +6,8 @@
   "spec_refs": [
     "ATA-01:07",
     "ATA-03:02",
-    "DV-ATA-08"
+    "DV-ATA-08",
+    "INV-ATA-07"
   ],
   "depends_on": [
     "AUT-017",
@@ -18,7 +19,9 @@
   "acceptance": [
     "Verifies the root signature and rejects a lower metadata_version",
     "Caches no longer than DV-ATA-08 and rejects when refresh fails with an older cache",
-    "Rejects unknown or revoked kid"
+    "Rejects unknown or revoked kid",
+    "Rejects a metadata document that lists a kid twice or whose kid differs from the thumbprint of its public key",
+    "Accepts an attestation only when its key is listed as active or retired (INV-ATA-07)"
   ],
   "verify": {
     "method": "command",

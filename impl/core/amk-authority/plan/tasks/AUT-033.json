@@ -16,5 +16,8 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "Router and Router Factory were removed from the Authority spec; controller behavior is AUT-074.",
-  "findings": ""
+  "findings": "",
+  "superseded_by": [
+    "AUT-074"
+  ]
 }

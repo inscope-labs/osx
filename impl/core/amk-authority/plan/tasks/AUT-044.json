@@ -17,5 +17,8 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "Superseded by AUT-067 (rotation moved to S1 because Basic already needs the signed key set).",
-  "findings": ""
+  "findings": "",
+  "superseded_by": [
+    "AUT-067"
+  ]
 }

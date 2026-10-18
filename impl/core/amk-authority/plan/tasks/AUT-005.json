@@ -17,5 +17,8 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "Resolved: signed key set with kid and statuses (ATA-01:07); landing tracked by AUT-061.",
-  "findings": ""
+  "findings": "",
+  "superseded_by": [
+    "AUT-061"
+  ]
 }

@@ -6,12 +6,14 @@
   "spec_refs": [],
   "depends_on": [
     "AUT-067",
-    "AUT-031"
+    "AUT-031",
+    "AUT-090"
   ],
   "deliverables": [],
   "acceptance": [
     "Runbooks cover key rotation, emergency revocation, profile downgrade and restore",
-    "Rollback instructions publish a higher metadata_version"
+    "Rollback instructions publish a higher metadata_version",
+    "Links to docs/trust-anchor.md for initial root key provisioning and root re-pinning"
   ],
   "verify": {
     "method": "manual"

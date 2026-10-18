@@ -1,0 +1,32 @@
+{
+  "id": "AUT-089",
+  "stage": "S3",
+  "title": "No verdict caching in the SDK",
+  "description": "No verdict caching in the SDK.",
+  "spec_refs": [
+    "INV-ATA-05",
+    "ATA-03:05",
+    "ATA-04:05"
+  ],
+  "depends_on": [
+    "AUT-027",
+    "AUT-032"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/packages/client-sdk/test/no-verdict-cache.test.ts"
+  ],
+  "acceptance": [
+    "Verifying the same attestation twice, with a revocation published between the calls, accepts the first and rejects the second",
+    "No cached signature, window, proof or revocation result is reused across calls",
+    "The test fails if any cache is introduced"
+  ],
+  "verify": {
+    "method": "command",
+    "command": "pnpm --filter @amk-authority/client-sdk test -- no-verdict-cache"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "From the repository audit of 2026-10-17: cached verification results must not bypass a newly applicable revocation."
+}

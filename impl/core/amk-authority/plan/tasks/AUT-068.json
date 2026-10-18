@@ -17,7 +17,9 @@
   "acceptance": [
     "Records follow ATA-06:10 (JSON Lines, SHA-256 hash chain, defined event types)",
     "Redaction is enforced at write time: no keys, proof material, long-term identity or personal data",
-    "Chain head is serialized in the Durable Object"
+    "Chain head is serialized in the Durable Object",
+    "An operation does not take effect if its audit record cannot be committed; the caller receives an opaque error (ATA-06:10)",
+    "A record's outcome is never success before the operation has taken effect"
   ],
   "verify": {
     "method": "command",

@@ -17,5 +17,8 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "Resolved: role list comes from the controller's session record (ATA-02:02); landing tracked by AUT-061.",
-  "findings": ""
+  "findings": "",
+  "superseded_by": [
+    "AUT-061"
+  ]
 }

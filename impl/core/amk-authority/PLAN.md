@@ -4,28 +4,28 @@
 
 Stages are boundaries only. All work and all verification live in atomic tasks. A stage's state is derived from its tasks and is never stored.
 
-**Tasks:** 88 total · todo 73 · in_progress 0 · blocked 5 · done 0 · dropped 10
+**Tasks:** 90 total · todo 75 · in_progress 0 · blocked 5 · done 0 · dropped 10
 
 ## How to change this plan
 
 - **Add a task:** create `plan/tasks/AUT-nnn.json` with the next free number (IDs are never reused or reassigned) and fill every field.
 - **Adjust a task:** edit its file. Moving it to another stage is a one-field change (`stage`).
-- **Remove a task:** delete the file only if it was never started. Otherwise set `status` to `dropped` with a `dropped_reason`, so history stays traceable.
+- **Remove a task:** delete the file only if it was never started. Otherwise set `status` to `dropped` with a `dropped_reason` and a `superseded_by` list (empty if nothing replaces it), and repoint any task that depended on it.
 - **Add, reorder or remove a stage:** edit `plan/stages.json`. A stage can only be removed when no task refers to it.
-- **Complete a task:** all acceptance statements are met, its verification passes, and `status` is `done` with `evidence.pr` or `evidence.commit` and `evidence.verified_at`. The `set` command writes this for you.
-- Run `check` before every plan PR. A task cannot be `in_progress` or `done` while a dependency is open, or while an earlier gate stage is incomplete.
+- **Complete a task:** all acceptance statements are met and its verification passes. `set ID done --pr <url> --commit <sha> --by <name>` runs the verification and records the evidence.
+- Run `check` before every plan PR. A task cannot be `in_progress` or `done` while a dependency is open, or while an earlier gate stage is incomplete. Run `coverage` to see which normative specification items no task cites.
 
 ## Statuses
 
 | Status | Meaning | Required |
 |---|---|---|
 | `todo` | Not started | none |
-| `in_progress` | Being worked on | dependencies done or dropped; earlier gate stages complete |
+| `in_progress` | Being worked on | dependencies done; earlier gate stages complete |
 | `blocked` | Cannot proceed | `blocked_by` (task IDs, open items, or a decision) |
-| `done` | Acceptance met and verified | `evidence.pr` or `evidence.commit`, `evidence.verified_at`, deliverables present |
-| `dropped` | No longer needed | `dropped_reason` |
+| `done` | Acceptance met and verified | `evidence`: PR URL, commit SHA, `verified_at`, `verified_by`, `verification` (method and pass); deliverables present |
+| `dropped` | No longer needed | `dropped_reason`, `superseded_by`; no live task may depend on it |
 
-Verification methods: `manual` (reviewer confirms every acceptance statement in the PR), `files` (deliverables exist), `command` (`verify ID` runs `verify.command` from `impl/core/amk-authority`).
+Verification methods: `manual` (reviewer confirms every acceptance statement; `evidence.notes` maps each to evidence), `files` (deliverables exist), `command` (`verify ID` runs `verify.command` from `impl/core/amk-authority`).
 
 ## S0: Spec landing and project foundation  (gate)
 
@@ -54,7 +54,7 @@ Verification methods: `manual` (reviewer confirms every acceptance statement in 
 
 ## S1: Keys, serialization, metadata and storage
 
-**State:** todo (0/13 done)
+**State:** todo (0/14 done)
 
 **Goal:** Build the data model, canonical serialization, key handling, signed metadata and the audit writer that everything else depends on.
 
@@ -67,7 +67,7 @@ Verification methods: `manual` (reviewer confirms every acceptance statement in 
 | `AUT-014` | Ed25519 signing, verification and key identifiers | todo | AUT-013 | command | ATA-01:05, ATA-01:07 |
 | `AUT-015` | Validity window rules | todo | AUT-012 | command | ATA-01:03, ATA-03:03, DV-ATA-01, DV-ATA-03, DV-ATA-07 |
 | `AUT-016` | Attestation nonce generation | todo | AUT-012 | command | ATA-01:04 |
-| `AUT-017` | Publish test vector set v1 | todo | AUT-013, AUT-014, AUT-015 | files | ATA-01:06 |
+| `AUT-017` | Publish test vector set v1 | todo | AUT-013, AUT-014, AUT-015 | files | ATA-01:02, ATA-01:05, ATA-01:07 |
 | `AUT-018` | Run vectors in the manual CI workflow | todo | AUT-017, AUT-010 | command | - |
 | `AUT-025` | Signer interface and software signer | todo | AUT-014 | command | ATA-01:05, ATA-06:02 |
 | `AUT-045` | Signed metadata document and endpoint | todo | AUT-025, AUT-064 | command | ATA-01:07, DV-ATA-08, O-ATA-08 |
@@ -75,6 +75,7 @@ Verification methods: `manual` (reviewer confirms every acceptance statement in 
 | `AUT-066` | Indexes and unique constraints as atomic guards | todo | AUT-065 | files | ATA-02:02, ATA-02:07 |
 | `AUT-067` | Metadata publication and key rotation | todo | AUT-045 | command | ATA-01:07, O-ATA-01 |
 | `AUT-068` | Audit writer with hash chain and redaction | todo | AUT-065, AUT-013 | command | ATA-06:10, INV-ATA-03 |
+| `AUT-090` | Document root key provisioning and trust-anchor pinning | todo | AUT-045, AUT-067 | files | ATA-01:07, O-ATA-05 |
 
 ## S2: Issuance (Basic)
 
@@ -99,7 +100,7 @@ Verification methods: `manual` (reviewer confirms every acceptance statement in 
 
 ## S3: Verification and client SDK
 
-**State:** todo (0/7 done)
+**State:** todo (0/8 done)
 
 **Goal:** Implement verification once, reused by the controller and any client.
 
@@ -107,14 +108,15 @@ Verification methods: `manual` (reviewer confirms every acceptance statement in 
 
 | Task | Title | Status | Depends on | Verify | Spec refs |
 |---|---|---|---|---|---|
-| `AUT-027` | Verifier pipeline | todo | AUT-071, AUT-015 | command | ATA-03:01, ATA-03:02, ATA-03:03 |
+| `AUT-027` | Verifier pipeline | todo | AUT-071, AUT-015 | command | ATA-03:01, ATA-03:02, ATA-03:03, INV-ATA-05, INV-ATA-07 |
 | `AUT-028` | Presentation proof and session context verification | todo | AUT-027 | command | ATA-03:04, ATA-03:06, DV-ATA-05 |
 | `AUT-033` | Router and factory behavior in the verifier | dropped | - | manual | - |
 | `AUT-034` | Fail-closed negative suite for the verifier | todo | AUT-028, AUT-032, AUT-073 | command | - |
-| `AUT-071` | SDK metadata resolver | todo | AUT-017, AUT-045 | command | ATA-01:07, ATA-03:02, DV-ATA-08 |
+| `AUT-071` | SDK metadata resolver | todo | AUT-017, AUT-045 | command | ATA-01:07, ATA-03:02, DV-ATA-08, INV-ATA-07 |
 | `AUT-072` | Pluggable verifier nonce store | todo | AUT-028, AUT-066 | command | ATA-03:04 |
 | `AUT-073` | Peer profile rule in the SDK | todo | AUT-071 | command | ATA-06:07, ATA-06:05 |
 | `AUT-074` | Controller integration contract and failure-log hook | todo | AUT-027 | files | ATA-03:07 |
+| `AUT-089` | No verdict caching in the SDK | todo | AUT-027, AUT-032 | command | INV-ATA-05, ATA-03:05, ATA-04:05 |
 
 ## S4: Revocation
 
@@ -128,8 +130,8 @@ Verification methods: `manual` (reviewer confirms every acceptance statement in 
 |---|---|---|---|---|---|
 | `AUT-029` | Revocation list structure and signing | todo | AUT-014, AUT-045 | command | ATA-04:01 |
 | `AUT-030` | Revocation request path | todo | AUT-062, AUT-029, AUT-068 | command | ATA-04:02, ATA-06:10 |
-| `AUT-031` | Revocation list publication | todo | AUT-030 | command | ATA-04:01, DV-ATA-06 |
-| `AUT-032` | SDK revocation handling | todo | AUT-027, AUT-029 | command | ATA-03:05, ATA-04:03, DV-ATA-02, INV-ATA-05 |
+| `AUT-031` | Revocation list publication | todo | AUT-030 | command | ATA-04:01, DV-ATA-06, ATA-04:05 |
+| `AUT-032` | SDK revocation handling | todo | AUT-027, AUT-029 | command | ATA-03:05, ATA-04:03, DV-ATA-02, INV-ATA-05, ATA-04:05 |
 
 ## S5: Basic integration and conformance  (gate)
 
@@ -195,7 +197,7 @@ Verification methods: `manual` (reviewer confirms every acceptance statement in 
 |---|---|---|---|---|---|
 | `AUT-078` | Dashboards | todo | AUT-046 | manual | - |
 | `AUT-079` | Alerts | todo | AUT-078 | manual | - |
-| `AUT-080` | Runbooks | todo | AUT-067, AUT-031 | manual | - |
+| `AUT-080` | Runbooks | todo | AUT-067, AUT-031, AUT-090 | manual | - |
 | `AUT-081` | Backup and restore drill | todo | AUT-075, AUT-080 | manual | - |
 | `AUT-082` | Threat model | todo | AUT-046 | manual | - |
 | `AUT-083` | Fuzz the parsers and verifiers | todo | AUT-028, AUT-020 | manual | - |

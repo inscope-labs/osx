@@ -18,7 +18,8 @@
   "acceptance": [
     "POST /v1/revocations accepts only the controller or the operator over an authenticated channel",
     "Requests from session participants are rejected",
-    "Every revocation writes an audit record and never alters earlier records"
+    "Every revocation writes an audit record and never alters earlier records",
+    "A revocation does not take effect if its audit record cannot be committed; the caller receives an opaque error"
   ],
   "verify": {
     "method": "command",

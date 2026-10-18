@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: "check = validate plan and confirm PLAN.md is current; status = counts per stage; verify = run one task's verification; render = regenerate PLAN.md and commit it"
+        description: "check = validate the plan, require full specification coverage and confirm PLAN.md is current; status = counts per stage; coverage = list uncited normative specification items; selftest = run the plan tool's own tests; verify = run one task's verification; render = regenerate PLAN.md and commit it"
         type: choice
         required: true
         default: check
-        options: [check, status, verify, render]
+        options: [check, status, coverage, selftest, verify, render]
       task_id:
         description: "Task ID for action=verify (for example AUT-007)"
         type: string
@@ -46,7 +46,16 @@ jobs:
         if: ${{ inputs.action == 'check' }}
         run: |
           python3 "$TOOL" check
+          python3 "$TOOL" coverage --fail
           python3 "$TOOL" render --check
+
+      - name: Coverage report
+        if: ${{ inputs.action == 'coverage' }}
+        run: python3 "$TOOL" coverage
+
+      - name: Self-test the plan tool
+        if: ${{ inputs.action == 'selftest' }}
+        run: python3 -m unittest discover -s impl/core/amk-authority/plan -p 'test_*.py' -v
 
       - name: Status
         if: ${{ inputs.action == 'status' || inputs.action == 'check' }}

@@ -16,5 +16,6 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "Resolved: audit format and retention defined (ATA-06:10, DV-ATA-10).",
-  "findings": ""
+  "findings": "",
+  "superseded_by": []
 }

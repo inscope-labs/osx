@@ -17,5 +17,8 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "Resolved: pull-only list, fail closed under every profile (ATA-04:01, ATA-04:03); landing tracked by AUT-061.",
-  "findings": ""
+  "findings": "",
+  "superseded_by": [
+    "AUT-061"
+  ]
 }
