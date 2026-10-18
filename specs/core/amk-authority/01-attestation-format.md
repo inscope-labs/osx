@@ -64,6 +64,7 @@
 - The Authority signs attestations and revocation lists only with a key whose `status` is `active`. A `retired` key signs nothing new; attestations it signed stay valid until their own `valid_to`. A `revoked` key's signatures MUST be rejected.
 - Rotation: publish the new key as `active`, then mark the old key `retired` at the switch. The old key MAY be removed once every attestation it signed has expired. A compromised key is marked `revoked`.
 - Clients MUST verify the metadata signature with a pinned root key, MUST reject a `metadata_version` lower than the last one they saw, and MUST reject an attestation whose `kid` is absent from the metadata or whose key status is `revoked`.
+- Each `kid` in `signing_keys` MUST be unique, and MUST equal the thumbprint of its `public_key`. Clients MUST reject a metadata document that lists a `kid` more than once or whose `kid` does not match its key, and MUST NOT guess between ambiguous keys.
 - Clients MUST refresh metadata when their cached copy is older than `DV-ATA-08`, and MUST reject attestations when that refresh fails and the cached copy is still older than `DV-ATA-08`.
 - Servers SHOULD set `Cache-Control: max-age` no larger than `DV-ATA-08` (RFC 9111).
 

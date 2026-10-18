@@ -84,5 +84,6 @@
 - Each record MUST contain `seq`, `ts` (RFC 3339), `event` (`issue`, `revoke`, `bind`, `key_status`, `metadata_publish`, or `reject`), `outcome`, `prev_hash` and `hash`. It carries `nonce`, `kid`, `session_handle`, `epoch` and `role` where they apply.
 - `hash` is the SHA-256 (FIPS 180-4) of the JCS serialization of the record without `hash`, and `prev_hash` is the previous record's `hash`.
 - Records MUST NOT contain secrets, private keys, long-term identity, or personal data. [INV-ATA-03]
+- An operation that requires an audit record MUST NOT take effect unless that record is committed. If the record cannot be committed, the Authority MUST fail the operation with an opaque error. A record's `outcome` MUST reflect the actual result and MUST NOT be `success` before the operation has taken effect.
 - Under High, the trail MUST be protected by hardware and the Authority MUST periodically sign a checkpoint of `seq` and `hash` with a signing key.
 - Minimum retention is stated in `DV-ATA-10`. Revocation never alters or deletes audit records.

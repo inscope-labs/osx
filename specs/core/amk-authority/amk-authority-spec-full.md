@@ -5,14 +5,14 @@ Edit the source files, then re-run the merge-spec workflow.
 Source files (sha256, first 12 hex):
   amk-authority.md                         22376ff29599
   00-foundations.md                        7b2748ae414f
-  01-attestation-format.md                 494028b2f453
+  01-attestation-format.md                 c851cb6f5e0c
   02-issuance.md                           eb44fbfd3331
   03-verification.md                       5a1b7c43b3f6
   04-revocation.md                         2433eb0a3f2e
   05-identity-binding.md                   952e0f4570bc
-  06-profiles.md                           e152210b5d20
+  06-profiles.md                           1347797658e9
   99-open-items.md                         ef22466ac894
-Merged content hash: a14683cee62e
+Merged content hash: 76d7c611e1c1
 -->
 <a id="file-amk-authority"></a>
 
@@ -326,6 +326,7 @@ Not yet updated: `amk-test-matrix`, `ssot-index`. Discontinued: `amk-contracts`,
 - The Authority signs attestations and revocation lists only with a key whose `status` is `active`. A `retired` key signs nothing new; attestations it signed stay valid until their own `valid_to`. A `revoked` key's signatures MUST be rejected.
 - Rotation: publish the new key as `active`, then mark the old key `retired` at the switch. The old key MAY be removed once every attestation it signed has expired. A compromised key is marked `revoked`.
 - Clients MUST verify the metadata signature with a pinned root key, MUST reject a `metadata_version` lower than the last one they saw, and MUST reject an attestation whose `kid` is absent from the metadata or whose key status is `revoked`.
+- Each `kid` in `signing_keys` MUST be unique, and MUST equal the thumbprint of its `public_key`. Clients MUST reject a metadata document that lists a `kid` more than once or whose `kid` does not match its key, and MUST NOT guess between ambiguous keys.
 - Clients MUST refresh metadata when their cached copy is older than `DV-ATA-08`, and MUST reject attestations when that refresh fails and the cached copy is still older than `DV-ATA-08`.
 - Servers SHOULD set `Cache-Control: max-age` no larger than `DV-ATA-08` (RFC 9111).
 
@@ -704,6 +705,7 @@ Defaults: values for `DV-ATA-nn` are stated in `amk-authority.md` (Defaults).
 - Each record MUST contain `seq`, `ts` (RFC 3339), `event` (`issue`, `revoke`, `bind`, `key_status`, `metadata_publish`, or `reject`), `outcome`, `prev_hash` and `hash`. It carries `nonce`, `kid`, `session_handle`, `epoch` and `role` where they apply.
 - `hash` is the SHA-256 (FIPS 180-4) of the JCS serialization of the record without `hash`, and `prev_hash` is the previous record's `hash`.
 - Records MUST NOT contain secrets, private keys, long-term identity, or personal data. [INV-ATA-03]
+- An operation that requires an audit record MUST NOT take effect unless that record is committed. If the record cannot be committed, the Authority MUST fail the operation with an opaque error. A record's `outcome` MUST reflect the actual result and MUST NOT be `success` before the operation has taken effect.
 - Under High, the trail MUST be protected by hardware and the Authority MUST periodically sign a checkpoint of `seq` and `hash` with a signing key.
 - Minimum retention is stated in `DV-ATA-10`. Revocation never alters or deletes audit records.
 
