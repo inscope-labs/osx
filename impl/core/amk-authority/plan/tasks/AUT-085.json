@@ -7,12 +7,14 @@
   "depends_on": [
     "AUT-057"
   ],
-  "deliverables": [],
+  "deliverables": [
+    "impl/core/amk-authority/docs/versioning.md"
+  ],
   "acceptance": [
     "Authority and SDK use semver and metadata_version continuity is documented against the spec version"
   ],
   "verify": {
-    "method": "manual"
+    "method": "files"
   },
   "status": "todo",
   "blocked_by": [],

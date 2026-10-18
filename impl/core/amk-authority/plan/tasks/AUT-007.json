@@ -1,8 +1,8 @@
 {
   "id": "AUT-007",
   "stage": "S0",
-  "title": "Create AGENTS.md local to impl/core/amk-authority",
-  "description": "Create AGENTS.md local to impl/core/amk-authority.",
+  "title": "Install the worker and supervisor AGENTS.md for impl/core/amk-authority",
+  "description": "Install the worker and supervisor AGENTS.md for impl/core/amk-authority.",
   "spec_refs": [],
   "depends_on": [],
   "deliverables": [
@@ -11,7 +11,9 @@
   "acceptance": [
     "File exists and states that it is the only instruction file for this directory and overrides the repository-root AGENTS.md",
     "Contains no Kotlin or Android rules",
-    "Covers TypeScript and pnpm, packages layout, tests inside packages, branch-per-task, manual-only workflows, spec conflicts reported not patched"
+    "Defines the operator, Agentic Worker and Agentic Supervisor roles",
+    "Lists the closed set of files a worker may read",
+    "Contains the engineering rules, the companion-test rule, the submission format and the gate names"
   ],
   "verify": {
     "method": "files"

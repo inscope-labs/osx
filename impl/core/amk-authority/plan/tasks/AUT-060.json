@@ -19,5 +19,6 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": ""
+  "findings": "",
+  "executor": "operator"
 }

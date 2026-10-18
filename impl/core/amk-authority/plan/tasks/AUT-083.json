@@ -8,12 +8,15 @@
     "AUT-028",
     "AUT-020"
   ],
-  "deliverables": [],
+  "deliverables": [
+    "impl/core/amk-authority/packages/conformance/test/fuzz.test.ts"
+  ],
   "acceptance": [
     "Canonicalizer, request parser and proof verifiers are fuzzed without a crash or acceptance of invalid input"
   ],
   "verify": {
-    "method": "manual"
+    "method": "command",
+    "command": "pnpm --filter @amk-authority/conformance test -- fuzz"
   },
   "status": "todo",
   "blocked_by": [],

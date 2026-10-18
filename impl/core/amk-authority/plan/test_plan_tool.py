@@ -154,6 +154,67 @@ class PlanToolTests(unittest.TestCase):
         code, out = self.run_tool("render", "--check")
         self.assertNotEqual(code, 0)
 
+    def test_next_lists_ready_and_stage_eligible(self):
+        code, out = self.run_tool("next", "--json")
+        self.assertEqual(code, 0, out)
+        data = json.loads(out)
+        self.assertEqual([r["id"] for r in data["ready"]], ["AUT-007", "AUT-061"])
+        s0 = data["stage_eligible"]["S0"]
+        self.assertEqual(s0["tasks"][0], "AUT-007")
+        self.assertIn("AUT-011", s0["operator_remaining"])
+        self.assertFalse(s0["completes_stage"])
+
+    def test_next_assume_done_unlocks_dependents(self):
+        code, out = self.run_tool("next", "--assume-done", "AUT-007", "--json")
+        self.assertEqual(code, 0, out)
+        self.assertIn("AUT-008", [r["id"] for r in json.loads(out)["ready"]])
+
+    def test_order_rejects_unmet_dependencies_and_gates(self):
+        code, out = self.run_tool("order", "AUT-013")
+        self.assertNotEqual(code, 0)
+        self.assertIn("neither done nor earlier", out)
+        self.assertIn("gate stage", out)
+
+    def test_order_rejects_operator_tasks(self):
+        code, out = self.run_tool("order", "AUT-061")
+        self.assertNotEqual(code, 0)
+        self.assertIn("cannot be given to a worker", out)
+
+    def test_order_individual_and_group_are_deterministic(self):
+        code, out = self.run_tool("order", "AUT-007", "--json")
+        self.assertEqual(code, 0, out)
+        one = json.loads(out)
+        self.assertEqual(one["mode"], "individual")
+        self.assertTrue(one["submission_id"].startswith("AUT-007-"))
+        self.assertTrue(one["upload_to"].endswith(one["submission_id"] + "/"))
+        self.assertEqual(list(one["task_dirs"]), ["AUT-007"])
+        self.assertTrue(one["task_dirs"]["AUT-007"].startswith("AUT-007-"))
+        c1, o1 = self.run_tool("order", "AUT-008", "AUT-007", "--json")
+        c2, o2 = self.run_tool("order", "AUT-007", "AUT-008", "--json")
+        self.assertEqual((c1, o1), (c2, o2))
+        grp = json.loads(o1)
+        self.assertEqual(grp["tasks"], ["AUT-007", "AUT-008"])
+        self.assertEqual(grp["mode"], "group")
+        self.assertIn("impl/core/amk-authority/plan/tasks/AUT-008.json", grp["package"])
+
+    def test_executor_value_is_validated(self):
+        f, t = self.live_task()
+        t["executor"] = "robot"
+        self.write(f, t)
+        code, out = self.run_tool("check")
+        self.assertNotEqual(code, 0)
+        self.assertIn("'executor' must be one of", out)
+
+    def test_worker_task_without_deliverables_is_rejected(self):
+        f, t = self.live_task()
+        t["deliverables"] = []
+        t["verify"] = {"method": "manual"}
+        t.pop("executor", None)
+        self.write(f, t)
+        code, out = self.run_tool("check")
+        self.assertNotEqual(code, 0)
+        self.assertIn("needs at least one deliverable", out)
+
 
 if __name__ == "__main__":
     unittest.main()

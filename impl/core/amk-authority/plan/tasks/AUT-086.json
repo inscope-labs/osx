@@ -21,5 +21,6 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": "Correction: imported rollback republished earlier metadata, which clients reject as a lower metadata_version."
+  "findings": "Correction: imported rollback republished earlier metadata, which clients reject as a lower metadata_version.",
+  "executor": "operator"
 }
