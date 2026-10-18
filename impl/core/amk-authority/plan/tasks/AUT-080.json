@@ -9,14 +9,16 @@
     "AUT-031",
     "AUT-090"
   ],
-  "deliverables": [],
+  "deliverables": [
+    "impl/core/amk-authority/docs/runbooks.md"
+  ],
   "acceptance": [
     "Runbooks cover key rotation, emergency revocation, profile downgrade and restore",
     "Rollback instructions publish a higher metadata_version",
     "Links to docs/trust-anchor.md for initial root key provisioning and root re-pinning"
   ],
   "verify": {
-    "method": "manual"
+    "method": "files"
   },
   "status": "todo",
   "blocked_by": [],

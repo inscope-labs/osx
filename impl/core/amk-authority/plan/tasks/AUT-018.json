@@ -8,7 +8,9 @@
     "AUT-017",
     "AUT-010"
   ],
-  "deliverables": [],
+  "deliverables": [
+    "impl/core/amk-authority/packages/conformance/test/vectors.test.ts"
+  ],
   "acceptance": [
     "Vector runner executes every vector and fails on any mismatch"
   ],

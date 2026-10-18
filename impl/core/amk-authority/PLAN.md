@@ -35,22 +35,22 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 **Exit criteria:** Spec PR merged, AGENTS.md local to this directory in place, toolchain and bindings configured, an empty Worker deployed manually.
 
-| Task | Title | Status | Depends on | Verify | Spec refs |
-|---|---|---|---|---|---|
-| `AUT-001` | Decide signature algorithm and canonical serialization | dropped | - | manual | - |
-| `AUT-002` | Resolve role list format and how it reaches the Authority | dropped | - | manual | - |
-| `AUT-003` | Resolve enrollment of controller and router at first use | dropped | - | manual | - |
-| `AUT-004` | Resolve revocation distribution and unknown-status behavior for Basic | dropped | - | manual | - |
-| `AUT-005` | Resolve signing key rotation scope for Basic | dropped | - | manual | - |
-| `AUT-006` | Specify who may request revocation and how they authenticate | dropped | - | manual | - |
-| `AUT-007` | Create AGENTS.md local to impl/core/amk-authority | todo | - | files | - |
-| `AUT-008` | Scaffold the pnpm workspace with four packages | todo | AUT-007 | files | - |
-| `AUT-009` | Create the Worker and Authority Durable Object skeleton | todo | AUT-008, AUT-063 | command | - |
-| `AUT-010` | Add manual-dispatch workflows for test and deploy | todo | AUT-063, AUT-064 | files | - |
-| `AUT-011` | Deploy the empty Worker manually | todo | AUT-010, AUT-061 | manual | - |
-| `AUT-061` | Land the standards-based specification resolutions | todo | - | manual | ATA-99:01, ATA-99:02 |
-| `AUT-063` | Configure the toolchain | todo | AUT-008 | command | - |
-| `AUT-064` | Configure Wrangler bindings for D1, R2, KV and the Durable Object | todo | AUT-009 | files | - |
+| Task | Title | Status | Executor | Depends on | Verify | Spec refs |
+|---|---|---|---|---|---|---|
+| `AUT-001` | Decide signature algorithm and canonical serialization | dropped | worker | - | manual | - |
+| `AUT-002` | Resolve role list format and how it reaches the Authority | dropped | worker | - | manual | - |
+| `AUT-003` | Resolve enrollment of controller and router at first use | dropped | worker | - | manual | - |
+| `AUT-004` | Resolve revocation distribution and unknown-status behavior for Basic | dropped | worker | - | manual | - |
+| `AUT-005` | Resolve signing key rotation scope for Basic | dropped | worker | - | manual | - |
+| `AUT-006` | Specify who may request revocation and how they authenticate | dropped | worker | - | manual | - |
+| `AUT-007` | Install the worker and supervisor AGENTS.md for impl/core/amk-authority | todo | worker | - | files | - |
+| `AUT-008` | Scaffold the pnpm workspace with four packages | todo | worker | AUT-007 | files | - |
+| `AUT-009` | Create the Worker and Authority Durable Object skeleton | todo | worker | AUT-008, AUT-063 | command | - |
+| `AUT-010` | Add manual-dispatch workflows for test and deploy | todo | worker | AUT-063, AUT-064 | files | - |
+| `AUT-011` | Deploy the empty Worker manually | todo | operator | AUT-010, AUT-061 | manual | - |
+| `AUT-061` | Land the standards-based specification resolutions | todo | operator | - | manual | ATA-99:01, ATA-99:02 |
+| `AUT-063` | Configure the toolchain | todo | worker | AUT-008 | command | - |
+| `AUT-064` | Configure Wrangler bindings for D1, R2, KV and the Durable Object | todo | worker | AUT-009 | files | - |
 
 ## S1: Keys, serialization, metadata and storage
 
@@ -60,22 +60,22 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 **Exit criteria:** Vectors pass in Node and Workers, metadata verifies against a pinned root key, audit chain verifies.
 
-| Task | Title | Status | Depends on | Verify | Spec refs |
-|---|---|---|---|---|---|
-| `AUT-012` | Attestation type and field validation | todo | AUT-008, AUT-063 | command | ATA-01:01 |
-| `AUT-013` | Canonical serialization (JCS, RFC 8785) | todo | AUT-012 | command | ATA-01:02 |
-| `AUT-014` | Ed25519 signing, verification and key identifiers | todo | AUT-013 | command | ATA-01:05, ATA-01:07 |
-| `AUT-015` | Validity window rules | todo | AUT-012 | command | ATA-01:03, ATA-03:03, DV-ATA-01, DV-ATA-03, DV-ATA-07 |
-| `AUT-016` | Attestation nonce generation | todo | AUT-012 | command | ATA-01:04 |
-| `AUT-017` | Publish test vector set v1 | todo | AUT-013, AUT-014, AUT-015 | files | ATA-01:02, ATA-01:05, ATA-01:07 |
-| `AUT-018` | Run vectors in the manual CI workflow | todo | AUT-017, AUT-010 | command | - |
-| `AUT-025` | Signer interface and software signer | todo | AUT-014 | command | ATA-01:05, ATA-06:02 |
-| `AUT-045` | Signed metadata document and endpoint | todo | AUT-025, AUT-064 | command | ATA-01:07, DV-ATA-08, O-ATA-08 |
-| `AUT-065` | D1 migrations for the data model | todo | AUT-064 | files | ATA-01:01, ATA-02:02, INV-ATA-03 |
-| `AUT-066` | Indexes and unique constraints as atomic guards | todo | AUT-065 | files | ATA-02:02, ATA-02:07 |
-| `AUT-067` | Metadata publication and key rotation | todo | AUT-045 | command | ATA-01:07, O-ATA-01 |
-| `AUT-068` | Audit writer with hash chain and redaction | todo | AUT-065, AUT-013 | command | ATA-06:10, INV-ATA-03 |
-| `AUT-090` | Document root key provisioning and trust-anchor pinning | todo | AUT-045, AUT-067 | files | ATA-01:07, O-ATA-05 |
+| Task | Title | Status | Executor | Depends on | Verify | Spec refs |
+|---|---|---|---|---|---|---|
+| `AUT-012` | Attestation type and field validation | todo | worker | AUT-008, AUT-063 | command | ATA-01:01 |
+| `AUT-013` | Canonical serialization (JCS, RFC 8785) | todo | worker | AUT-012 | command | ATA-01:02 |
+| `AUT-014` | Ed25519 signing, verification and key identifiers | todo | worker | AUT-013 | command | ATA-01:05, ATA-01:07 |
+| `AUT-015` | Validity window rules | todo | worker | AUT-012 | command | ATA-01:03, ATA-03:03, DV-ATA-01, DV-ATA-03, DV-ATA-07 |
+| `AUT-016` | Attestation nonce generation | todo | worker | AUT-012 | command | ATA-01:04 |
+| `AUT-017` | Publish test vector set v1 | todo | worker | AUT-013, AUT-014, AUT-015 | files | ATA-01:02, ATA-01:05, ATA-01:07 |
+| `AUT-018` | Run vectors in the manual CI workflow | todo | worker | AUT-017, AUT-010 | command | - |
+| `AUT-025` | Signer interface and software signer | todo | worker | AUT-014 | command | ATA-01:05, ATA-06:02 |
+| `AUT-045` | Signed metadata document and endpoint | todo | worker | AUT-025, AUT-064 | command | ATA-01:07, DV-ATA-08, O-ATA-08 |
+| `AUT-065` | D1 migrations for the data model | todo | worker | AUT-064 | files | ATA-01:01, ATA-02:02, INV-ATA-03 |
+| `AUT-066` | Indexes and unique constraints as atomic guards | todo | worker | AUT-065 | files | ATA-02:02, ATA-02:07 |
+| `AUT-067` | Metadata publication and key rotation | todo | worker | AUT-045 | command | ATA-01:07, O-ATA-01 |
+| `AUT-068` | Audit writer with hash chain and redaction | todo | worker | AUT-065, AUT-013 | command | ATA-06:10, INV-ATA-03 |
+| `AUT-090` | Document root key provisioning and trust-anchor pinning | todo | worker | AUT-045, AUT-067 | files | ATA-01:07, O-ATA-05 |
 
 ## S2: Issuance (Basic)
 
@@ -85,18 +85,18 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 **Exit criteria:** A test client obtains a valid attestation; every deny vector is rejected opaquely.
 
-| Task | Title | Status | Depends on | Verify | Spec refs |
-|---|---|---|---|---|---|
-| `AUT-019` | Issuance request schema and validation | todo | AUT-012, AUT-024 | command | ATA-02:01, ATA-02:02, DV-ATA-04 |
-| `AUT-020` | Deterministic proof of possession | todo | AUT-019, AUT-014 | command | ATA-02:03, INV-ATA-01, O-ATA-07 |
-| `AUT-021` | Role validation against the session record | todo | AUT-019, AUT-024 | command | ATA-02:04, INV-ATA-02, O-ATA-02 |
-| `AUT-022` | Request nonce replay protection | todo | AUT-066, AUT-019 | command | ATA-02:02, DV-ATA-04 |
-| `AUT-023` | Attestation assembly, signing and binding rules | todo | AUT-020, AUT-021, AUT-022, AUT-025, AUT-045 | command | ATA-02:06, ATA-02:07, ATA-01:03, INV-ATA-06 |
-| `AUT-024` | Controller identity pinning and session record intake | todo | AUT-062, AUT-066, AUT-068 | command | ATA-02:02, O-ATA-05 |
-| `AUT-026` | Issuance end-to-end test | todo | AUT-070, AUT-024 | command | - |
-| `AUT-062` | Resolve O-ATA-11: controller-to-Authority interface | todo | AUT-061 | manual | O-ATA-11, ATA-02:02, ATA-04:02 |
-| `AUT-069` | Opaque error mapping with correlation ID | todo | AUT-019 | command | INV-ATA-04, ATA-02:02 |
-| `AUT-070` | Issuance endpoint | todo | AUT-023, AUT-069, AUT-068 | command | ATA-02:01, ATA-02:02 |
+| Task | Title | Status | Executor | Depends on | Verify | Spec refs |
+|---|---|---|---|---|---|---|
+| `AUT-019` | Issuance request schema and validation | todo | worker | AUT-012, AUT-024 | command | ATA-02:01, ATA-02:02, DV-ATA-04 |
+| `AUT-020` | Deterministic proof of possession | todo | worker | AUT-019, AUT-014 | command | ATA-02:03, INV-ATA-01, O-ATA-07 |
+| `AUT-021` | Role validation against the session record | todo | worker | AUT-019, AUT-024 | command | ATA-02:04, INV-ATA-02, O-ATA-02 |
+| `AUT-022` | Request nonce replay protection | todo | worker | AUT-066, AUT-019 | command | ATA-02:02, DV-ATA-04 |
+| `AUT-023` | Attestation assembly, signing and binding rules | todo | worker | AUT-020, AUT-021, AUT-022, AUT-025, AUT-045 | command | ATA-02:06, ATA-02:07, ATA-01:03, INV-ATA-06 |
+| `AUT-024` | Controller identity pinning and session record intake | todo | worker | AUT-062, AUT-066, AUT-068 | command | ATA-02:02, O-ATA-05 |
+| `AUT-026` | Issuance end-to-end test | todo | worker | AUT-070, AUT-024 | command | - |
+| `AUT-062` | Resolve O-ATA-11: controller-to-Authority interface | todo | operator | AUT-061 | manual | O-ATA-11, ATA-02:02, ATA-04:02 |
+| `AUT-069` | Opaque error mapping with correlation ID | todo | worker | AUT-019 | command | INV-ATA-04, ATA-02:02 |
+| `AUT-070` | Issuance endpoint | todo | worker | AUT-023, AUT-069, AUT-068 | command | ATA-02:01, ATA-02:02 |
 
 ## S3: Verification and client SDK
 
@@ -106,17 +106,17 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 **Exit criteria:** The SDK rejects every unverifiable case and exposes only an opaque verdict.
 
-| Task | Title | Status | Depends on | Verify | Spec refs |
-|---|---|---|---|---|---|
-| `AUT-027` | Verifier pipeline | todo | AUT-071, AUT-015 | command | ATA-03:01, ATA-03:02, ATA-03:03, INV-ATA-05, INV-ATA-07 |
-| `AUT-028` | Presentation proof and session context verification | todo | AUT-027 | command | ATA-03:04, ATA-03:06, DV-ATA-05 |
-| `AUT-033` | Router and factory behavior in the verifier | dropped | - | manual | - |
-| `AUT-034` | Fail-closed negative suite for the verifier | todo | AUT-028, AUT-032, AUT-073 | command | - |
-| `AUT-071` | SDK metadata resolver | todo | AUT-017, AUT-045 | command | ATA-01:07, ATA-03:02, DV-ATA-08, INV-ATA-07 |
-| `AUT-072` | Pluggable verifier nonce store | todo | AUT-028, AUT-066 | command | ATA-03:04 |
-| `AUT-073` | Peer profile rule in the SDK | todo | AUT-071 | command | ATA-06:07, ATA-06:05 |
-| `AUT-074` | Controller integration contract and failure-log hook | todo | AUT-027 | files | ATA-03:07 |
-| `AUT-089` | No verdict caching in the SDK | todo | AUT-027, AUT-032 | command | INV-ATA-05, ATA-03:05, ATA-04:05 |
+| Task | Title | Status | Executor | Depends on | Verify | Spec refs |
+|---|---|---|---|---|---|---|
+| `AUT-027` | Verifier pipeline | todo | worker | AUT-071, AUT-015 | command | ATA-03:01, ATA-03:02, ATA-03:03, INV-ATA-05, INV-ATA-07 |
+| `AUT-028` | Presentation proof and session context verification | todo | worker | AUT-027 | command | ATA-03:04, ATA-03:06, DV-ATA-05 |
+| `AUT-033` | Router and factory behavior in the verifier | dropped | worker | - | manual | - |
+| `AUT-034` | Fail-closed negative suite for the verifier | todo | worker | AUT-028, AUT-032, AUT-073 | command | - |
+| `AUT-071` | SDK metadata resolver | todo | worker | AUT-017, AUT-045 | command | ATA-01:07, ATA-03:02, DV-ATA-08, INV-ATA-07 |
+| `AUT-072` | Pluggable verifier nonce store | todo | worker | AUT-028, AUT-066 | command | ATA-03:04 |
+| `AUT-073` | Peer profile rule in the SDK | todo | worker | AUT-071 | command | ATA-06:07, ATA-06:05 |
+| `AUT-074` | Controller integration contract and failure-log hook | todo | worker | AUT-027 | files | ATA-03:07 |
+| `AUT-089` | No verdict caching in the SDK | todo | worker | AUT-027, AUT-032 | command | INV-ATA-05, ATA-03:05, ATA-04:05 |
 
 ## S4: Revocation
 
@@ -126,12 +126,12 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 **Exit criteria:** Revocation takes effect within the stated worst case and clients fail closed.
 
-| Task | Title | Status | Depends on | Verify | Spec refs |
-|---|---|---|---|---|---|
-| `AUT-029` | Revocation list structure and signing | todo | AUT-014, AUT-045 | command | ATA-04:01 |
-| `AUT-030` | Revocation request path | todo | AUT-062, AUT-029, AUT-068 | command | ATA-04:02, ATA-06:10 |
-| `AUT-031` | Revocation list publication | todo | AUT-030 | command | ATA-04:01, DV-ATA-06, ATA-04:05 |
-| `AUT-032` | SDK revocation handling | todo | AUT-027, AUT-029 | command | ATA-03:05, ATA-04:03, DV-ATA-02, INV-ATA-05, ATA-04:05 |
+| Task | Title | Status | Executor | Depends on | Verify | Spec refs |
+|---|---|---|---|---|---|---|
+| `AUT-029` | Revocation list structure and signing | todo | worker | AUT-014, AUT-045 | command | ATA-04:01 |
+| `AUT-030` | Revocation request path | todo | worker | AUT-062, AUT-029, AUT-068 | command | ATA-04:02, ATA-06:10 |
+| `AUT-031` | Revocation list publication | todo | worker | AUT-030 | command | ATA-04:01, DV-ATA-06, ATA-04:05 |
+| `AUT-032` | SDK revocation handling | todo | worker | AUT-027, AUT-029 | command | ATA-03:05, ATA-04:03, DV-ATA-02, INV-ATA-05, ATA-04:05 |
 
 ## S5: Basic integration and conformance  (gate)
 
@@ -141,16 +141,16 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 **Exit criteria:** Basic conformance suite green, retention jobs running, candidate tagged.
 
-| Task | Title | Status | Depends on | Verify | Spec refs |
-|---|---|---|---|---|---|
-| `AUT-035` | Controller stand-in harness | todo | AUT-026, AUT-034 | files | - |
-| `AUT-036` | End-to-end integration test | todo | AUT-035, AUT-031, AUT-032 | command | - |
-| `AUT-037` | Basic conformance suite with rule traceability | todo | AUT-036 | command | ATA-06:09 |
-| `AUT-038` | Update amk-test-matrix and regenerate spec-full | todo | AUT-037 | manual | - |
-| `AUT-039` | Basic profile metadata | todo | AUT-037 | files | ATA-06:05, ATA-06:09 |
-| `AUT-040` | Tag the Basic candidate | todo | AUT-038, AUT-039, AUT-075 | manual | - |
-| `AUT-044` | Multiple signing keys and rotation | dropped | - | manual | - |
-| `AUT-075` | Retention jobs | todo | AUT-031, AUT-068 | command | DV-ATA-10, DV-ATA-04, ATA-06:10 |
+| Task | Title | Status | Executor | Depends on | Verify | Spec refs |
+|---|---|---|---|---|---|---|
+| `AUT-035` | Controller stand-in harness | todo | worker | AUT-026, AUT-034 | files | - |
+| `AUT-036` | End-to-end integration test | todo | worker | AUT-035, AUT-031, AUT-032 | command | - |
+| `AUT-037` | Basic conformance suite with rule traceability | todo | worker | AUT-036 | command | ATA-06:09 |
+| `AUT-038` | Update amk-test-matrix and regenerate spec-full | todo | operator | AUT-037 | manual | - |
+| `AUT-039` | Basic profile metadata | todo | worker | AUT-037 | files | ATA-06:05, ATA-06:09 |
+| `AUT-040` | Tag the Basic candidate | todo | operator | AUT-038, AUT-039, AUT-075 | manual | - |
+| `AUT-044` | Multiple signing keys and rotation | dropped | worker | - | manual | - |
+| `AUT-075` | Retention jobs | todo | worker | AUT-031, AUT-068 | command | DV-ATA-10, DV-ATA-04, ATA-06:10 |
 
 ## S6: Standard profile
 
@@ -160,16 +160,16 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 **Exit criteria:** Standard conformance suite green; Standard refuses to start with software keys.
 
-| Task | Title | Status | Depends on | Verify | Spec refs |
-|---|---|---|---|---|---|
-| `AUT-041` | Decide the Standard key host | todo | AUT-040 | manual | ATA-06:03 |
-| `AUT-042` | ProxySigner against the chosen key host | todo | AUT-025, AUT-041 | command | ATA-06:03 |
-| `AUT-043` | Real-time revocation endpoint | todo | AUT-031, AUT-042 | command | ATA-04:04, DV-ATA-09 |
-| `AUT-046` | Standard conformance suite | todo | AUT-043, AUT-076, AUT-077 | command | ATA-06:03 |
-| `AUT-047` | Resolve identity binding scope | dropped | - | manual | - |
-| `AUT-048` | Resolve audit format and retention | dropped | - | manual | - |
-| `AUT-076` | Requester and controller authentication | todo | AUT-070, AUT-041 | command | ATA-02:05 |
-| `AUT-077` | Profile enforcement and startup assertions | todo | AUT-042, AUT-045 | command | ATA-06:03, ATA-06:05 |
+| Task | Title | Status | Executor | Depends on | Verify | Spec refs |
+|---|---|---|---|---|---|---|
+| `AUT-041` | Decide the Standard key host | todo | operator | AUT-040 | manual | ATA-06:03 |
+| `AUT-042` | ProxySigner against the chosen key host | todo | worker | AUT-025, AUT-041 | command | ATA-06:03 |
+| `AUT-043` | Real-time revocation endpoint | todo | worker | AUT-031, AUT-042 | command | ATA-04:04, DV-ATA-09 |
+| `AUT-046` | Standard conformance suite | todo | worker | AUT-043, AUT-076, AUT-077 | command | ATA-06:03 |
+| `AUT-047` | Resolve identity binding scope | dropped | worker | - | manual | - |
+| `AUT-048` | Resolve audit format and retention | dropped | worker | - | manual | - |
+| `AUT-076` | Requester and controller authentication | todo | worker | AUT-070, AUT-041 | command | ATA-02:05 |
+| `AUT-077` | Profile enforcement and startup assertions | todo | worker | AUT-042, AUT-045 | command | ATA-06:03, ATA-06:05 |
 
 ## S7: Identity binding and audit coverage
 
@@ -179,11 +179,11 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 **Exit criteria:** Binding and audit tests green; no identity or secrets in any record.
 
-| Task | Title | Status | Depends on | Verify | Spec refs |
-|---|---|---|---|---|---|
-| `AUT-049` | Per-session identity binding | todo | AUT-076, AUT-066 | command | ATA-05:03, ATA-05:04, ATA-05:02, INV-ATA-03 |
-| `AUT-050` | Audit coverage and checkpoints | todo | AUT-068, AUT-049 | command | ATA-05:05, ATA-06:10 |
-| `AUT-051` | Binding and audit tests | todo | AUT-049, AUT-050 | command | - |
+| Task | Title | Status | Executor | Depends on | Verify | Spec refs |
+|---|---|---|---|---|---|---|
+| `AUT-049` | Per-session identity binding | todo | worker | AUT-076, AUT-066 | command | ATA-05:03, ATA-05:04, ATA-05:02, INV-ATA-03 |
+| `AUT-050` | Audit coverage and checkpoints | todo | worker | AUT-068, AUT-049 | command | ATA-05:05, ATA-06:10 |
+| `AUT-051` | Binding and audit tests | todo | worker | AUT-049, AUT-050 | command | - |
 
 ## S8: Operations and security review
 
@@ -193,15 +193,15 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 **Exit criteria:** Dashboards, alerts, runbooks and restore drill done; threat model and fuzzing complete.
 
-| Task | Title | Status | Depends on | Verify | Spec refs |
-|---|---|---|---|---|---|
-| `AUT-078` | Dashboards | todo | AUT-046 | manual | - |
-| `AUT-079` | Alerts | todo | AUT-078 | manual | - |
-| `AUT-080` | Runbooks | todo | AUT-067, AUT-031, AUT-090 | manual | - |
-| `AUT-081` | Backup and restore drill | todo | AUT-075, AUT-080 | manual | - |
-| `AUT-082` | Threat model | todo | AUT-046 | manual | - |
-| `AUT-083` | Fuzz the parsers and verifiers | todo | AUT-028, AUT-020 | manual | - |
-| `AUT-084` | Secret scanning and dependency audit | todo | AUT-010 | manual | - |
+| Task | Title | Status | Executor | Depends on | Verify | Spec refs |
+|---|---|---|---|---|---|---|
+| `AUT-078` | Dashboards | todo | operator | AUT-046 | manual | - |
+| `AUT-079` | Alerts | todo | operator | AUT-078 | manual | - |
+| `AUT-080` | Runbooks | todo | worker | AUT-067, AUT-031, AUT-090 | files | - |
+| `AUT-081` | Backup and restore drill | todo | operator | AUT-075, AUT-080 | manual | - |
+| `AUT-082` | Threat model | todo | worker | AUT-046 | files | - |
+| `AUT-083` | Fuzz the parsers and verifiers | todo | worker | AUT-028, AUT-020 | command | - |
+| `AUT-084` | Secret scanning and dependency audit | todo | operator | AUT-010 | manual | - |
 
 ## S9: Release and sign-off
 
@@ -211,16 +211,16 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 **Exit criteria:** Release tagged with conformance report; High documented as unsupported on this stack.
 
-| Task | Title | Status | Depends on | Verify | Spec refs |
-|---|---|---|---|---|---|
-| `AUT-057` | Full conformance run per profile | todo | AUT-037, AUT-046, AUT-051 | manual | - |
-| `AUT-058` | Regenerate specifications | todo | AUT-057 | manual | - |
-| `AUT-059` | Release | todo | AUT-058, AUT-086, AUT-087, AUT-088 | manual | - |
-| `AUT-060` | Post-release review and plan close | todo | AUT-059 | manual | - |
-| `AUT-085` | Versioning | todo | AUT-057 | manual | - |
-| `AUT-086` | Staged deployment | todo | AUT-085, AUT-081 | manual | - |
-| `AUT-087` | Document High as unsupported on this stack | todo | AUT-077 | files | ATA-06:05, ATA-06:04 |
-| `AUT-088` | Conformance report | todo | AUT-057 | manual | - |
+| Task | Title | Status | Executor | Depends on | Verify | Spec refs |
+|---|---|---|---|---|---|---|
+| `AUT-057` | Full conformance run per profile | todo | operator | AUT-037, AUT-046, AUT-051 | manual | - |
+| `AUT-058` | Regenerate specifications | todo | operator | AUT-057 | manual | - |
+| `AUT-059` | Release | todo | operator | AUT-058, AUT-086, AUT-087, AUT-088 | manual | - |
+| `AUT-060` | Post-release review and plan close | todo | operator | AUT-059 | manual | - |
+| `AUT-085` | Versioning | todo | worker | AUT-057 | files | - |
+| `AUT-086` | Staged deployment | todo | operator | AUT-085, AUT-081 | manual | - |
+| `AUT-087` | Document High as unsupported on this stack | todo | worker | AUT-077 | files | ATA-06:05, ATA-06:04 |
+| `AUT-088` | Conformance report | todo | operator | AUT-057 | manual | - |
 
 ## S10: High profile (deferred)
 
@@ -230,13 +230,13 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 **Exit criteria:** Only started after a scope decision to support High.
 
-| Task | Title | Status | Depends on | Verify | Spec refs |
-|---|---|---|---|---|---|
-| `AUT-052` | Decide the High key host and evidence source | blocked | - | manual | ATA-06:04 |
-| `AUT-053` | Hardware-backed key provider | blocked | AUT-052, AUT-042 | manual | ATA-06:04 |
-| `AUT-054` | Publish attestation evidence | blocked | AUT-052 | manual | ATA-06:04, ATA-06:05 |
-| `AUT-055` | Enforce mandatory real-time revocation | blocked | AUT-043, AUT-052 | manual | ATA-04:04, ATA-03:05 |
-| `AUT-056` | High conformance suite | blocked | AUT-053, AUT-054, AUT-055 | manual | ATA-06:04 |
+| Task | Title | Status | Executor | Depends on | Verify | Spec refs |
+|---|---|---|---|---|---|---|
+| `AUT-052` | Decide the High key host and evidence source | blocked | worker | - | manual | ATA-06:04 |
+| `AUT-053` | Hardware-backed key provider | blocked | worker | AUT-052, AUT-042 | manual | ATA-06:04 |
+| `AUT-054` | Publish attestation evidence | blocked | worker | AUT-052 | manual | ATA-06:04, ATA-06:05 |
+| `AUT-055` | Enforce mandatory real-time revocation | blocked | worker | AUT-043, AUT-052 | manual | ATA-04:04, ATA-03:05 |
+| `AUT-056` | High conformance suite | blocked | worker | AUT-053, AUT-054, AUT-055 | manual | ATA-06:04 |
 
 ---
 

@@ -24,5 +24,6 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": "Replaces AUT-001 to 006. The imported plan assumed earlier spec fixes (3600 s metadata cache, declared_roles in the request, nonce tracking at verifiers, High downgraded); the landed spec differs, see tasks below."
+  "findings": "Replaces AUT-001 to 006. The imported plan assumed earlier spec fixes (3600 s metadata cache, declared_roles in the request, nonce tracking at verifiers, High downgraded); the landed spec differs, see tasks below.",
+  "executor": "operator"
 }

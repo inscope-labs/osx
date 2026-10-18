@@ -7,12 +7,14 @@
   "depends_on": [
     "AUT-046"
   ],
-  "deliverables": [],
+  "deliverables": [
+    "impl/core/amk-authority/docs/threat-model.md"
+  ],
   "acceptance": [
     "Covers elevation, replay, revocation list withholding, opaque-error leakage and personal data in logs"
   ],
   "verify": {
-    "method": "manual"
+    "method": "files"
   },
   "status": "todo",
   "blocked_by": [],

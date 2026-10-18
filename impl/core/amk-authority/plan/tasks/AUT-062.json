@@ -25,5 +25,6 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "",
-  "findings": "Missing from the imported plan. Blocks session records, epoch bounds, role validation and revocation requests."
+  "findings": "Missing from the imported plan. Blocks session records, epoch bounds, role validation and revocation requests.",
+  "executor": "operator"
 }
