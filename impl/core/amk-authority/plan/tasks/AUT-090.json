@@ -1,0 +1,32 @@
+{
+  "id": "AUT-090",
+  "stage": "S1",
+  "title": "Document root key provisioning and trust-anchor pinning",
+  "description": "Document root key provisioning and trust-anchor pinning.",
+  "spec_refs": [
+    "ATA-01:07",
+    "O-ATA-05"
+  ],
+  "depends_on": [
+    "AUT-045",
+    "AUT-067"
+  ],
+  "deliverables": [
+    "impl/core/amk-authority/docs/trust-anchor.md"
+  ],
+  "acceptance": [
+    "Documents how the root key pair is generated and how its kid is confirmed by the operator out of band",
+    "States that clients pin the root public key and issuer in configuration and never fetch them",
+    "Documents how the controller identity is pinned for session records",
+    "Documents root rotation by re-pinning with an overlap, and the steps after a suspected root compromise",
+    "Contains no private key material"
+  ],
+  "verify": {
+    "method": "files"
+  },
+  "status": "todo",
+  "blocked_by": [],
+  "evidence": {},
+  "dropped_reason": "",
+  "findings": "From the repository audit of 2026-10-17: metadata cannot establish trust in its own root key, so the initial trust anchor needs a documented, authenticated provisioning procedure."
+}

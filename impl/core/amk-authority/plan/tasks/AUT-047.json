@@ -16,5 +16,6 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "Resolved: identity binding is per-session (ATA-05:04).",
-  "findings": ""
+  "findings": "",
+  "superseded_by": []
 }

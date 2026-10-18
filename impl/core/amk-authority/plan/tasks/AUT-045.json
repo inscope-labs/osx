@@ -18,7 +18,8 @@
   "acceptance": [
     "GET /.well-known/amk-authority serves metadata with issuer, metadata_version, published_at, profile, root_kid, signing_keys, revocation_list_url and signature",
     "Signed by the root key only; Cache-Control max-age does not exceed DV-ATA-08",
-    "Published through R2 with a KV mirror"
+    "Published through R2 with a KV mirror",
+    "Never publishes a duplicate kid, and every kid equals the thumbprint of its public_key"
   ],
   "verify": {
     "method": "command",

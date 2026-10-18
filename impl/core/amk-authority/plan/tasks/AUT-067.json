@@ -16,7 +16,8 @@
   "acceptance": [
     "Publication is serialized in the Durable Object and metadata_version only increases",
     "Key statuses active, retired and revoked behave as in ATA-01:07",
-    "Rotation and rollback both publish content with a higher metadata_version"
+    "Rotation and rollback both publish content with a higher metadata_version",
+    "A key status change or metadata publication does not take effect if its audit record cannot be committed"
   ],
   "verify": {
     "method": "command",

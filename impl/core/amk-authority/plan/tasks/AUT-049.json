@@ -19,7 +19,8 @@
   "acceptance": [
     "Binding scope is per-session; a scope change needs a new attestation",
     "Only an HMAC of the identity reference is stored; it never appears in an attestation or a log",
-    "Authentication method comes from the metadata list"
+    "Authentication method comes from the metadata list",
+    "A binding does not take effect if its audit record cannot be committed"
   ],
   "verify": {
     "method": "command",

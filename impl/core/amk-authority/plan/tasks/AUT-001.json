@@ -17,5 +17,8 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "Resolved in the spec rewrite (Ed25519 and JCS in ATA-01:02/05); landing tracked by AUT-061.",
-  "findings": ""
+  "findings": "",
+  "superseded_by": [
+    "AUT-061"
+  ]
 }

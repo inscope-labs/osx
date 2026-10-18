@@ -7,7 +7,8 @@
     "ATA-03:05",
     "ATA-04:03",
     "DV-ATA-02",
-    "INV-ATA-05"
+    "INV-ATA-05",
+    "ATA-04:05"
   ],
   "depends_on": [
     "AUT-027",
@@ -20,7 +21,8 @@
     "List signature is verified with its kid; lower versions are rejected",
     "Lists older than R_MAX, or missing, are never accepted as current under any profile",
     "Policy hook may define suspend or restrict; the default is deny",
-    "Cache lifetime never exceeds R_MAX"
+    "Cache lifetime never exceeds R_MAX",
+    "A test with controlled clocks shows the worst-case time from revocation to rejection through the list is at most RL_INTERVAL plus R_MAX"
   ],
   "verify": {
     "method": "command",

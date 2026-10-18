@@ -5,7 +5,8 @@
   "description": "Revocation list publication.",
   "spec_refs": [
     "ATA-04:01",
-    "DV-ATA-06"
+    "DV-ATA-06",
+    "ATA-04:05"
   ],
   "depends_on": [
     "AUT-030"

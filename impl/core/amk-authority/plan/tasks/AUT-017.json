@@ -4,7 +4,9 @@
   "title": "Publish test vector set v1",
   "description": "Publish test vector set v1.",
   "spec_refs": [
-    "ATA-01:06"
+    "ATA-01:02",
+    "ATA-01:05",
+    "ATA-01:07"
   ],
   "depends_on": [
     "AUT-013",
@@ -16,7 +18,8 @@
   ],
   "acceptance": [
     "Language-neutral JSON vectors cover valid, malformed, expired, tampered, wrong-key, unknown-kid and unknown-algorithm cases",
-    "A README describes the schema so the Kotlin console can consume the vectors"
+    "A README describes the schema so the Kotlin console can consume the vectors",
+    "Metadata vectors include a document that lists a kid twice and one whose kid does not equal the thumbprint of its public key"
   ],
   "verify": {
     "method": "files"

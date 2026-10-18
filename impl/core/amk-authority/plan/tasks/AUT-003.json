@@ -16,5 +16,8 @@
   "blocked_by": [],
   "evidence": {},
   "dropped_reason": "Resolved: out-of-band pinning, no enrollment handshake (O-ATA-05); landing tracked by AUT-061.",
-  "findings": ""
+  "findings": "",
+  "superseded_by": [
+    "AUT-061"
+  ]
 }

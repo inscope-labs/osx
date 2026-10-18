@@ -1,0 +1,36 @@
+{
+  "exempt": [
+    {
+      "id": "ATA-00:01",
+      "reason": "Descriptive role statement; enforced through the invariants and tasks that cite them"
+    },
+    {
+      "id": "ATA-00:02",
+      "reason": "Trust boundary overview; enforced through ATA-01:07, ATA-03:01 and the invariants"
+    },
+    {
+      "id": "ATA-00:03",
+      "reason": "Self-containment statement; no implementation work"
+    },
+    {
+      "id": "ATA-00:04",
+      "reason": "Invariant list; each INV-ATA item is cited individually"
+    },
+    {
+      "id": "ATA-00:05",
+      "reason": "Relationships to other components; interface work is cited in ATA-02:02 and ATA-03:07 tasks"
+    },
+    {
+      "id": "ATA-05:01",
+      "reason": "Purpose statement; requirements are in ATA-05:02 to ATA-05:05"
+    },
+    {
+      "id": "ATA-06:01",
+      "reason": "Profile overview; requirements are in ATA-06:02 to ATA-06:04"
+    },
+    {
+      "id": "ATA-06:06",
+      "reason": "Summary table that restates ATA-06:02 to ATA-06:04"
+    }
+  ]
+}

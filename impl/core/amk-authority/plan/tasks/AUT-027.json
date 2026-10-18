@@ -6,7 +6,9 @@
   "spec_refs": [
     "ATA-03:01",
     "ATA-03:02",
-    "ATA-03:03"
+    "ATA-03:03",
+    "INV-ATA-05",
+    "INV-ATA-07"
   ],
   "depends_on": [
     "AUT-071",
@@ -17,7 +19,8 @@
   ],
   "acceptance": [
     "Pipeline order: kid resolution, signature, window, presentation proof, revocation, session context",
-    "Verdict is opaque: callers see only ok or not ok"
+    "Verdict is opaque: callers see only ok or not ok",
+    "No verdict, signature result or revocation status is cached between calls; every call re-checks revocation (INV-ATA-05)"
   ],
   "verify": {
     "method": "command",
