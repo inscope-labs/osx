@@ -16,6 +16,8 @@ Commands:
   set ID STATUS [options]   change a task's status; `done` runs the verification and records evidence
   registry                  list every specification item a task may cite
   coverage [--fail]         list normative specification items that no live task cites
+  next [--assume-done IDS]  list what can be ordered now: ready tasks, groups, stage-eligible sets (read-only)
+  order IDS [--json]        validate a worker order and print the TASK ORDER block (read-only)
 """
 import argparse, datetime, json, re, subprocess, sys
 from pathlib import Path
@@ -38,7 +40,8 @@ VERIFY_METHODS = {"manual", "files", "command"}
 REQUIRED = ["id", "stage", "title", "description", "spec_refs", "depends_on",
             "deliverables", "acceptance", "verify", "status", "blocked_by",
             "evidence", "dropped_reason"]
-OPTIONAL = ["findings", "superseded_by"]
+OPTIONAL = ["findings", "superseded_by", "executor"]
+EXECUTORS = ("worker", "operator")
 STR_FIELDS = ["id", "stage", "title", "description", "dropped_reason"]
 LIST_FIELDS = ["spec_refs", "depends_on", "deliverables", "acceptance", "blocked_by"]
 EVIDENCE_KEYS = {"pr", "commit", "verified_at", "verified_by", "verification", "notes"}
@@ -74,6 +77,8 @@ def validate_schema(t, fname):
             errs.append(f"{p}: '{k}' must be a list of strings")
     if "superseded_by" in t and not is_str_list(t["superseded_by"]):
         errs.append(f"{p}: 'superseded_by' must be a list of strings")
+    if "executor" in t and t["executor"] not in EXECUTORS:
+        errs.append(f"{p}: 'executor' must be one of {list(EXECUTORS)}")
     if isinstance(t.get("title"), str) and not t["title"].strip():
         errs.append(f"{p}: 'title' must not be empty")
     if is_str_list(t.get("acceptance")):
@@ -270,6 +275,8 @@ def check():
                     errs.append(f"{tid}: done but deliverable missing: {d}")
         elif t["evidence"]:
             errs.append(f"{tid}: evidence must be empty unless status is done")
+        if executor_of(t) == "worker" and st in ("todo", "in_progress") and not t["deliverables"]:
+            errs.append(f"{tid}: a worker task needs at least one deliverable (or set executor to operator)")
     for tid, t in tasks.items():
         if t["status"] in ("in_progress", "done"):
             for d in t["depends_on"]:
@@ -363,9 +370,9 @@ def render():
                 f"**Goal:** {s['goal']}", "", f"**Exit criteria:** {s['exit']}", ""]
         rows = [t for t in tasks.values() if t["stage"] == s["id"]]
         if rows:
-            out += ["| Task | Title | Status | Depends on | Verify | Spec refs |", "|---|---|---|---|---|---|"]
+            out += ["| Task | Title | Status | Executor | Depends on | Verify | Spec refs |", "|---|---|---|---|---|---|---|"]
             for t in sorted(rows, key=lambda x: x["id"]):
-                out.append(f"| `{t['id']}` | {t['title']} | {t['status']} | "
+                out.append(f"| `{t['id']}` | {t['title']} | {t['status']} | {executor_of(t)} | "
                            f"{', '.join(t['depends_on']) or '-'} | {t['verify']['method']} | "
                            f"{', '.join(t['spec_refs']) or '-'} |")
             out.append("")
@@ -472,6 +479,217 @@ def cmd_set(a):
     return 0
 
 
+
+# ----------------------------------------------------------------- ordering (read-only)
+def executor_of(t):
+    return t.get("executor", "worker")
+
+
+def slugify(text, n=40):
+    """Lowercase words joined by hyphens, cut at a word boundary so the slug never ends mid-word."""
+    out = ""
+    for w in re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-").split("-"):
+        if len(out) + len(w) + (1 if out else 0) > n:
+            break
+        out += ("-" if out else "") + w
+    return out or re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")[:n]
+
+
+def done_set(tasks, assume=()):
+    return {k for k, t in tasks.items() if t["status"] == "done"} | set(assume)
+
+
+def gate_ok(tasks, stages, t, done):
+    pos = {s["id"]: i for i, s in enumerate(stages)}
+    for g in stages:
+        if g.get("gate") and pos[g["id"]] < pos[t["stage"]]:
+            if [k for k, x in tasks.items() if x["stage"] == g["id"] and x["status"] != "dropped" and k not in done]:
+                return False
+    return True
+
+
+def topo(tasks, ids):
+    """Dependency order restricted to ids; ties broken by task ID so the result is deterministic."""
+    remaining, out = set(ids), []
+    while remaining:
+        ready = sorted(k for k in remaining if all(d not in remaining for d in tasks[k]["depends_on"]))
+        if not ready:
+            out += sorted(remaining)
+            break
+        out.append(ready[0])
+        remaining.discard(ready[0])
+    return out
+
+
+def ready_tasks(tasks, stages, done):
+    return sorted(k for k, t in tasks.items()
+                  if t["status"] in ("todo", "in_progress") and k not in done
+                  and all(d in done for d in t["depends_on"]) and gate_ok(tasks, stages, t, done))
+
+
+def stage_eligible(tasks, stages, done):
+    out = {}
+    for s in stages:
+        sid = s["id"]
+        open_all = [k for k, t in tasks.items() if t["stage"] == sid and t["status"] != "dropped" and k not in done]
+        cand = {k for k in open_all if tasks[k]["status"] in ("todo", "in_progress") and executor_of(tasks[k]) == "worker"}
+        changed = True
+        while changed:
+            changed = False
+            for k in sorted(cand):
+                t = tasks[k]
+                if not (all(d in done or d in cand for d in t["depends_on"]) and gate_ok(tasks, stages, t, done)):
+                    cand.discard(k)
+                    changed = True
+        if cand:
+            out[sid] = {"tasks": topo(tasks, cand),
+                        "operator_remaining": sorted(k for k in open_all if tasks[k]["status"] != "blocked" and executor_of(tasks[k]) == "operator"),
+                        "other_remaining": sorted(k for k in open_all if k not in cand and executor_of(tasks[k]) == "worker"),
+                        "completes_stage": set(open_all) == cand}
+    return out
+
+
+def cmd_next(a):
+    stages, tasks, errs = check()
+    if errs:
+        for e in errs:
+            print("ERROR:", e)
+        return 1
+    assume = [x for x in (a.assume_done or "").replace(" ", "").split(",") if x]
+    for x in assume:
+        if x not in tasks:
+            print(f"ERROR: --assume-done names unknown task {x}")
+            return 1
+    done = done_set(tasks, assume)
+    ready = ready_tasks(tasks, stages, done)
+    groups = {}
+    for k in ready:
+        if executor_of(tasks[k]) == "worker":
+            groups.setdefault(tasks[k]["stage"], []).append(k)
+    elig = stage_eligible(tasks, stages, done)
+    if a.json:
+        print(json.dumps({"assumed_done": sorted(assume),
+                          "ready": [{"id": k, "stage": tasks[k]["stage"], "title": tasks[k]["title"], "executor": executor_of(tasks[k]), "verify": tasks[k]["verify"]["method"]} for k in ready],
+                          "groups": {s: v for s, v in groups.items() if len(v) > 1},
+                          "stage_eligible": elig}, indent=2))
+        return 0
+    print(f"assumed done: {', '.join(sorted(assume)) or 'none'}")
+    print("READY (each can be ordered on its own)")
+    for k in ready:
+        t = tasks[k]
+        print(f"  {k}  {t['stage']:<3} [{executor_of(t)}] verify={t['verify']['method']:<8} {t['title']}")
+    if not ready:
+        print("  none")
+    print("GROUPS (ready worker tasks in the same stage; independent of each other)")
+    shown = False
+    for sid, ids in groups.items():
+        if len(ids) > 1:
+            print(f"  {sid}: {', '.join(ids)}")
+            shown = True
+    if not shown:
+        print("  none")
+    print("STAGE-ELIGIBLE (worker tasks of a stage that can be ordered together, in this order)")
+    if not elig:
+        print("  none")
+    for sid, e in elig.items():
+        tail = []
+        if e["operator_remaining"]:
+            tail.append("operator tasks remaining: " + ", ".join(e["operator_remaining"]))
+        if e["other_remaining"]:
+            tail.append("not yet orderable: " + ", ".join(e["other_remaining"]))
+        print(f"  {sid}: {', '.join(e['tasks'])}" + ("  (completes the stage)" if e["completes_stage"] else ("  (" + "; ".join(tail) + ")" if tail else "")))
+    return 0
+
+
+def build_order(tasks, stages, ids):
+    """Validate and describe a worker order. Returns (order dict or None, errors)."""
+    errors = []
+    if not ids:
+        return None, ["no task IDs given"]
+    if len(set(ids)) != len(ids):
+        errors.append("duplicate task IDs in the order")
+    for k in ids:
+        t = tasks.get(k)
+        if t is None:
+            errors.append(f"{k}: unknown task")
+            continue
+        if t["status"] not in ("todo", "in_progress"):
+            errors.append(f"{k}: status is {t['status']}; only todo or in_progress tasks can be ordered")
+        if executor_of(t) != "worker":
+            errors.append(f"{k}: executor is {executor_of(t)}; it cannot be given to a worker")
+        if not t["deliverables"]:
+            errors.append(f"{k}: no deliverables")
+    if errors:
+        return None, errors
+    ordered = topo(tasks, set(ids))
+    done, prior = done_set(tasks), set()
+    for k in ordered:
+        t = tasks[k]
+        missing = [d for d in t["depends_on"] if d not in done and d not in prior]
+        if missing:
+            errors.append(f"{k}: dependencies are neither done nor earlier in this order: {', '.join(missing)}")
+        if not gate_ok(tasks, stages, t, done | prior):
+            errors.append(f"{k}: an earlier gate stage is not complete")
+        prior.add(k)
+    if errors:
+        return None, errors
+    stage_ids = sorted({tasks[k]["stage"] for k in ordered})
+    elig = stage_eligible(tasks, stages, done)
+    if len(ordered) == 1:
+        mode = "individual"
+        sid = f"{ordered[0]}-{slugify(tasks[ordered[0]]['title'])}"
+    elif len(stage_ids) == 1 and elig.get(stage_ids[0], {}).get("tasks") == ordered:
+        mode = "stage"
+        title = next(s["title"] for s in stages if s["id"] == stage_ids[0])
+        sid = f"{stage_ids[0]}-{slugify(title)}"
+    else:
+        mode = "group"
+        label = stage_ids[0] if len(stage_ids) == 1 else "MULTI"
+        sid = f"{label}-grp-{ordered[0]}-{ordered[-1]}"
+    context = {"impl/core/amk-authority/plan/stages.json"}
+    for k in ordered:
+        for d in tasks[k]["depends_on"]:
+            if d in done:
+                context |= {p for p in tasks[d]["deliverables"] if (ROOT / p).exists()}
+    package = ["specs/core/amk-authority/", "impl/core/amk-authority/AGENTS.md", "impl/core/amk-authority/PLAN.md"]
+    package += [f"impl/core/amk-authority/plan/tasks/{k}.json" for k in ordered]
+    return {"submission_id": sid, "mode": mode, "tasks": ordered,
+            "task_dirs": {k: f"{k}-{slugify(tasks[k]['title'])}" for k in ordered}, "package": package,
+            "context_read_only": sorted(context),
+            "upload_to": f"impl/core/amk-authority/submissions/{sid}/"}, []
+
+
+def cmd_order(a):
+    stages, tasks, errs = check()
+    if errs:
+        for e in errs:
+            print("ERROR:", e)
+        return 1
+    order, oerrs = build_order(tasks, stages, a.ids)
+    if oerrs:
+        for e in oerrs:
+            print("ERROR:", e)
+        return 1
+    if a.json:
+        print(json.dumps(order, indent=2))
+        return 0
+    print("TASK ORDER")
+    print(f"submission_id: {order['submission_id']}")
+    print(f"mode: {order['mode']}")
+    print(f"tasks: {', '.join(order['tasks'])}")
+    print("task_dirs:")
+    for k in order["tasks"]:
+        print(f"  - {k}: {order['task_dirs'][k]}")
+    print("package:")
+    for x in order["package"]:
+        print(f"  - {x}")
+    print("context (read-only):")
+    for x in order["context_read_only"]:
+        print(f"  - {x}")
+    print(f"upload_to: {order['upload_to']}")
+    return 0
+
+
 def cmd_registry(_):
     for rid, r in sorted(build_registry().items()):
         print(f"{rid:<11} {r['kind']:<10} {r['status']:<11} {r['file']:<24} {r['title']}")
@@ -502,6 +720,8 @@ def main():
     sub.add_parser("status").set_defaults(fn=cmd_status)
     sub.add_parser("registry").set_defaults(fn=cmd_registry)
     cv = sub.add_parser("coverage"); cv.add_argument("--fail", action="store_true"); cv.set_defaults(fn=cmd_coverage)
+    nx = sub.add_parser("next"); nx.add_argument("--assume-done", dest="assume_done"); nx.add_argument("--json", action="store_true"); nx.set_defaults(fn=cmd_next)
+    od = sub.add_parser("order"); od.add_argument("ids", nargs="+"); od.add_argument("--json", action="store_true"); od.set_defaults(fn=cmd_order)
     r = sub.add_parser("render"); r.add_argument("--check", action="store_true"); r.set_defaults(fn=cmd_render)
     v = sub.add_parser("verify"); v.add_argument("id"); v.set_defaults(fn=cmd_verify)
     s = sub.add_parser("set"); s.add_argument("id"); s.add_argument("status", choices=STATUSES)
