@@ -12,6 +12,17 @@ def make_tree():
     ignore = shutil.ignore_patterns("__pycache__", "agent-reports", "node_modules")
     shutil.copytree(REPO / IMPL_REL, tmp / IMPL_REL, ignore=ignore)
     shutil.copytree(REPO / SPEC_REL, tmp / SPEC_REL, ignore=ignore)
+    # The tests describe a plan with nothing done, so they must not change as tasks are recorded done.
+    reset = False
+    for f in sorted((tmp / IMPL_REL / "plan" / "tasks").glob("*.json")):
+        t = json.loads(f.read_text())
+        if t["status"] == "done":
+            t["status"], t["evidence"] = "todo", {}
+            f.write_text(json.dumps(t, indent=2) + "\n")
+            reset = True
+    if reset:
+        subprocess.run([sys.executable, str(tmp / IMPL_REL / "plan" / "plan_tool.py"), "render"],
+                       cwd=tmp, check=True, capture_output=True)
     return tmp
 
 
