@@ -1,0 +1,7 @@
+{
+  "commands": [
+    { "args": ["check"] },
+    { "args": ["status"] },
+    { "args": ["next"] }
+  ]
+}
