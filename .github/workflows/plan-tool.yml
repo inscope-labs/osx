@@ -1,5 +1,8 @@
 name: Plan tool
 
+# Manual and read-only. Runs the read-only plan_tool commands listed in a config file
+# and publishes the answer (step summary and artifact). Mutating commands are refused
+# by run_plan.py. For check/coverage/selftest/verify/render use amk-authority-plan.yml.
 on:
   workflow_dispatch:
     inputs:
@@ -18,12 +21,27 @@ permissions:
 jobs:
   plan:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Validate inputs
+        env:
+          CONFIG_PATH: ${{ inputs.config_path }}
+          ASSUME_DONE: ${{ inputs.assume_done }}
+        run: |
+          case "$CONFIG_PATH" in
+            /*|*..*) echo "::error::config_path must be a repository-relative path without .."; exit 2;;
+          esac
+          if [ -n "$ASSUME_DONE" ] && ! printf '%s' "$ASSUME_DONE" | grep -Eq '^[A-Za-z0-9, -]+$'; then
+            echo "::error::assume_done must be comma-separated task IDs"; exit 2
+          fi
 
       - name: Run plan_tool commands
         id: run
@@ -32,7 +50,7 @@ jobs:
           ASSUME_DONE: ${{ inputs.assume_done }}
         run: |
           set +e
-          python3 .github/scripts/run_plan.py \
+          python3 impl/core/amk-authority/scripts/run_plan.py \
             --config "$CONFIG_PATH" \
             --plan-tool impl/core/amk-authority/plan/plan_tool.py \
             --assume-done "$ASSUME_DONE" \
@@ -41,7 +59,12 @@ jobs:
 
       - name: Publish response to step summary
         if: always()
-        run: cat "$RUNNER_TEMP/response.md" >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          if [ -f "$RUNNER_TEMP/response.md" ]; then
+            head -c 900000 "$RUNNER_TEMP/response.md" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No response.md was produced; the run step did not complete." >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Upload response artifact
         if: always()
@@ -50,6 +73,7 @@ jobs:
           name: plan-response-${{ github.run_id }}
           path: ${{ runner.temp }}/response.md
           if-no-files-found: warn
+          retention-days: 14
 
       - name: Fail if any command failed
         if: always() && steps.run.outputs.exit != '0'
