@@ -4,7 +4,7 @@
 
 Stages are boundaries only. All work and all verification live in atomic tasks. A stage's state is derived from its tasks and is never stored.
 
-**Tasks:** 90 total · todo 75 · in_progress 0 · blocked 5 · done 0 · dropped 10
+**Tasks:** 90 total · todo 74 · in_progress 0 · blocked 5 · done 1 · dropped 10
 
 ## How to change this plan
 
@@ -29,7 +29,7 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 
 ## S0: Spec landing and project foundation  (gate)
 
-**State:** todo (0/8 done)
+**State:** in_progress (1/8 done)
 
 **Goal:** Land the standards-based specification, then create the project skeleton, toolchain and manual workflows.
 
@@ -43,7 +43,7 @@ Verification methods: `manual` (reviewer confirms every acceptance statement; `e
 | `AUT-004` | Resolve revocation distribution and unknown-status behavior for Basic | dropped | worker | - | manual | - |
 | `AUT-005` | Resolve signing key rotation scope for Basic | dropped | worker | - | manual | - |
 | `AUT-006` | Specify who may request revocation and how they authenticate | dropped | worker | - | manual | - |
-| `AUT-007` | Install the worker and supervisor AGENTS.md for impl/core/amk-authority | todo | worker | - | files | - |
+| `AUT-007` | Install the worker and supervisor AGENTS.md for impl/core/amk-authority | done | worker | - | files | - |
 | `AUT-008` | Scaffold the pnpm workspace with four packages | todo | worker | AUT-007 | files | - |
 | `AUT-009` | Create the Worker and Authority Durable Object skeleton | todo | worker | AUT-008, AUT-063 | command | - |
 | `AUT-010` | Add manual-dispatch workflows for test and deploy | todo | worker | AUT-063, AUT-064 | files | - |

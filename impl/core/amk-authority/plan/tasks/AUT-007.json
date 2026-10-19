@@ -18,9 +18,19 @@
   "verify": {
     "method": "files"
   },
-  "status": "todo",
+  "status": "done",
   "blocked_by": [],
-  "evidence": {},
+  "evidence": {
+    "pr": "https://github.com/inscope-labs/osx/pull/8",
+    "commit": "0818ac7",
+    "verified_at": "2026-10-19",
+    "verified_by": "John Wendell",
+    "verification": {
+      "method": "files",
+      "result": "pass"
+    },
+    "notes": "AGENTS.md hand-installed in 0818ac7; verify PASS"
+  },
   "dropped_reason": "",
   "findings": ""
 }
