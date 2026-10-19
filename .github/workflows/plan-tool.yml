@@ -1,0 +1,56 @@
+name: Plan tool
+
+on:
+  workflow_dispatch:
+    inputs:
+      config_path:
+        description: Path to the command config file (relative to repo root)
+        required: true
+        default: impl/core/amk-authority/plan/run.config.json
+      assume_done:
+        description: Comma-separated task IDs to treat as done for `next` (optional)
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run plan_tool commands
+        id: run
+        env:
+          CONFIG_PATH: ${{ inputs.config_path }}
+          ASSUME_DONE: ${{ inputs.assume_done }}
+        run: |
+          set +e
+          python3 .github/scripts/run_plan.py \
+            --config "$CONFIG_PATH" \
+            --plan-tool impl/core/amk-authority/plan/plan_tool.py \
+            --assume-done "$ASSUME_DONE" \
+            --out "$RUNNER_TEMP/response.md"
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Publish response to step summary
+        if: always()
+        run: cat "$RUNNER_TEMP/response.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload response artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plan-response-${{ github.run_id }}
+          path: ${{ runner.temp }}/response.md
+          if-no-files-found: warn
+
+      - name: Fail if any command failed
+        if: always() && steps.run.outputs.exit != '0'
+        run: exit 1
