@@ -26,6 +26,7 @@ One submission per run.
 ## 3. Vocabulary (closed)
 
 - Gate result, per task: `PASS`, `FAIL`, `NOT RUN`.
+- Worker result: `READY_FOR_SUPERVISOR` (every task `DELIVERED`) or `PARTIAL_FOR_SUPERVISOR` (some tasks `BLOCKED_*` by the worker).
 - Task outcome: `ACCEPTED`, `RETURNED` (rework needed), `BLOCKED` (the operator must decide).
 - Run outcome: `ACCEPTED_PR_OPEN` (all tasks accepted), `PARTIAL_PR_OPEN` (some accepted), `RETURNED_FOR_REWORK` (none accepted, at least one returned), `BLOCKED_NEEDS_OPERATOR`.
 - A task with a `NOT RUN` gate can never be `ACCEPTED`.
@@ -36,9 +37,11 @@ Run G0 once, then G1 to G4 for each task in manifest order. A task stops at its 
 
 **G0. Intake**
 1. Clone `main` and record `BASE_SHA` (`git rev-parse HEAD`).
-2. Run `python3 impl/core/amk-authority/plan/plan_tool.py check`. It MUST show 0 errors. If the tool has no `order` command (`... order --help` fails), stop with `BLOCKED_NEEDS_OPERATOR`: "the plan tool must be updated first".
-3. Open `impl/core/amk-authority/submissions/<submission_id>/` on `main`. Read `SUBMISSION.json`. It MUST have schema `amk-authority-submission/1`, `submission_id` equal to the folder name, `result` equal to `READY_FOR_SUPERVISOR`, and a non-empty `tasks` list.
-4. Run `python3 impl/core/amk-authority/plan/plan_tool.py order <task ids in manifest order> --json`. It MUST succeed. Its `tasks` order and `task_dirs` MUST equal the manifest. Its `submission_id` MUST equal the manifest's, ignoring a trailing `-r<N>` rework suffix. Otherwise: if the plan state changed since the order was made, `BLOCKED_NEEDS_OPERATOR`; if the manifest disagrees with the plan, `RETURNED` for all tasks.
+2. Run `python3 impl/core/amk-authority/plan/plan_tool.py check`. It MUST show 0 errors. Each of `order`, `verify`, `set`, `render`, `coverage` MUST answer `--help`; otherwise stop with `BLOCKED_NEEDS_OPERATOR`: "the plan tool must be updated first".
+3. If the branch `submission/<submission_id>` already exists on the remote, stop with `BLOCKED_NEEDS_OPERATOR` (a rework uses a new `-r<N>` id). Never reuse or delete a branch.
+4. Open `impl/core/amk-authority/submissions/<submission_id>/` on `main`. Read `SUBMISSION.json`. It MUST have schema `amk-authority-submission/1`, `submission_id` equal to the folder name, `result` equal to `READY_FOR_SUPERVISOR` or `PARTIAL_FOR_SUPERVISOR`, and a non-empty `tasks` list in which every entry has `status` `DELIVERED` or a `BLOCKED_*` code. `READY_FOR_SUPERVISOR` requires every task `DELIVERED`; `PARTIAL_FOR_SUPERVISOR` requires at least one of each.
+5. Run `python3 impl/core/amk-authority/plan/plan_tool.py order <task ids in manifest order> --json`. It MUST succeed. Its `tasks` order and `task_dirs` MUST equal the manifest, blocked tasks included. Its `submission_id` MUST equal the manifest's, ignoring a trailing `-r<N>` rework suffix. Otherwise: if the plan state changed since the order was made, `BLOCKED_NEEDS_OPERATOR`; if the manifest disagrees with the plan, `RETURNED` for all tasks.
+6. A task the worker marked `BLOCKED_*` gets task outcome `BLOCKED` with the worker's `reason` and no further gate. Its folder MUST contain only `REPORT.md` (no `files/`), otherwise `RETURNED`. Any delivered task that depends on it is `BLOCKED` too. Carry each reason into "Decisions needed from the operator".
 
 **G1. Layout and secrets** (per task)
 1. The task folder contains exactly `REPORT.md` and `files/**`, matching the manifest `dir`.
@@ -58,7 +61,8 @@ Any other failure: `RETURNED`.
 **G3. Acceptance and specification review** (per task)
 1. For each acceptance statement, read the cited `path:lines`. `MET` only if that code actually does what the statement says; otherwise `NOT MET`.
 2. For each rule in the task's `spec_refs`, read it in `specs/core/amk-authority/` and mark `consistent`, `conflict` or `not applicable`.
-3. Apply this checklist to the code, marking each item `ok`, `violation` or `not applicable`: fails closed; no internal failure reason reaches a caller; no secret or identity in logs or tests; no new dependency; one canonicalizer, signer and verifier (no second implementation, for example no `JSON.stringify` used for signing outside the canonicalizer); no verdict or revocation status cached between calls; each acceptance statement covered by a test whose name starts with `AC<n>:`; no `any`, TODO or placeholder.
+3. If any cited rule is listed in `specs/core/amk-authority/99-open-items.md` (or the core `OPEN-ITEMS.md`) and the report does not show it was settled, outcome `BLOCKED` naming the open-item ID.
+4. Apply this checklist to the code, marking each item `ok`, `violation` or `not applicable`: fails closed; no internal failure reason reaches a caller; no secret or identity in logs or tests; no new dependency; one canonicalizer, signer and verifier (no second implementation, for example no `JSON.stringify` used for signing outside the canonicalizer); no verdict or revocation status cached between calls; each acceptance statement covered by a test whose name starts with `AC<n>:`; no `any`, TODO or placeholder.
 Any `NOT MET`, `conflict` or `violation`: `FAIL`, outcome `RETURNED` with the file and line.
 
 **G4. Mechanical verification** (per task, after applying the files on the working branch from G5.1)
@@ -69,7 +73,7 @@ Record each command, its exit code and the last 10 lines of output.
 
 **G5. Branch and pull request**
 1. Create the branch `submission/<submission_id>` from `BASE_SHA`. Never commit to `main`.
-2. For each task that passed G1 to G3 (and is verified in G4), in manifest order: move `files/**` to its final paths with `git mv`, so the supervisor changes no content; commit as `<id>: <task title>`; record that commit's SHA. A task that fails G4 is moved back (`git checkout`/`git reset` of that task's moves) and not committed.
+2. For each task that passed G1 to G3 (and is verified in G4), in manifest order: move `files/**` to its final paths with `git mv`, so the supervisor changes no content. If a destination already exists on `BASE_SHA`, replace it by `git rm` then `git mv` and list it under "replaced files" in the pull request body; if the new content is byte-identical, make no commit and give the task outcome `BLOCKED` ("deliverable already on main; the operator records the status"); commit as `<id>: <task title>`; record that commit's SHA. A task that fails G4 is moved back (`git checkout`/`git reset` of that task's moves) and not committed.
 3. Remove the now-empty `files/` folders (`git rm -r`). Keep `SUBMISSION.json` and each `REPORT.md`.
 4. Push the branch. Open a pull request to `main` (not a draft) titled `<submission_id>: <accepted task ids>`, whose body contains: the run outcome, a table of task and outcome, the gate table (G0 to G7 by task), the plan status after, and the review list for the operator (each acceptance statement with its `path:lines`).
 5. If no task was accepted, open no pull request.
@@ -95,7 +99,7 @@ run outcome; pull request URL or "none"; BASE_SHA; branch
 ## Rework orders
 <for each RETURNED task: a numbered list of exact defects with file:line and the required change; then the TASK ORDER block to resubmit, from plan_tool.py order, with "-r2" (or the next number) appended to submission_id and upload_to; or "none">
 ## Decisions needed from the operator
-<each BLOCKED reason as a question with the options; or "none">
+<each BLOCKED reason (worker-blocked, open spec item, deliverable already on main) as a question with the options; or "none">
 ## Next orders
 <output of: plan_tool.py next --assume-done <accepted task ids>>
 Recommended next order: <one of: the largest STAGE-ELIGIBLE set, else the largest GROUP, else the lowest READY worker task> followed by its TASK ORDER block from plan_tool.py order.
