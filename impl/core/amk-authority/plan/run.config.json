@@ -1,7 +1,7 @@
 {
   "commands": [
+    { "args": ["verify", "AUT-007"] },
     { "args": ["check"] },
-    { "args": ["status"] },
-    { "args": ["next"] }
+    { "args": ["next", "--json"] }
   ]
 }
