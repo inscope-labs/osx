@@ -19,8 +19,8 @@ python3 impl/core/amk-authority/plan/plan_tool.py order AUT-007 [AUT-008 ...]
 ## The loop
 
 1. **Choose the next order.** Use the latest `EXIT-REPORT.md` ("Next orders") or `next`.
-2. **Generate the TASK ORDER block** with `order`. Individual, grouped and stage orders use the same command. It refuses unsatisfied dependencies, closed gates and operator-only tasks.
-3. **Brief the worker.** Fresh conversation, one order per conversation. Give it `AGENT-WORKER-PROMPT.md`, attach every file under `package:` and `context (read-only):`, paste the TASK ORDER block. Nothing else. The worker may only use what you attach.
+2. **Generate the TASK ORDER block** with `order`. Add `--base-url HEAD` (or a commit SHA) when the worker will fetch files instead of receiving attachments: the block then lists every file as a raw URL pinned to that commit, directories expanded, and the command refuses if any listed file differs from your working tree. Push the commit to GitHub before you give the order to the worker, or the URLs will not load. Individual, grouped and stage orders use the same command. It refuses unsatisfied dependencies, closed gates and operator-only tasks.
+3. **Brief the worker.** Fresh conversation, one order per conversation. Give it `AGENT-WORKER-PROMPT.md` and paste the TASK ORDER block exactly as printed, nothing else. Without `--base-url`, also attach every file under `package:` and `context (read-only):`. With it, the worker must be able to fetch URLs. Never edit the block (the worker blocks on a missing key or an unpinned link).
 4. **Collect the result.** The first lines of the reply are one of:
    - `READY_FOR_SUPERVISOR`: every task delivered.
    - `PARTIAL_FOR_SUPERVISOR`: some tasks delivered, the rest blocked (the `blocked:` list says why).

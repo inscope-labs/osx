@@ -653,10 +653,51 @@ def build_order(tasks, stages, ids):
                 context |= {p for p in tasks[d]["deliverables"] if (ROOT / p).exists()}
     package = ["specs/core/amk-authority/", "impl/core/amk-authority/AGENTS.md", "impl/core/amk-authority/PLAN.md"]
     package += [f"impl/core/amk-authority/plan/tasks/{k}.json" for k in ordered]
+    context -= set(package)  # a done dependency's deliverable (e.g. AGENTS.md) is already in the package
     return {"submission_id": sid, "mode": mode, "tasks": ordered,
             "task_dirs": {k: f"{k}-{slugify(tasks[k]['title'])}" for k in ordered}, "package": package,
             "context_read_only": sorted(context),
             "upload_to": f"impl/core/amk-authority/submissions/{sid}/"}, []
+
+
+RAW_BASE = "https://raw.githubusercontent.com/inscope-labs/osx"
+
+
+def _git(*args):
+    r = subprocess.run(["git", "-C", str(ROOT), *args], capture_output=True)
+    return r.returncode, r.stdout, r.stderr.decode(errors="replace").strip()
+
+
+def pin_order(order, rev):
+    """Resolve `rev` to a full commit SHA and return (sha, package_urls, context_urls, errors).
+    Every file is listed individually (directories are expanded at that commit) and must be
+    byte-identical to the working tree, so the worker sees exactly the state the order was made from."""
+    code, out, err = _git("rev-parse", "--verify", f"{rev}^{{commit}}")
+    if code != 0:
+        return None, [], [], [f"--base-url: commit '{rev}' not found in this clone ({err})"]
+    sha = out.decode().strip()
+    errors, groups = [], []
+    for key in ("package", "context_read_only"):
+        urls = []
+        for entry in order[key]:
+            if entry.endswith("/"):
+                code, out, err = _git("ls-tree", "-r", "--name-only", sha, "--", entry)
+                files = sorted(out.decode().split("\n")) if code == 0 else []
+                files = [f for f in files if f]
+                if not files:
+                    errors.append(f"{entry}: no files at commit {sha[:12]}")
+            else:
+                files = [entry]
+            for f in files:
+                code, blob, _ = _git("show", f"{sha}:{f}")
+                local = ROOT / f
+                if code != 0:
+                    errors.append(f"{f}: not present at commit {sha[:12]}")
+                elif not local.is_file() or local.read_bytes() != blob:
+                    errors.append(f"{f}: differs between commit {sha[:12]} and the working tree; commit or merge it first")
+                urls.append(f"{RAW_BASE}/{sha}/{f}")
+        groups.append(urls)
+    return sha, groups[0], groups[1], errors
 
 
 def cmd_order(a):
@@ -670,6 +711,14 @@ def cmd_order(a):
         for e in oerrs:
             print("ERROR:", e)
         return 1
+    pkg, ctx = order["package"], order["context_read_only"]
+    if a.base_url:
+        sha, pkg, ctx, perrs = pin_order(order, a.base_url)
+        if perrs:
+            for e in perrs:
+                print("ERROR:", e)
+            return 1
+        order = {**order, "base_sha": sha, "package_urls": pkg, "context_urls": ctx}
     if a.json:
         print(json.dumps(order, indent=2))
         return 0
@@ -677,14 +726,16 @@ def cmd_order(a):
     print(f"submission_id: {order['submission_id']}")
     print(f"mode: {order['mode']}")
     print(f"tasks: {', '.join(order['tasks'])}")
+    if a.base_url:
+        print(f"base_sha: {order['base_sha']}")
     print("task_dirs:")
     for k in order["tasks"]:
         print(f"  - {k}: {order['task_dirs'][k]}")
     print("package:")
-    for x in order["package"]:
+    for x in pkg:
         print(f"  - {x}")
     print("context (read-only):")
-    for x in order["context_read_only"]:
+    for x in ctx:
         print(f"  - {x}")
     print(f"upload_to: {order['upload_to']}")
     return 0
@@ -721,7 +772,7 @@ def main():
     sub.add_parser("registry").set_defaults(fn=cmd_registry)
     cv = sub.add_parser("coverage"); cv.add_argument("--fail", action="store_true"); cv.set_defaults(fn=cmd_coverage)
     nx = sub.add_parser("next"); nx.add_argument("--assume-done", dest="assume_done"); nx.add_argument("--json", action="store_true"); nx.set_defaults(fn=cmd_next)
-    od = sub.add_parser("order"); od.add_argument("ids", nargs="+"); od.add_argument("--json", action="store_true"); od.set_defaults(fn=cmd_order)
+    od = sub.add_parser("order"); od.add_argument("ids", nargs="+"); od.add_argument("--json", action="store_true"); od.add_argument("--base-url", dest="base_url", metavar="SHA"); od.set_defaults(fn=cmd_order)
     r = sub.add_parser("render"); r.add_argument("--check", action="store_true"); r.set_defaults(fn=cmd_render)
     v = sub.add_parser("verify"); v.add_argument("id"); v.set_defaults(fn=cmd_verify)
     s = sub.add_parser("set"); s.add_argument("id"); s.add_argument("status", choices=STATUSES)

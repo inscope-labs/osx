@@ -197,6 +197,53 @@ class PlanToolTests(unittest.TestCase):
         self.assertEqual(grp["mode"], "group")
         self.assertIn("impl/core/amk-authority/plan/tasks/AUT-008.json", grp["package"])
 
+    def git(self, *args):
+        return subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", *args],
+                              cwd=self.tmp, capture_output=True, text=True, check=True).stdout.strip()
+
+    def commit_with_aut007_done(self):
+        self.git("init", "-q"); self.git("add", "-A"); self.git("commit", "-q", "-m", "base")
+        code, out = self.run_tool("set", "AUT-007", "done", "--pr", "https://github.com/inscope-labs/osx/pull/1",
+                                  "--commit", self.git("rev-parse", "HEAD"), "--by", "test")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.run_tool("render")[0], 0)
+        self.git("add", "-A"); self.git("commit", "-q", "-m", "aut-007 done")
+        return self.git("rev-parse", "HEAD")
+
+    def test_order_has_no_duplicate_paths(self):
+        self.commit_with_aut007_done()
+        code, out = self.run_tool("order", "AUT-008", "--json")
+        self.assertEqual(code, 0, out)
+        o = json.loads(out)
+        self.assertEqual(set(o["package"]) & set(o["context_read_only"]), set())
+        self.assertEqual(o["context_read_only"], ["impl/core/amk-authority/plan/stages.json"])
+
+    def test_order_base_url_pins_individual_files(self):
+        sha = self.commit_with_aut007_done()
+        code, out = self.run_tool("order", "AUT-008", "--base-url", "HEAD", "--json")
+        self.assertEqual(code, 0, out)
+        o = json.loads(out)
+        self.assertEqual(o["base_sha"], sha)
+        base = f"https://raw.githubusercontent.com/inscope-labs/osx/{sha}/"
+        self.assertTrue(all(u.startswith(base) for u in o["package_urls"] + o["context_urls"]))
+        self.assertIn(base + "impl/core/amk-authority/AGENTS.md", o["package_urls"])
+        self.assertTrue(any(u.endswith("/specs/core/amk-authority/00-foundations.md") for u in o["package_urls"]))
+        self.assertFalse(any(u.endswith("/") for u in o["package_urls"]))
+        code, txt = self.run_tool("order", "AUT-008", "--base-url", sha)
+        self.assertEqual(code, 0, txt)
+        self.assertIn(f"base_sha: {sha}", txt)
+
+    def test_order_base_url_rejects_unknown_commit_and_dirty_tree(self):
+        self.commit_with_aut007_done()
+        code, out = self.run_tool("order", "AUT-008", "--base-url", "0" * 40)
+        self.assertNotEqual(code, 0)
+        self.assertIn("not found", out)
+        agents = self.tmp / IMPL_REL / "AGENTS.md"
+        agents.write_text(agents.read_text() + "\nlocal edit\n")
+        code, out = self.run_tool("order", "AUT-008", "--base-url", "HEAD")
+        self.assertNotEqual(code, 0)
+        self.assertIn("differs between commit", out)
+
     def test_executor_value_is_validated(self):
         f, t = self.live_task()
         t["executor"] = "robot"
